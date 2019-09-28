@@ -48,7 +48,7 @@ jobs:
         rustc --version
         
     - name: fmt
-      run: cargo fmt -- --check
+      run: cargo fmt --all -- --check
 
     - name: Docs
       run: cargo doc --features docs,unstable
