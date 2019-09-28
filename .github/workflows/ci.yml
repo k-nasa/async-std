@@ -20,7 +20,7 @@ jobs:
     - name: check
       uses: actions-rs/cargo@v1
       with: 
-        comand: check --all --benches --bins --examples --tests
+        command: check --all --benches --bins --examples --tests
         
     - name: check unstable
       uses: actions-rs/cargo@v1
