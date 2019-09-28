@@ -20,13 +20,12 @@
 //! # Ok(()) }) }
 //! ```
 
-pub mod prelude;
-
 #[doc(inline)]
 pub use std::io::{Error, ErrorKind, IoSlice, IoSliceMut, Result, SeekFrom};
 
 pub use buf_read::{BufRead, Lines};
 pub use buf_reader::BufReader;
+pub use buf_writer::BufWriter;
 pub use copy::copy;
 pub use cursor::Cursor;
 pub use empty::{empty, Empty};
@@ -40,17 +39,21 @@ pub use stdout::{stdout, Stdout};
 pub use timeout::timeout;
 pub use write::Write;
 
-mod buf_read;
+pub mod prelude;
+
+pub(crate) mod buf_read;
+pub(crate) mod read;
+pub(crate) mod seek;
+pub(crate) mod write;
+
 mod buf_reader;
+mod buf_writer;
 mod copy;
 mod cursor;
 mod empty;
-mod read;
 mod repeat;
-mod seek;
 mod sink;
 mod stderr;
 mod stdin;
 mod stdout;
 mod timeout;
-mod write;

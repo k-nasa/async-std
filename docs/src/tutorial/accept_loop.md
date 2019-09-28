@@ -29,12 +29,13 @@ Now we can write the server's accept loop:
 # extern crate async_std;
 # use async_std::{
 #     net::{TcpListener, ToSocketAddrs},
-#     prelude::Stream,
+#     prelude::*,
 # };
 #
 # type Result<T> = std::result::Result<T, Box<dyn std::error::Error + Send + Sync>>;
 #
-async fn server(addr: impl ToSocketAddrs) -> Result<()> { // 1
+async fn accept_loop(addr: impl ToSocketAddrs) -> Result<()> { // 1
+
     let listener = TcpListener::bind(addr).await?; // 2
     let mut incoming = listener.incoming();
     while let Some(stream) = incoming.next().await { // 3
@@ -44,7 +45,7 @@ async fn server(addr: impl ToSocketAddrs) -> Result<()> { // 1
 }
 ```
 
-1. We mark the `server` function as `async`, which allows us to use `.await` syntax inside.
+1. We mark the `accept_loop` function as `async`, which allows us to use `.await` syntax inside.
 2. `TcpListener::bind` call returns a future, which we `.await` to extract the `Result`, and then `?` to get a `TcpListener`.
    Note how `.await` and `?` work nicely together.
    This is exactly how `std::net::TcpListener` works, but with `.await` added.
@@ -66,13 +67,13 @@ Finally, let's add main:
 # extern crate async_std;
 # use async_std::{
 #     net::{TcpListener, ToSocketAddrs},
-#     prelude::Stream,
+#     prelude::*,
 #     task,
 # };
 #
 # type Result<T> = std::result::Result<T, Box<dyn std::error::Error + Send + Sync>>;
 #
-# async fn server(addr: impl ToSocketAddrs) -> Result<()> { // 1
+# async fn accept_loop(addr: impl ToSocketAddrs) -> Result<()> { // 1
 #     let listener = TcpListener::bind(addr).await?; // 2
 #     let mut incoming = listener.incoming();
 #     while let Some(stream) = incoming.next().await { // 3
@@ -83,7 +84,7 @@ Finally, let's add main:
 #
 // main
 fn run() -> Result<()> {
-    let fut = server("127.0.0.1:8080");
+    let fut = accept_loop("127.0.0.1:8080");
     task::block_on(fut)
 }
 ```
