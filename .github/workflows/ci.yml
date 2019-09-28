@@ -12,11 +12,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - name: Rust version
-      run: |
-        rustup default nightly
-        rustc --version
-
     - name: build
       run: cargo build
 
