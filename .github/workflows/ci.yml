@@ -7,32 +7,32 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macOS-latest]
-        
+
     steps:
     - uses: actions/checkout@master
-    
-    - name: Install nightly 
+
+    - name: Install nightly
       uses: actions-rs/toolchain@v1
-      with: 
+      with:
         toolchain: nightly
         override: true
-        
+
     - name: check
       uses: actions-rs/cargo@v1
-      with: 
-        command: check 
+      with:
+        command: check
         args: --all --benches --bins --examples --tests
-        
+
     - name: check unstable
       uses: actions-rs/cargo@v1
       with:
-        command:  check 
+        command:  check
         args: --features unstable --all --benches --bins --examples --tests
 
     - name: tests
       uses: actions-rs/cargo@v1
-      with: 
-        command: test 
+      with:
+        command: test
         args: --all --doc --features unstable
 
   check_fmt_and_docs:
@@ -40,18 +40,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-        
+
     - name: setup
       run: |
         rustup default nightly
         rustup component add rustfmt
         cargo install mdbook
         rustc --version
-        
+
     - name: mdbook
       run: |
         mdbook build docs
-        
+
     - name: fmt
       run: cargo fmt --all -- --check
 
