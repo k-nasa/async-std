@@ -51,7 +51,6 @@ jobs:
     - name: mdbook
       run: |
         mdbook build docs
-        mdbook test -L ./target/debug/deps/docs
         
     - name: fmt
       run: cargo fmt --all -- --check
