@@ -29,7 +29,8 @@ jobs:
 
     - name: tests
       uses: actions-rs/cargo@v1
-      run: test --all --doc --features unstable
+      with: 
+        command: test --all --doc --features unstable
 
   check_fmt_and_docs:
     name: Checking fmt and docs
