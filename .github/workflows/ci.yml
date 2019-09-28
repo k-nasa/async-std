@@ -1,0 +1,31 @@
+on: [push, pull_request]
+
+jobs:
+  ci:
+    name: CI on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Rust version
+      run: |
+        rustup default nightly
+        rustc --version
+
+    - name: build
+      run: cargo build --verbose
+
+    - name: tests
+      run: cargo test --verbose
+
+    - name: fmt
+      run: cargo fmt -- --check
+
+    - name: lint
+      run: cargo clippy -- -Dwarnings
+
+    - name: Docs
+      run: cargo doc --features docs,unstable
