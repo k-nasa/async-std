@@ -6,7 +6,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+        os: [ubuntu-latest, windows-latest]
         
     steps:
     - uses: actions/checkout@master
@@ -14,8 +14,6 @@ jobs:
     - name: Rust version
       run: |
         rustup default nightly
-        rustup component add rustfmt
-        rustup component add clippy
         rustc --version
 
     - name: build
@@ -29,7 +27,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    
+        
+    - name: Rust version
+      run: |
+        rustup default nightly
+        rustup component add rustfmt
+        rustc --version
+        
     - name: fmt
       run: cargo fmt -- --check
 
