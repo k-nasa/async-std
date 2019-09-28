@@ -41,11 +41,17 @@ jobs:
     steps:
     - uses: actions/checkout@master
         
-    - name: Rust version
+    - name: setup
       run: |
         rustup default nightly
         rustup component add rustfmt
+        cargo install mdbook
         rustc --version
+        
+    - name: mdbook
+      run: |
+        mdbook build docs
+        mdbook test -L ./target/debug/deps/docs
         
     - name: fmt
       run: cargo fmt --all -- --check
