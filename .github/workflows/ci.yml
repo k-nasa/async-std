@@ -46,7 +46,6 @@ jobs:
         rustup default nightly
         rustup component add rustfmt
         test -x $HOME/.cargo/bin/mdbook || ./ci/install-mdbook.sh
-        test -x $HOME/.cargo/bin/cargo-deadlinks || ./ci/install-cargo-deadlinks.sh
         rustc --version
 
     - name: mdbook
@@ -59,4 +58,3 @@ jobs:
     - name: Docs
       run: |
         cargo doc --features docs,unstable
-        cargo deadlinks --check-http
