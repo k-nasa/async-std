@@ -45,13 +45,9 @@ jobs:
       run: |
         rustup default nightly
         rustup component add rustfmt
+        test -x $HOME/.cargo/bin/mdbook || ./ci/install-mdbook.sh
         rustc --version
 
-    - name: setup2
-      description: "hogehoge"
-      runs:
-        using: 'docker'
-        image: 'Dockerfile'
     - name: mdbook
       run: |
         mdbook build docs
