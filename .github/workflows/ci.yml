@@ -22,6 +22,12 @@ jobs:
     steps:
     - uses: actions/checkout@master
 
+    - name: Cache cargo registry
+      uses: actions/cache@preview
+      with:
+        path: ~/.cargo/registry
+        key: ${{ runner.os }}-${{ matrix.rust }}-cargo-registry
+
     - name: Install ${{ matrix.rust }}
       uses: actions-rs/toolchain@v1
       with:
