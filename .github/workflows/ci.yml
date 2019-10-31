@@ -58,6 +58,7 @@ jobs:
         command: test
         args: --all --features unstable
 
+
   check_fmt_and_docs:
     name: Checking fmt and docs
     runs-on: ubuntu-latest
