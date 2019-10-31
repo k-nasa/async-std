@@ -23,25 +23,25 @@ jobs:
     - uses: actions/checkout@master
 
     - name: Cache cargo registry
-      uses: actions/cache@preview
+      uses: actions/cache@master
       with:
         path: ~/.cargo/registry
         key: ${{ runner.os }}-${{ matrix.rust }}-cargo-registry-${{ hashFiles('**/Cargo.toml') }}
 
     - name: Cache deps crates
-      uses: actions/cache@preview
+      uses: actions/cache@master
       with:
         path: target/debug/deps
         key: ${{ runner.os }}-${{ matrix.rust }}-target-deps-${{ hashFiles('**/Cargo.toml') }}
 
     - name: Cache build
-      uses: actions/cache@preview
+      uses: actions/cache@master
       with:
         path: target/debug/build
         key: ${{ runner.os }}-${{ matrix.rust }}-target-build-${{ hashFiles('**/Cargo.toml') }}
 
     - name: Cache build
-      uses: actions/cache@preview
+      uses: actions/cache@master
       with:
         path: target/debug/.fingerprint
         key: ${{ runner.os }}-${{ matrix.rust }}-target-fingerprint-${{ hashFiles('**/Cargo.toml') }}
@@ -78,7 +78,7 @@ jobs:
     - uses: actions/checkout@master
 
     - name: Cache cargo doc
-      uses: actions/cache@preview
+      uses: actions/cache@master
       with:
         path: target/doc
         key: ${{ runner.os }}-${{ matrix.rust }}--cargo-doc-${{ hashFiles('**/Cargo.toml') }}
