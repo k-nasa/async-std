@@ -22,6 +22,18 @@ jobs:
     steps:
     - uses: actions/checkout@master
 
+    - name: Cache cargo registry
+      uses: actions/cache@preview
+      with:
+        path: ~/.cargo/registry
+        key: ${{ runner.os }}-${{ matrix.rust }}-cargo-registry-${{ hashFiles('**/Cargo.toml') }}
+
+    - name: Cache deps crates
+      uses: actions/cache@preview
+      with:
+        path: target/debug/deps
+        key: ${{ runner.os }}-${{ matrix.rust }}-deps-crates-${{ hashFiles('**/Cargo.toml') }}
+
     - name: Install ${{ matrix.rust }}
       uses: actions-rs/toolchain@v1
       with:
@@ -51,6 +63,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
+
+    - name: Cache cargo doc
+      uses: actions/cache@preview
+      with:
+        path: target/doc
+        key: ${{ runner.os }}-${{ matrix.rust }}--cargo-doc-${{ hashFiles('**/Cargo.toml') }}
 
     - id: component
       uses: actions-rs/components-nightly@v1
