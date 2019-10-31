@@ -32,7 +32,7 @@ jobs:
       uses: actions/cache@preview
       with:
         path: target/debug
-        key: ${{ runner.os }}-${{ matrix.rust }}-target-build-${{ hashFiles('**/Cargo.toml') }}
+        key: ${{ runner.os }}-${{ matrix.rust }}-cargo-build-cache-${{ hashFiles('**/Cargo.toml') }}
 
     - name: Install ${{ matrix.rust }}
       uses: actions-rs/toolchain@v1
