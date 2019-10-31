@@ -28,11 +28,23 @@ jobs:
         path: ~/.cargo/registry
         key: ${{ runner.os }}-${{ matrix.rust }}-cargo-registry-${{ hashFiles('**/Cargo.toml') }}
 
+    - name: Cache deps crates
+      uses: actions/cache@preview
+      with:
+        path: target/debug/deps
+        key: ${{ runner.os }}-${{ matrix.rust }}-target-deps-${{ hashFiles('**/Cargo.toml') }}
+
     - name: Cache build
       uses: actions/cache@preview
       with:
-        path: target/debug
-        key: ${{ runner.os }}-${{ matrix.rust }}-cargo-build-cache-${{ hashFiles('**/Cargo.toml') }}
+        path: target/debug/build
+        key: ${{ runner.os }}-${{ matrix.rust }}-target-build-${{ hashFiles('**/Cargo.toml') }}
+
+    - name: Cache build
+      uses: actions/cache@preview
+      with:
+        path: target/debug/.fingerprint
+        key: ${{ runner.os }}-${{ matrix.rust }}-target-fingerprint-${{ hashFiles('**/Cargo.toml') }}
 
     - name: Install ${{ matrix.rust }}
       uses: actions-rs/toolchain@v1
