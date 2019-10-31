@@ -1,5 +1,4 @@
 //! Async version of the Rust standard library.
-//!
 //! Modules in this crate are organized in the same way as in the standard library, except blocking
 //! functions have been replaced with async functions and threads have been replaced with
 //! lightweight tasks.
