@@ -16,7 +16,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+        os: [ubuntu-latest, macOS-latest]
         rust: [nightly]
 
     steps:
@@ -26,13 +26,13 @@ jobs:
       uses: actions/cache@preview
       with:
         path: ~/.cargo/registry
-        key: ${{ runner.os }}-${{ matrix.rust }}-cargo-registry-${{ hashFiles('Cargo.toml') }}
+        key: ${{ runner.os }}-${{ matrix.rust }}-cargo-registry-${{ hashFiles('**/Cargo.toml') }}
 
     - name: Cache deps crates
       uses: actions/cache@preview
       with:
         path: target/debug/deps
-        key: ${{ runner.os }}-${{ matrix.rust }}-deps-crates-${{ hashFiles('Cargo.toml') }}
+        key: ${{ runner.os }}-${{ matrix.rust }}-deps-crates-${{ hashFiles('**/Cargo.toml') }}
 
     - name: Install ${{ matrix.rust }}
       uses: actions-rs/toolchain@v1
@@ -68,7 +68,7 @@ jobs:
       uses: actions/cache@preview
       with:
         path: target/doc
-        key: ${{ runner.os }}-${{ matrix.rust }}--cargo-doc-${{ hashFiles('Cargo.toml') }}
+        key: ${{ runner.os }}-${{ matrix.rust }}--cargo-doc-${{ hashFiles('**/Cargo.toml') }}
 
     - id: component
       uses: actions-rs/components-nightly@v1
