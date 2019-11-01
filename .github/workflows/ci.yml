@@ -23,25 +23,25 @@ jobs:
     - uses: actions/checkout@master
 
     - name: Cache cargo registry
-      uses: actions/cache@master
+      uses: actions/cache@preview
       with:
         path: ~/.cargo/registry
         key: ${{ runner.os }}-${{ matrix.rust }}-cargo-registry-${{ hashFiles(format('{0}{1}', github.workspace, '/Cargo.toml')) }}
 
     - name: Cache target deps
-      uses: actions/cache@master
+      uses: actions/cache@preview
       with:
         path: target/debug/deps
         key: ${{ runner.os }}-${{ matrix.rust }}-target-deps-${{ hashFiles(format('{0}{1}', github.workspace, '/Cargo.toml')) }}
 
     - name: Cache target build
-      uses: actions/cache@master
+      uses: actions/cache@preview
       with:
         path: target/debug/build
         key: ${{ runner.os }}-${{ matrix.rust }}-target-build-${{ hashFiles(format('{0}{1}', github.workspace, '/Cargo.toml')) }}
 
     - name: Cache target fingerprint
-      uses: actions/cache@master
+      uses: actions/cache@preview
       with:
         path: target/debug/.fingerprint
         key: ${{ runner.os }}-${{ matrix.rust }}-target-fingerprint-${{ hashFiles(format('{0}{1}', github.workspace, '/Cargo.toml')) }}
@@ -78,7 +78,7 @@ jobs:
     - uses: actions/checkout@master
 
     - name: Cache cargo doc
-      uses: actions/cache@master
+      uses: actions/cache@preview
       with:
         path: target/doc
         key: ${{ runner.os }}-${{ matrix.rust }}--cargo-doc-${{ hashFiles('**/Cargo.toml') }}
