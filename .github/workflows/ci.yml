@@ -16,31 +16,35 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macOS-latest]
+        os: [ubuntu-latest, windows-latest, macOS-latest]
         rust: [nightly]
 
     steps:
     - uses: actions/checkout@master
 
     - name: Cache cargo registry
+      if: matrix.os != 'windows-latest'
       uses: actions/cache@preview
       with:
         path: ~/.cargo/registry
         key: ${{ runner.os }}-${{ matrix.rust }}-cargo-registry-${{ hashFiles('**/Cargo.toml') }}
 
     - name: Cache deps crates
+      if: matrix.os != 'windows-latest'
       uses: actions/cache@preview
       with:
         path: target/debug/deps
         key: ${{ runner.os }}-${{ matrix.rust }}-target-deps-${{ hashFiles('**/Cargo.toml') }}
 
     - name: Cache build
+      if: matrix.os != 'windows-latest'
       uses: actions/cache@preview
       with:
         path: target/debug/build
         key: ${{ runner.os }}-${{ matrix.rust }}-target-build-${{ hashFiles('**/Cargo.toml') }}
 
     - name: Cache build
+      if: matrix.os != 'windows-latest'
       uses: actions/cache@preview
       with:
         path: target/debug/.fingerprint
