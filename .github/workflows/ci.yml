@@ -26,7 +26,7 @@ jobs:
       uses: actions/cache@preview
       with:
         path: ~/.cargo/registry
-        key: ${{ runner.os }}-${{ matrix.rust }}-cargo-registry-${{ hashFiles(format('{0}{1}', github.workspace, '/Cargo.toml')) }}
+        key: ${{ runner.os }}-${{ matrix.rust }}-cargo-registry-${{ hashFiles('Cargo.toml') }}
 
     - name: Cache target deps
       uses: actions/cache@preview
