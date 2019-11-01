@@ -26,25 +26,25 @@ jobs:
       uses: actions/cache@master
       with:
         path: ~/.cargo/registry
-        key: ${{ runner.os }}-${{ matrix.rust }}-cargo-registry-${{ hashFiles('**/Cargo.toml') }}
+        key: ${{ runner.os }}-${{ matrix.rust }}-cargo-registry-${{ hashFiles(format('{0}{1}', github.workspace, '/Cargo.toml')) }}
 
-    - name: Cache deps crates
+    - name: Cache target deps
       uses: actions/cache@master
       with:
         path: target/debug/deps
-        key: ${{ runner.os }}-${{ matrix.rust }}-target-deps-${{ hashFiles('**/Cargo.toml') }}
+        key: ${{ runner.os }}-${{ matrix.rust }}-target-deps-${{ hashFiles(format('{0}{1}', github.workspace, '/Cargo.toml')) }}
 
-    - name: Cache build
+    - name: Cache target build
       uses: actions/cache@master
       with:
         path: target/debug/build
-        key: ${{ runner.os }}-${{ matrix.rust }}-target-build-${{ hashFiles('**/Cargo.toml') }}
+        key: ${{ runner.os }}-${{ matrix.rust }}-target-build-${{ hashFiles(format('{0}{1}', github.workspace, '/Cargo.toml')) }}
 
-    - name: Cache build
+    - name: Cache target fingerprint
       uses: actions/cache@master
       with:
         path: target/debug/.fingerprint
-        key: ${{ runner.os }}-${{ matrix.rust }}-target-fingerprint-${{ hashFiles('**/Cargo.toml') }}
+        key: ${{ runner.os }}-${{ matrix.rust }}-target-fingerprint-${{ hashFiles(format('{0}{1}', github.workspace, '/Cargo.toml')) }}
 
     - name: Install ${{ matrix.rust }}
       uses: actions-rs/toolchain@v1
