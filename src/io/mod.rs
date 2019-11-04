@@ -311,3 +311,9 @@ mod stdin;
 mod stdio;
 mod stdout;
 mod timeout;
+
+cfg_unstable! {
+    pub use stderr::StderrLock;
+    pub use stdin::StdinLock;
+    pub use stdout::StdoutLock;
+}

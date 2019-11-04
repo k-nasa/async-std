@@ -25,7 +25,9 @@ mod all;
 mod any;
 mod chain;
 mod cmp;
+mod copied;
 mod enumerate;
+mod eq;
 mod filter;
 mod filter_map;
 mod find;
@@ -41,11 +43,15 @@ mod le;
 mod lt;
 mod map;
 mod max_by;
+mod max_by_key;
+mod min;
 mod min_by;
 mod min_by_key;
+mod ne;
 mod next;
 mod nth;
 mod partial_cmp;
+mod position;
 mod scan;
 mod skip;
 mod skip_while;
@@ -60,6 +66,7 @@ use all::AllFuture;
 use any::AnyFuture;
 use cmp::CmpFuture;
 use enumerate::Enumerate;
+use eq::EqFuture;
 use filter_map::FilterMap;
 use find::FindFuture;
 use find_map::FindMapFuture;
@@ -71,15 +78,20 @@ use last::LastFuture;
 use le::LeFuture;
 use lt::LtFuture;
 use max_by::MaxByFuture;
+use max_by_key::MaxByKeyFuture;
+use min::MinFuture;
 use min_by::MinByFuture;
 use min_by_key::MinByKeyFuture;
+use ne::NeFuture;
 use next::NextFuture;
 use nth::NthFuture;
 use partial_cmp::PartialCmpFuture;
+use position::PositionFuture;
 use try_fold::TryFoldFuture;
-use try_for_each::TryForEeachFuture;
+use try_for_each::TryForEachFuture;
 
 pub use chain::Chain;
+pub use copied::Copied;
 pub use filter::Filter;
 pub use fuse::Fuse;
 pub use inspect::Inspect;
@@ -268,11 +280,10 @@ extension_trait! {
             ```
             # fn main() { async_std::task::block_on(async {
             #
-            use std::collections::VecDeque;
-
             use async_std::prelude::*;
+            use async_std::stream;
 
-            let s: VecDeque<usize> = vec![1, 2, 3, 4].into_iter().collect();
+            let s = stream::from_iter(vec![1, 2, 3, 4]);
             let mut s = s.take_while(|x| x < &3 );
 
             assert_eq!(s.next().await, Some(1));
@@ -305,9 +316,9 @@ extension_trait! {
             # fn main() { async_std::task::block_on(async {
             #
             use async_std::prelude::*;
-            use std::collections::VecDeque;
+            use async_std::stream;
 
-            let s: VecDeque<_> = vec![0u8, 1, 2, 3, 4].into_iter().collect();
+            let s = stream::from_iter(vec![0u8, 1, 2, 3, 4]);
             let mut stepped = s.step_by(2);
 
             assert_eq!(stepped.next().await, Some(0));
@@ -337,10 +348,10 @@ extension_trait! {
             # fn main() { async_std::task::block_on(async {
             #
             use async_std::prelude::*;
-            use std::collections::VecDeque;
+            use async_std::stream;
 
-            let first: VecDeque<_> = vec![0u8, 1].into_iter().collect();
-            let second: VecDeque<_> = vec![2, 3].into_iter().collect();
+            let first = stream::from_iter(vec![0u8, 1]);
+            let second = stream::from_iter(vec![2, 3]);
             let mut c = first.chain(second);
 
             assert_eq!(c.next().await, Some(0));
@@ -361,6 +372,41 @@ extension_trait! {
             Chain::new(self, other)
         }
 
+
+        #[doc = r#"
+            Creates an stream which copies all of its elements.
+
+            # Examples
+
+            Basic usage:
+
+            ```
+            # fn main() { async_std::task::block_on(async {
+            #
+            use async_std::prelude::*;
+            use async_std::stream;
+
+            let s = stream::from_iter(vec![&1, &2, &3]);
+            let second = stream::from_iter(vec![2, 3]);
+
+            let mut s_copied  = s.copied();
+
+            assert_eq!(s_copied.next().await, Some(1));
+            assert_eq!(s_copied.next().await, Some(2));
+            assert_eq!(s_copied.next().await, Some(3));
+            assert_eq!(s_copied.next().await, None);
+            #
+            # }) }
+            ```
+        "#]
+        fn copied<'a,T>(self) -> Copied<Self>
+        where
+            Self: Sized + Stream<Item = &'a T>,
+            T : 'a + Copy,
+        {
+            Copied::new(self)
+        }
+
         #[doc = r#"
             Creates a stream that gives the current element's count as well as the next value.
 
@@ -374,9 +420,9 @@ extension_trait! {
             # fn main() { async_std::task::block_on(async {
             #
             use async_std::prelude::*;
-            use std::collections::VecDeque;
+            use async_std::stream;
 
-            let s: VecDeque<_> = vec!['a', 'b', 'c'].into_iter().collect();
+            let s = stream::from_iter(vec!['a', 'b', 'c']);
             let mut s = s.enumerate();
 
             assert_eq!(s.next().await, Some((0, 'a')));
@@ -404,9 +450,9 @@ extension_trait! {
             # fn main() { async_std::task::block_on(async {
             #
             use async_std::prelude::*;
-            use std::collections::VecDeque;
+            use async_std::stream;
 
-            let s: VecDeque<_> = vec![1, 2, 3].into_iter().collect();
+            let s = stream::from_iter(vec![1, 2, 3]);
             let mut s = s.map(|x| 2 * x);
 
             assert_eq!(s.next().await, Some(2));
@@ -438,10 +484,11 @@ extension_trait! {
             # fn main() { async_std::task::block_on(async {
             #
             use async_std::prelude::*;
-            use std::collections::VecDeque;
+            use async_std::stream;
 
-            let a: VecDeque<_> = vec![1u8, 2, 3, 4, 5].into_iter().collect();
-            let sum = a
+            let s = stream::from_iter(vec![1, 2, 3, 4, 5]);
+
+            let sum = s
                     .inspect(|x| println!("about to filter {}", x))
                     .filter(|x| x % 2 == 0)
                     .inspect(|x| println!("made it through filter: {}", x))
@@ -470,11 +517,10 @@ extension_trait! {
             ```
             # fn main() { async_std::task::block_on(async {
             #
-            use std::collections::VecDeque;
-
             use async_std::prelude::*;
+            use async_std::stream;
 
-            let s: VecDeque<usize> = vec![1, 2, 3].into_iter().collect();
+            let s = stream::from_iter(vec![1, 2, 3]);
 
             let last  = s.last().await;
             assert_eq!(last, Some(3));
@@ -486,11 +532,10 @@ extension_trait! {
             ```
             # fn main() { async_std::task::block_on(async {
             #
-            use std::collections::VecDeque;
+            use async_std::stream;
+            use crate::async_std::prelude::*;
 
-            use async_std::prelude::*;
-
-            let s: VecDeque<usize> = vec![].into_iter().collect();
+            let s = stream::empty::<()>();
 
             let last  = s.last().await;
             assert_eq!(last, None);
@@ -551,11 +596,10 @@ extension_trait! {
             ```
             # fn main() { async_std::task::block_on(async {
             #
-            use std::collections::VecDeque;
-
             use async_std::prelude::*;
+            use async_std::stream;
 
-            let s: VecDeque<usize> = vec![1, 2, 3, 4].into_iter().collect();
+            let s = stream::from_iter(vec![1, 2, 3, 4]);
             let mut s = s.filter(|i| i % 2 == 0);
 
             assert_eq!(s.next().await, Some(2));
@@ -583,14 +627,14 @@ extension_trait! {
             ```
             # async_std::task::block_on(async {
 
-            use std::collections::VecDeque;
             use async_std::prelude::*;
             use async_std::stream::IntoStream;
+            use async_std::stream;
 
-            let inner1: VecDeque<u8> = vec![1,2,3].into_iter().collect();
-            let inner2: VecDeque<u8> = vec![4,5,6].into_iter().collect();
+            let inner1 = stream::from_iter(vec![1,2,3]);
+            let inner2 = stream::from_iter(vec![4,5,6]);
 
-            let s: VecDeque<_> = vec![inner1, inner2].into_iter().collect();
+            let s = stream::from_iter(vec![inner1, inner2]);
 
             let v :Vec<_> = s.flat_map(|s| s.into_stream()).collect().await;
 
@@ -620,12 +664,12 @@ extension_trait! {
             ```
             # async_std::task::block_on(async {
 
-            use std::collections::VecDeque;
             use async_std::prelude::*;
+            use async_std::stream;
 
-            let inner1: VecDeque<u8> = vec![1,2,3].into_iter().collect();
-            let inner2: VecDeque<u8> = vec![4,5,6].into_iter().collect();
-            let s: VecDeque<_> = vec![inner1, inner2].into_iter().collect();
+            let inner1 = stream::from_iter(vec![1u8,2,3]);
+            let inner2 = stream::from_iter(vec![4u8,5,6]);
+            let s  = stream::from_iter(vec![inner1, inner2]);
 
             let v: Vec<_> = s.flatten().collect().await;
 
@@ -653,11 +697,11 @@ extension_trait! {
             ```
             # fn main() { async_std::task::block_on(async {
             #
-            use std::collections::VecDeque;
 
             use async_std::prelude::*;
+            use async_std::stream;
 
-            let s: VecDeque<&str> = vec!["1", "lol", "3", "NaN", "5"].into_iter().collect();
+            let s = stream::from_iter(vec!["1", "lol", "3", "NaN", "5"]);
 
             let mut parsed = s.filter_map(|a| a.parse::<u32>().ok());
 
@@ -694,16 +738,15 @@ extension_trait! {
             ```
             # fn main() { async_std::task::block_on(async {
             #
-            use std::collections::VecDeque;
-
             use async_std::prelude::*;
+            use async_std::stream;
 
-            let s: VecDeque<i32> = vec![1, 2, -3].into_iter().collect();
+            let s = stream::from_iter(vec![1isize, 2, -3]);
 
             let min = s.clone().min_by_key(|x| x.abs()).await;
             assert_eq!(min, Some(1));
 
-            let min = VecDeque::<isize>::new().min_by_key(|x| x.abs()).await;
+            let min = stream::empty::<isize>().min_by_key(|x| x.abs()).await;
             assert_eq!(min, None);
             #
             # }) }
@@ -721,6 +764,42 @@ extension_trait! {
             MinByKeyFuture::new(self, key_by)
         }
 
+         #[doc = r#"
+            Returns the element that gives the maximum value with respect to the
+            specified key function. If several elements are equally maximum,
+            the first element is returned. If the stream is empty, `None` is returned.
+
+            # Examples
+
+            ```
+            # fn main() { async_std::task::block_on(async {
+            #
+            use async_std::prelude::*;
+            use async_std::stream;
+
+            let s = stream::from_iter(vec![-1isize, -2, -3]);
+
+            let max = s.clone().max_by_key(|x| x.abs()).await;
+            assert_eq!(max, Some(3));
+
+            let max = stream::empty::<isize>().min_by_key(|x| x.abs()).await;
+            assert_eq!(max, None);
+            #
+            # }) }
+            ```
+        "#]
+        fn max_by_key<K>(
+            self,
+            key_by: K,
+        ) -> impl Future<Output = Option<Self::Item>> [MaxByKeyFuture<Self, Self::Item, K>]
+        where
+            Self: Sized,
+            Self::Item: Ord,
+            K: FnMut(&Self::Item) -> Self::Item,
+        {
+            MaxByKeyFuture::new(self, key_by)
+        }
+
         #[doc = r#"
             Returns the element that gives the minimum value with respect to the
             specified comparison function. If several elements are equally minimum,
@@ -731,11 +810,10 @@ extension_trait! {
             ```
             # fn main() { async_std::task::block_on(async {
             #
-            use std::collections::VecDeque;
-
             use async_std::prelude::*;
+            use async_std::stream;
 
-            let s: VecDeque<usize> = vec![1, 2, 3].into_iter().collect();
+            let s = stream::from_iter(vec![1u8, 2, 3]);
 
             let min = s.clone().min_by(|x, y| x.cmp(y)).await;
             assert_eq!(min, Some(1));
@@ -743,7 +821,7 @@ extension_trait! {
             let min = s.min_by(|x, y| y.cmp(x)).await;
             assert_eq!(min, Some(3));
 
-            let min = VecDeque::<usize>::new().min_by(|x, y| x.cmp(y)).await;
+            let min = stream::empty::<u8>().min_by(|x, y| x.cmp(y)).await;
             assert_eq!(min, None);
             #
             # }) }
@@ -760,6 +838,39 @@ extension_trait! {
             MinByFuture::new(self, compare)
         }
 
+        #[doc = r#"
+            Returns the element that gives the minimum value. If several elements are equally minimum,
+            the first element is returned. If the stream is empty, `None` is returned.
+
+            # Examples
+
+            ```ignore
+            # fn main() { async_std::task::block_on(async {
+            #
+            use async_std::prelude::*;
+            use async_std::stream;
+
+            let s = stream::from_iter(vec![1usize, 2, 3]);
+
+            let min = s.clone().min().await;
+            assert_eq!(min, Some(1));
+
+            let min = stream::empty::<usize>().min().await;
+            assert_eq!(min, None);
+            #
+            # }) }
+            ```
+        "#]
+        fn min<F>(
+            self,
+        ) -> impl Future<Output = Option<Self::Item>> [MinFuture<Self, F, Self::Item>]
+        where
+            Self: Sized,
+            F: FnMut(&Self::Item, &Self::Item) -> Ordering,
+        {
+            MinFuture::new(self)
+        }
+
          #[doc = r#"
             Returns the element that gives the maximum value with respect to the
             specified comparison function. If several elements are equally maximum,
@@ -770,11 +881,10 @@ extension_trait! {
             ```
             # fn main() { async_std::task::block_on(async {
             #
-            use std::collections::VecDeque;
-
             use async_std::prelude::*;
+            use async_std::stream;
 
-            let s: VecDeque<usize> = vec![1, 2, 3].into_iter().collect();
+            let s = stream::from_iter(vec![1u8, 2, 3]);
 
             let max = s.clone().max_by(|x, y| x.cmp(y)).await;
             assert_eq!(max, Some(3));
@@ -782,7 +892,7 @@ extension_trait! {
             let max = s.max_by(|x, y| y.cmp(x)).await;
             assert_eq!(max, Some(1));
 
-            let max = VecDeque::<usize>::new().max_by(|x, y| x.cmp(y)).await;
+            let max = stream::empty::<usize>().max_by(|x, y| x.cmp(y)).await;
             assert_eq!(max, None);
             #
             # }) }
@@ -809,11 +919,10 @@ extension_trait! {
             ```
             # fn main() { async_std::task::block_on(async {
             #
-            use std::collections::VecDeque;
-
             use async_std::prelude::*;
+            use async_std::stream;
 
-            let mut s: VecDeque<usize> = vec![1, 2, 3].into_iter().collect();
+            let mut s = stream::from_iter(vec![1u8, 2, 3]);
 
             let second = s.nth(1).await;
             assert_eq!(second, Some(2));
@@ -825,11 +934,10 @@ extension_trait! {
             ```
             # fn main() { async_std::task::block_on(async {
             #
-            use std::collections::VecDeque;
-
+            use async_std::stream;
             use async_std::prelude::*;
 
-            let mut s: VecDeque<usize> = vec![1, 2, 3].into_iter().collect();
+            let mut s = stream::from_iter(vec![1u8, 2, 3]);
 
             let second = s.nth(0).await;
             assert_eq!(second, Some(1));
@@ -843,11 +951,10 @@ extension_trait! {
             ```
             # fn main() { async_std::task::block_on(async {
             #
-            use std::collections::VecDeque;
-
             use async_std::prelude::*;
+            use async_std::stream;
 
-            let mut s: VecDeque<usize> = vec![1, 2, 3].into_iter().collect();
+            let mut s  = stream::from_iter(vec![1u8, 2, 3]);
 
             let fourth = s.nth(4).await;
             assert_eq!(fourth, None);
@@ -938,9 +1045,9 @@ extension_trait! {
             # fn main() { async_std::task::block_on(async {
             #
             use async_std::prelude::*;
-            use std::collections::VecDeque;
+            use async_std::stream;
 
-            let mut s: VecDeque<usize> = vec![1, 2, 3].into_iter().collect();
+            let mut s = stream::from_iter(vec![1u8, 2, 3]);
             let res = s.find(|x| *x == 2).await;
             assert_eq!(res, Some(2));
             #
@@ -953,9 +1060,9 @@ extension_trait! {
             # fn main() { async_std::task::block_on(async {
             #
             use async_std::prelude::*;
-            use std::collections::VecDeque;
+            use async_std::stream;
 
-            let mut s: VecDeque<usize> = vec![1, 2, 3].into_iter().collect();
+            let mut s= stream::from_iter(vec![1, 2, 3]);
             let res = s.find(|x| *x == 2).await;
             assert_eq!(res, Some(2));
 
@@ -983,9 +1090,9 @@ extension_trait! {
             # fn main() { async_std::task::block_on(async {
             #
             use async_std::prelude::*;
-            use std::collections::VecDeque;
+            use async_std::stream;
 
-            let mut s: VecDeque<&str> = vec!["lol", "NaN", "2", "5"].into_iter().collect();
+            let mut s = stream::from_iter(vec!["lol", "NaN", "2", "5"]);
             let first_number = s.find_map(|s| s.parse().ok()).await;
 
             assert_eq!(first_number, Some(2));
@@ -1016,9 +1123,9 @@ extension_trait! {
             # fn main() { async_std::task::block_on(async {
             #
             use async_std::prelude::*;
-            use std::collections::VecDeque;
+            use async_std::stream;
 
-            let s: VecDeque<usize> = vec![1, 2, 3].into_iter().collect();
+            let s = stream::from_iter(vec![1u8, 2, 3]);
             let sum = s.fold(0, |acc, x| acc + x).await;
 
             assert_eq!(sum, 6);
@@ -1047,12 +1154,12 @@ extension_trait! {
             # fn main() { async_std::task::block_on(async {
             #
             use async_std::prelude::*;
-            use std::collections::VecDeque;
+            use async_std::stream;
             use std::sync::mpsc::channel;
 
             let (tx, rx) = channel();
 
-            let s: VecDeque<usize> = vec![1, 2, 3].into_iter().collect();
+            let s = stream::from_iter(vec![1usize, 2, 3]);
             let sum = s.for_each(move |x| tx.clone().send(x).unwrap()).await;
 
             let v: Vec<_> = rx.iter().collect();
@@ -1153,11 +1260,10 @@ extension_trait! {
             ```
             # fn main() { async_std::task::block_on(async {
             #
-            use std::collections::VecDeque;
-
             use async_std::prelude::*;
+            use async_std::stream;
 
-            let s: VecDeque<isize> = vec![1, 2, 3].into_iter().collect();
+            let s = stream::from_iter(vec![1isize, 2, 3]);
             let mut s = s.scan(1, |state, x| {
                 *state = *state * x;
                 Some(-*state)
@@ -1194,11 +1300,10 @@ extension_trait! {
             ```
             # fn main() { async_std::task::block_on(async {
             #
-            use std::collections::VecDeque;
-
             use async_std::prelude::*;
+            use async_std::stream;
 
-            let a: VecDeque<_> = vec![-1i32, 0, 1].into_iter().collect();
+            let a = stream::from_iter(vec![-1i32, 0, 1]);
             let mut s = a.skip_while(|x| x.is_negative());
 
             assert_eq!(s.next().await, Some(0));
@@ -1224,11 +1329,10 @@ extension_trait! {
             ```
             # fn main() { async_std::task::block_on(async {
             #
-            use std::collections::VecDeque;
-
             use async_std::prelude::*;
+            use async_std::stream;
 
-            let s: VecDeque<usize> = vec![1, 2, 3].into_iter().collect();
+            let s = stream::from_iter(vec![1u8, 2, 3]);
             let mut skipped = s.skip(2);
 
             assert_eq!(skipped.next().await, Some(3));
@@ -1290,9 +1394,9 @@ extension_trait! {
             # fn main() { async_std::task::block_on(async {
             #
             use async_std::prelude::*;
-            use std::collections::VecDeque;
+            use async_std::stream;
 
-            let s: VecDeque<usize> = vec![1, 2, 3].into_iter().collect();
+            let s = stream::from_iter(vec![1usize, 2, 3]);
             let sum = s.try_fold(0, |acc, v| {
                 if (acc+v) % 2 == 1 {
                     Ok(v+3)
@@ -1326,13 +1430,13 @@ extension_trait! {
             ```
             # fn main() { async_std::task::block_on(async {
             #
-            use std::collections::VecDeque;
             use std::sync::mpsc::channel;
             use async_std::prelude::*;
+            use async_std::stream;
 
             let (tx, rx) = channel();
 
-            let s: VecDeque<usize> = vec![1, 2, 3].into_iter().collect();
+            let s = stream::from_iter(vec![1u8, 2, 3]);
             let s = s.try_for_each(|v| {
                 if v % 2 == 1 {
                     tx.clone().send(v).unwrap();
@@ -1355,12 +1459,12 @@ extension_trait! {
         fn try_for_each<F, E>(
             self,
             f: F,
-        ) -> impl Future<Output = E> [TryForEeachFuture<Self, F, Self::Item, E>]
+        ) -> impl Future<Output = E> [TryForEachFuture<Self, F, Self::Item, E>]
         where
             Self: Sized,
             F: FnMut(Self::Item) -> Result<(), E>,
         {
-            TryForEeachFuture::new(self, f)
+            TryForEachFuture::new(self, f)
         }
 
         #[doc = r#"
@@ -1384,12 +1488,11 @@ extension_trait! {
             ```
             # fn main() { async_std::task::block_on(async {
             #
-            use std::collections::VecDeque;
-
             use async_std::prelude::*;
+            use async_std::stream;
 
-            let l: VecDeque<isize> = vec![1, 2, 3].into_iter().collect();
-            let r: VecDeque<isize> = vec![4, 5, 6, 7].into_iter().collect();
+            let l = stream::from_iter(vec![1u8, 2, 3]);
+            let r = stream::from_iter(vec![4u8, 5, 6, 7]);
             let mut s = l.zip(r);
 
             assert_eq!(s.next().await, Some((1, 4)));
@@ -1519,14 +1622,14 @@ extension_trait! {
             # fn main() { async_std::task::block_on(async {
             #
             use async_std::prelude::*;
-            use std::collections::VecDeque;
+            use async_std::stream;
 
             use std::cmp::Ordering;
 
-            let s1 = VecDeque::from(vec![1]);
-            let s2 = VecDeque::from(vec![1, 2]);
-            let s3 = VecDeque::from(vec![1, 2, 3]);
-            let s4 = VecDeque::from(vec![1, 2, 4]);
+            let s1 = stream::from_iter(vec![1]);
+            let s2 = stream::from_iter(vec![1, 2]);
+            let s3 = stream::from_iter(vec![1, 2, 3]);
+            let s4 = stream::from_iter(vec![1, 2, 4]);
             assert_eq!(s1.clone().partial_cmp(s1.clone()).await, Some(Ordering::Equal));
             assert_eq!(s1.clone().partial_cmp(s2.clone()).await, Some(Ordering::Less));
             assert_eq!(s2.clone().partial_cmp(s1.clone()).await, Some(Ordering::Greater));
@@ -1549,6 +1652,45 @@ extension_trait! {
         }
 
         #[doc = r#"
+            Searches for an element in a Stream that satisfies a predicate, returning
+            its index.
+
+            # Examples
+
+            ```
+            # fn main() { async_std::task::block_on(async {
+            #
+            use async_std::prelude::*;
+            use async_std::stream;
+
+            let s = stream::from_iter(vec![1usize, 2, 3]);
+            let res = s.clone().position(|x| *x == 1).await;
+            assert_eq!(res, Some(0));
+
+            let res = s.clone().position(|x| *x == 2).await;
+            assert_eq!(res, Some(1));
+
+            let res = s.clone().position(|x| *x == 3).await;
+            assert_eq!(res, Some(2));
+
+            let res = s.clone().position(|x| *x == 4).await;
+            assert_eq!(res, None);
+            #
+            # }) }
+            ```
+        "#]
+        fn position<P>(
+           self,
+           predicate: P
+        ) -> impl Future<Output = Option<usize>>  [PositionFuture<Self, P>]
+        where
+            Self: Sized,
+            P: FnMut(&Self::Item) -> bool,
+        {
+            PositionFuture::new(self, predicate)
+        }
+
+        #[doc = r#"
             Lexicographically compares the elements of this `Stream` with those
             of another using 'Ord'.
 
@@ -1558,13 +1700,14 @@ extension_trait! {
             # fn main() { async_std::task::block_on(async {
             #
             use async_std::prelude::*;
-            use std::collections::VecDeque;
-
+            use async_std::stream;
             use std::cmp::Ordering;
-            let s1 = VecDeque::from(vec![1]);
-            let s2 = VecDeque::from(vec![1, 2]);
-            let s3 = VecDeque::from(vec![1, 2, 3]);
-            let s4 = VecDeque::from(vec![1, 2, 4]);
+
+            let s1 = stream::from_iter(vec![1]);
+            let s2 = stream::from_iter(vec![1, 2]);
+            let s3 = stream::from_iter(vec![1, 2, 3]);
+            let s4 = stream::from_iter(vec![1, 2, 4]);
+
             assert_eq!(s1.clone().cmp(s1.clone()).await, Ordering::Equal);
             assert_eq!(s1.clone().cmp(s2.clone()).await, Ordering::Less);
             assert_eq!(s2.clone().cmp(s1.clone()).await, Ordering::Greater);
@@ -1586,6 +1729,41 @@ extension_trait! {
             CmpFuture::new(self, other)
         }
 
+           #[doc = r#"
+            Determines if the elements of this `Stream` are lexicographically
+            not equal to those of another.
+            # Examples
+            ```
+            # fn main() { async_std::task::block_on(async {
+            #
+            use async_std::prelude::*;
+            use async_std::stream;
+
+            let single     = stream::from_iter(vec![1usize]);
+            let single_ne  = stream::from_iter(vec![10usize]);
+            let multi      = stream::from_iter(vec![1usize,2]);
+            let multi_ne   = stream::from_iter(vec![1usize,5]);
+
+            assert_eq!(single.clone().ne(single.clone()).await, false);
+            assert_eq!(single_ne.clone().ne(single.clone()).await, true);
+            assert_eq!(multi.clone().ne(single_ne.clone()).await, true);
+            assert_eq!(multi_ne.clone().ne(multi.clone()).await, true);
+            #
+            # }) }
+            ```
+        "#]
+        fn ne<S>(
+           self,
+           other: S
+        ) -> impl Future<Output = bool> [NeFuture<Self, S>]
+        where
+            Self: Sized + Stream,
+            S: Sized + Stream,
+            <Self as Stream>::Item: PartialEq<S::Item>,
+        {
+            NeFuture::new(self, other)
+        }
+
         #[doc = r#"
             Determines if the elements of this `Stream` are lexicographically
             greater than or equal to those of another.
@@ -1596,12 +1774,13 @@ extension_trait! {
             # fn main() { async_std::task::block_on(async {
             #
             use async_std::prelude::*;
-            use std::collections::VecDeque;
+            use async_std::stream;
 
-            let single:     VecDeque<isize> = vec![1].into_iter().collect();
-            let single_gt:  VecDeque<isize> = vec![10].into_iter().collect();
-            let multi:      VecDeque<isize> = vec![1,2].into_iter().collect();
-            let multi_gt:   VecDeque<isize> = vec![1,5].into_iter().collect();
+            let single    = stream::from_iter(vec![1]);
+            let single_gt = stream::from_iter(vec![10]);
+            let multi     = stream::from_iter(vec![1,2]);
+            let multi_gt  = stream::from_iter(vec![1,5]);
+
             assert_eq!(single.clone().ge(single.clone()).await, true);
             assert_eq!(single_gt.clone().ge(single.clone()).await, true);
             assert_eq!(multi.clone().ge(single_gt.clone()).await, false);
@@ -1624,6 +1803,43 @@ extension_trait! {
 
         #[doc = r#"
             Determines if the elements of this `Stream` are lexicographically
+            equal to those of another.
+
+            # Examples
+
+            ```
+            # fn main() { async_std::task::block_on(async {
+            #
+            use async_std::prelude::*;
+            use async_std::stream;
+
+            let single     = stream::from_iter(vec![1]);
+            let single_eq  = stream::from_iter(vec![10]);
+            let multi      = stream::from_iter(vec![1,2]);
+            let multi_eq   = stream::from_iter(vec![1,5]);
+
+            assert_eq!(single.clone().eq(single.clone()).await, true);
+            assert_eq!(single_eq.clone().eq(single.clone()).await, false);
+            assert_eq!(multi.clone().eq(single_eq.clone()).await, false);
+            assert_eq!(multi_eq.clone().eq(multi.clone()).await, false);
+            #
+            # }) }
+            ```
+        "#]
+        fn eq<S>(
+           self,
+           other: S
+        ) -> impl Future<Output = bool> [EqFuture<Self, S>]
+        where
+            Self: Sized + Stream,
+            S: Sized + Stream,
+            <Self as Stream>::Item: PartialEq<S::Item>,
+        {
+            EqFuture::new(self, other)
+        }
+
+        #[doc = r#"
+            Determines if the elements of this `Stream` are lexicographically
             greater than those of another.
 
             # Examples
@@ -1632,12 +1848,13 @@ extension_trait! {
             # fn main() { async_std::task::block_on(async {
             #
             use async_std::prelude::*;
-            use std::collections::VecDeque;
+            use async_std::stream;
 
-            let single = VecDeque::from(vec![1]);
-            let single_gt = VecDeque::from(vec![10]);
-            let multi = VecDeque::from(vec![1,2]);
-            let multi_gt = VecDeque::from(vec![1,5]);
+            let single = stream::from_iter(vec![1]);
+            let single_gt = stream::from_iter(vec![10]);
+            let multi = stream::from_iter(vec![1,2]);
+            let multi_gt = stream::from_iter(vec![1,5]);
+
             assert_eq!(single.clone().gt(single.clone()).await, false);
             assert_eq!(single_gt.clone().gt(single.clone()).await, true);
             assert_eq!(multi.clone().gt(single_gt.clone()).await, false);
@@ -1668,12 +1885,13 @@ extension_trait! {
             # fn main() { async_std::task::block_on(async {
             #
             use async_std::prelude::*;
-            use std::collections::VecDeque;
+            use async_std::stream;
 
-            let single = VecDeque::from(vec![1]);
-            let single_gt = VecDeque::from(vec![10]);
-            let multi = VecDeque::from(vec![1,2]);
-            let multi_gt = VecDeque::from(vec![1,5]);
+            let single = stream::from_iter(vec![1]);
+            let single_gt = stream::from_iter(vec![10]);
+            let multi = stream::from_iter(vec![1,2]);
+            let multi_gt = stream::from_iter(vec![1,5]);
+
             assert_eq!(single.clone().le(single.clone()).await, true);
             assert_eq!(single.clone().le(single_gt.clone()).await, true);
             assert_eq!(multi.clone().le(single_gt.clone()).await, true);
@@ -1704,12 +1922,12 @@ extension_trait! {
             # fn main() { async_std::task::block_on(async {
             #
             use async_std::prelude::*;
-            use std::collections::VecDeque;
+            use async_std::stream;
 
-            let single = VecDeque::from(vec![1]);
-            let single_gt = VecDeque::from(vec![10]);
-            let multi = VecDeque::from(vec![1,2]);
-            let multi_gt = VecDeque::from(vec![1,5]);
+            let single = stream::from_iter(vec![1]);
+            let single_gt = stream::from_iter(vec![10]);
+            let multi = stream::from_iter(vec![1,2]);
+            let multi_gt = stream::from_iter(vec![1,5]);
 
             assert_eq!(single.clone().lt(single.clone()).await, false);
             assert_eq!(single.clone().lt(single_gt.clone()).await, true);
@@ -1751,10 +1969,10 @@ extension_trait! {
             ```
             # fn main() { async_std::task::block_on(async {
             #
-            use std::collections::VecDeque;
             use async_std::prelude::*;
+            use async_std::stream;
 
-            let s: VecDeque<_> = vec![0u8, 1, 2, 3, 4].into_iter().collect();
+            let s = stream::from_iter(vec![0u8, 1, 2, 3, 4]);
             let sum: u8 = s.sum().await;
 
             assert_eq!(sum, 10);
