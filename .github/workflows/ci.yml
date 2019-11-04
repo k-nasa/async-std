@@ -23,32 +23,60 @@ jobs:
     - uses: actions/checkout@master
 
     - name: Cache cargo registry
-      if: matrix.os != 'windows-latest'
+      if: runner.os != 'Windows'
       uses: actions/cache@preview
       with:
         path: ~/.cargo/registry
-        key: ${{ runner.os }}-${{ matrix.rust }}-cargo-registry-${{ hashFiles('**/Cargo.toml') }}
+        key: ${{ runner.os }}-${{ matrix.rust }}-cargo-registry-${{ hashFiles('**/Cargo.toml') }}-
 
     - name: Cache deps crates
-      if: matrix.os != 'windows-latest'
+      if: runner.os != 'Windows'
       uses: actions/cache@preview
       with:
         path: target/debug/deps
-        key: ${{ runner.os }}-${{ matrix.rust }}-target-deps-${{ hashFiles('**/Cargo.toml') }}
+        key: ${{ runner.os }}-${{ matrix.rust }}-target-deps-${{ hashFiles('**/Cargo.toml') }}-
 
     - name: Cache build
-      if: matrix.os != 'windows-latest'
+      if: runner.os != 'Windows'
       uses: actions/cache@preview
       with:
         path: target/debug/build
-        key: ${{ runner.os }}-${{ matrix.rust }}-target-build-${{ hashFiles('**/Cargo.toml') }}
+        key: ${{ runner.os }}-${{ matrix.rust }}-target-build-${{ hashFiles('**/Cargo.toml') }}-
 
     - name: Cache build
-      if: matrix.os != 'windows-latest'
+      if: runner.os != 'Windows'
       uses: actions/cache@preview
       with:
         path: target/debug/.fingerprint
-        key: ${{ runner.os }}-${{ matrix.rust }}-target-fingerprint-${{ hashFiles('**/Cargo.toml') }}
+        key: ${{ runner.os }}-${{ matrix.rust }}-target-fingerprint-${{ hashFiles('**/Cargo.toml') }}-
+
+    - name: Cache cargo registry (on Windows)
+      if: runner.os == 'Windows'
+      uses: actions/cache@preview
+      with:
+        path: ~/.cargo/registry
+        key: ${{ runner.os }}-${{ matrix.rust }}-cargo-registry-${{ hashFiles('**/Cargo.toml') }}-
+
+    - name: Cache deps crates (on Windows)
+      if: runner.os == 'Windows'
+      uses: actions/cache@preview
+      with:
+        path: target/debug/deps
+        key: ${{ runner.os }}-${{ matrix.rust }}-target-deps-${{ hashFiles('**/Cargo.toml') }}-
+
+    - name: Cache build (on Windows)
+      if: runner.os == 'Windows'
+      uses: actions/cache@preview
+      with:
+        path: target/debug/build
+        key: ${{ runner.os }}-${{ matrix.rust }}-target-build-${{ hashFiles('**/Cargo.toml') }}-
+
+    - name: Cache build (on Windows)
+      if: runner.os == 'Windows'
+      uses: actions/cache@preview
+      with:
+        path: target/debug/.fingerprint
+        key: ${{ runner.os }}-${{ matrix.rust }}-target-fingerprint-${{ hashFiles('**/Cargo.toml') }}-
 
     - name: Install ${{ matrix.rust }}
       uses: actions-rs/toolchain@v1
