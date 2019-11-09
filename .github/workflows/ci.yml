@@ -26,6 +26,7 @@ jobs:
       uses: actions/cache@v1
       with:
         path: ~/.rustup
+        key: ${{runner.os}}-${{matrix.rust}}-toolchain
 
     - name: Cache cargo registry
       if: matrix.os != 'windows-latest'
