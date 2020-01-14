@@ -37,7 +37,7 @@
 //! outlive its parent (the task that spawned it), unless this parent is the root task.
 //!
 //! The root task can also wait on the completion of the child task; a call to [`spawn`] produces a
-//! [`JoinHandle`], which provides implements `Future` and can be `await`ed:
+//! [`JoinHandle`], which implements `Future` and can be `await`ed:
 //!
 //! ```
 //! use async_std::task;
@@ -58,7 +58,7 @@
 //! ## Configuring tasks
 //!
 //! A new task can be configured before it is spawned via the [`Builder`] type,
-//! which currently allows you to set the name and stack size for the child task:
+//! which currently allows you to set the name for the child task:
 //!
 //! ```
 //! # #![allow(unused_must_use)]
@@ -110,7 +110,6 @@
 //! [`join`]: struct.JoinHandle.html#method.join
 //! [`panic!`]: https://doc.rust-lang.org/std/macro.panic.html
 //! [`Builder`]: struct.Builder.html
-//! [`Builder::stack_size`]: struct.Builder.html#method.stack_size
 //! [`Builder::name`]: struct.Builder.html#method.name
 //! [`task::current`]: fn.current.html
 //! [`Task`]: struct.Task.html
@@ -122,10 +121,9 @@ cfg_std! {
     #[doc(inline)]
     pub use std::task::{Context, Poll, Waker};
 
-    #[doc(inline)]
-    pub use async_macros::ready;
-
+    pub use ready::ready;
     pub use yield_now::yield_now;
+    mod ready;
     mod yield_now;
 }
 
