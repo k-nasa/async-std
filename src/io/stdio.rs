@@ -1,21 +1,21 @@
-//! Internal types for stdio.
+//! Internal types for coreio.
 //!
-//! This module is a port of `libstd/io/stdio.rs`,and contains internal types for `print`/`eprint`.
+//! This module is a port of `libcore/io/coreio.rs`,and contains internal types for `print`/`eprint`.
 
-use crate::io::{stderr, stdout};
+use crate::io::{coreerr, coreout};
 use crate::prelude::*;
-use std::fmt;
+use core::fmt;
 
 #[doc(hidden)]
 pub async fn _print(args: fmt::Arguments<'_>) {
-    if let Err(e) = stdout().write_fmt(args).await {
-        panic!("failed printing to stdout: {}", e);
+    if let Err(e) = coreout().write_fmt(args).await {
+        panic!("failed printing to coreout: {}", e);
     }
 }
 
 #[doc(hidden)]
 pub async fn _eprint(args: fmt::Arguments<'_>) {
-    if let Err(e) = stderr().write_fmt(args).await {
-        panic!("failed printing to stderr: {}", e);
+    if let Err(e) = coreerr().write_fmt(args).await {
+        panic!("failed printing to coreerr: {}", e);
     }
 }

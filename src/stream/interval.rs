@@ -1,6 +1,6 @@
-use std::pin::Pin;
-use std::task::{Context, Poll};
-use std::time::{Duration, Instant};
+use core::pin::Pin;
+use core::task::{Context, Poll};
+use core::time::{Duration, Instant};
 
 use futures_timer::Delay;
 
@@ -28,11 +28,11 @@ use crate::prelude::*;
 /// Basic example:
 ///
 /// ```no_run
-/// use async_std::prelude::*;
-/// use async_std::stream;
-/// use std::time::Duration;
+/// use async_core::prelude::*;
+/// use async_core::stream;
+/// use core::time::Duration;
 ///
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
 /// let mut interval = stream::interval(Duration::from_secs(4));
 /// while let Some(_) = interval.next().await {
@@ -85,7 +85,7 @@ impl Stream for Interval {
 /// While technically for large duration it's impossible to represent any
 /// duration as nanoseconds, the largest duration we can represent is about
 /// 427_000 years. Large enough for any interval we would use or calculate in
-/// async-std.
+/// async-core.
 fn duration_to_nanos(dur: Duration) -> Option<u64> {
     dur.as_secs()
         .checked_mul(1_000_000_000)
@@ -115,8 +115,8 @@ fn next_interval(prev: Instant, now: Instant, interval: Duration) -> Instant {
 #[cfg(test)]
 mod test {
     use super::next_interval;
-    use std::cmp::Ordering;
-    use std::time::{Duration, Instant};
+    use core::cmp::Ordering;
+    use core::time::{Duration, Instant};
 
     struct Timeline(Instant);
 

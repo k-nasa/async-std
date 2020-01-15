@@ -1,12 +1,12 @@
 //! Synchronization primitives.
 //!
-//! This module is an async version of [`std::sync`].
+//! This module is an async version of [`core::sync`].
 //!
-//! [`std::sync`]: https://doc.rust-lang.org/std/sync/index.html
+//! [`core::sync`]: https://doc.rust-lang.org/core/sync/index.html
 //!
 //! ## The need for synchronization
 //!
-//! async-std's sync primitives are scheduler-aware, making it possible to
+//! async-core's sync primitives are scheduler-aware, making it possible to
 //! `.await` their operations - for example the locking of a [`Mutex`].
 //!
 //! Conceptually, a Rust program is a series of operations which will
@@ -100,20 +100,20 @@
 //!   memory location doesn't lead to undefined behavior.
 //!
 //! [prefetching]: https://en.wikipedia.org/wiki/Cache_prefetching
-//! [compiler fences]: https://doc.rust-lang.org/std/sync/atomic/fn.compiler_fence.html
+//! [compiler fences]: https://doc.rust-lang.org/core/sync/atomic/fn.compiler_fence.html
 //! [out-of-order]: https://en.wikipedia.org/wiki/Out-of-order_execution
 //! [superscalar]: https://en.wikipedia.org/wiki/Superscalar_processor
-//! [memory fences]: https://doc.rust-lang.org/std/sync/atomic/fn.fence.html
-//! [atomic operations]: https://doc.rust-lang.org/std/sync/atomic/index.html
+//! [memory fences]: https://doc.rust-lang.org/core/sync/atomic/fn.fence.html
+//! [atomic operations]: https://doc.rust-lang.org/core/sync/atomic/index.html
 //!
 //! ## Higher-level synchronization objects
 //!
 //! Most of the low-level synchronization primitives are quite error-prone and
-//! inconvenient to use, which is why async-std also exposes some
+//! inconvenient to use, which is why async-core also exposes some
 //! higher-level synchronization objects.
 //!
 //! These abstractions can be built out of lower-level primitives.
-//! For efficiency, the sync objects in async-std are usually
+//! For efficiency, the sync objects in async-core are usually
 //! implemented with help from the scheduler, which is
 //! able to reschedule the tasks while they are blocked on acquiring
 //! a lock.
@@ -153,10 +153,10 @@
 //! Spawn a task that updates an integer protected by a mutex:
 //!
 //! ```
-//! # async_std::task::block_on(async {
+//! # async_core::task::block_on(async {
 //! #
-//! use async_std::sync::{Arc, Mutex};
-//! use async_std::task;
+//! use async_core::sync::{Arc, Mutex};
+//! use async_core::task;
 //!
 //! let m1 = Arc::new(Mutex::new(0));
 //! let m2 = m1.clone();
@@ -174,7 +174,7 @@
 #![allow(clippy::needless_doctest_main)]
 
 #[doc(inline)]
-pub use std::sync::{Arc, Weak};
+pub use core::sync::{Arc, Weak};
 
 pub use mutex::{Mutex, MutexGuard};
 pub use rwlock::{RwLock, RwLockReadGuard, RwLockWriteGuard};

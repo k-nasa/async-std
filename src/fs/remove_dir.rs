@@ -5,9 +5,9 @@ use crate::utils::Context as _;
 
 /// Removes an empty directory.
 ///
-/// This function is an async version of [`std::fs::remove_dir`].
+/// This function is an async version of [`core::fs::remove_dir`].
 ///
-/// [`std::fs::remove_dir`]: https://doc.rust-lang.org/std/fs/fn.remove_dir.html
+/// [`core::fs::remove_dir`]: https://doc.rust-lang.org/core/fs/fn.remove_dir.html
 ///
 /// # Errors
 ///
@@ -20,9 +20,9 @@ use crate::utils::Context as _;
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::fs;
+/// use async_core::fs;
 ///
 /// fs::remove_dir("./some/directory").await?;
 /// #
@@ -31,7 +31,7 @@ use crate::utils::Context as _;
 pub async fn remove_dir<P: AsRef<Path>>(path: P) -> io::Result<()> {
     let path = path.as_ref().to_owned();
     spawn_blocking(move || {
-        std::fs::remove_dir(&path)
+        core::fs::remove_dir(&path)
             .context(|| format!("could not remove directory `{}`", path.display()))
     })
     .await

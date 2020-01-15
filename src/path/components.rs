@@ -1,5 +1,5 @@
-use std::ffi::OsStr;
-use std::iter::FusedIterator;
+use core::ffi::OsStr;
+use core::iter::FusedIterator;
 
 use crate::path::{Component, Path};
 
@@ -11,7 +11,7 @@ use crate::path::{Component, Path};
 /// # Examples
 ///
 /// ```
-/// use async_std::path::Path;
+/// use async_core::path::Path;
 ///
 /// let path = Path::new("/tmp/foo/bar.txt");
 ///
@@ -25,7 +25,7 @@ use crate::path::{Component, Path};
 /// [`Path`]: struct.Path.html
 #[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Components<'a> {
-    pub(crate) inner: std::path::Components<'a>,
+    pub(crate) inner: core::path::Components<'a>,
 }
 
 impl<'a> Components<'a> {
@@ -34,7 +34,7 @@ impl<'a> Components<'a> {
     /// # Examples
     ///
     /// ```
-    /// use async_std::path::Path;
+    /// use async_core::path::Path;
     ///
     /// let mut components = Path::new("/tmp/foo/bar.txt").components();
     /// components.next();

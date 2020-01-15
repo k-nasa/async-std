@@ -1,20 +1,20 @@
-use std::pin::Pin;
-use std::sync::Mutex;
-use std::future::Future;
+use core::pin::Pin;
+use core::sync::Mutex;
+use core::future::Future;
 
 use crate::io::{self, Write};
 use crate::task::{spawn_blocking, Context, JoinHandle, Poll};
 
 cfg_unstable! {
     use once_cell::sync::Lazy;
-    use std::io::Write as _;
+    use core::io::Write as _;
 }
 
 /// Constructs a new handle to the standard error of the current process.
 ///
-/// This function is an async version of [`std::io::stderr`].
+/// This function is an async version of [`core::io::coreerr`].
 ///
-/// [`std::io::stderr`]: https://doc.rust-lang.org/std/io/fn.stderr.html
+/// [`core::io::coreerr`]: https://doc.rust-lang.org/core/io/fn.coreerr.html
 ///
 /// ### Note: Windows Portability Consideration
 ///
@@ -25,19 +25,19 @@ cfg_unstable! {
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::io;
-/// use async_std::prelude::*;
+/// use async_core::io;
+/// use async_core::prelude::*;
 ///
-/// let mut stderr = io::stderr();
-/// stderr.write_all(b"Hello, world!").await?;
+/// let mut coreerr = io::coreerr();
+/// coreerr.write_all(b"Hello, world!").await?;
 /// #
 /// # Ok(()) }) }
 /// ```
-pub fn stderr() -> Stderr {
+pub fn coreerr() -> Stderr {
     Stderr(Mutex::new(State::Idle(Some(Inner {
-        stderr: std::io::stderr(),
+        coreerr: core::io::coreerr(),
         buf: Vec::new(),
         last_op: None,
     }))))
@@ -45,7 +45,7 @@ pub fn stderr() -> Stderr {
 
 /// A handle to the standard error of the current process.
 ///
-/// This writer is created by the [`stderr`] function. See its documentation for
+/// This writer is created by the [`coreerr`] function. See its documentation for
 /// more.
 ///
 /// ### Note: Windows Portability Consideration
@@ -54,7 +54,7 @@ pub fn stderr() -> Stderr {
 /// non-UTF-8 byte sequences. Attempting to write bytes that are not valid UTF-8 will return
 /// an error.
 ///
-/// [`stderr`]: fn.stderr.html
+/// [`coreerr`]: fn.coreerr.html
 #[derive(Debug)]
 pub struct Stderr(Mutex<State>);
 
@@ -68,40 +68,40 @@ pub struct Stderr(Mutex<State>);
 #[cfg(feature = "unstable")]
 #[cfg_attr(feature = "docs", doc(cfg(unstable)))]
 #[derive(Debug)]
-pub struct StderrLock<'a>(std::io::StderrLock<'a>);
+pub struct StderrLock<'a>(core::io::StderrLock<'a>);
 
 #[cfg(feature = "unstable")]
 #[cfg_attr(feature = "docs", doc(cfg(unstable)))]
 unsafe impl Send for StderrLock<'_> {}
 
-/// The state of the asynchronous stderr.
+/// The state of the asynchronous coreerr.
 ///
-/// The stderr can be either idle or busy performing an asynchronous operation.
+/// The coreerr can be either idle or busy performing an asynchronous operation.
 #[derive(Debug)]
 enum State {
-    /// The stderr is idle.
+    /// The coreerr is idle.
     Idle(Option<Inner>),
 
-    /// The stderr is blocked on an asynchronous operation.
+    /// The coreerr is blocked on an asynchronous operation.
     ///
-    /// Awaiting this operation will result in the new state of the stderr.
+    /// Awaiting this operation will result in the new state of the coreerr.
     Busy(JoinHandle<State>),
 }
 
-/// Inner representation of the asynchronous stderr.
+/// Inner representation of the asynchronous coreerr.
 #[derive(Debug)]
 struct Inner {
-    /// The blocking stderr handle.
-    stderr: std::io::Stderr,
+    /// The blocking coreerr handle.
+    coreerr: core::io::Stderr,
 
     /// The write buffer.
     buf: Vec<u8>,
 
-    /// The result of the last asynchronous operation on the stderr.
+    /// The result of the last asynchronous operation on the coreerr.
     last_op: Option<Operation>,
 }
 
-/// Possible results of an asynchronous operation on the stderr.
+/// Possible results of an asynchronous operation on the coreerr.
 #[derive(Debug)]
 enum Operation {
     Write(io::Result<usize>),
@@ -116,13 +116,13 @@ impl Stderr {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::io;
-    /// use async_std::prelude::*;
+    /// use async_core::io;
+    /// use async_core::prelude::*;
     ///
-    /// let stderr = io::stderr();
-    /// let mut handle = stderr.lock().await;
+    /// let coreerr = io::coreerr();
+    /// let mut handle = coreerr.lock().await;
     ///
     /// handle.write_all(b"hello world").await?;
     /// #
@@ -131,7 +131,7 @@ impl Stderr {
     #[cfg_attr(feature = "docs", doc(cfg(unstable)))]
     #[cfg(any(feature = "unstable", feature = "docs"))]
     pub async fn lock(&self) -> StderrLock<'static> {
-        static STDERR: Lazy<std::io::Stderr> = Lazy::new(std::io::stderr);
+        static STDERR: Lazy<core::io::Stderr> = Lazy::new(core::io::coreerr);
 
         spawn_blocking(move || StderrLock(STDERR.lock())).await
     }
@@ -175,13 +175,13 @@ impl Write for Stderr {
 
                         // Start the operation asynchronously.
                         *state = State::Busy(spawn_blocking(move || {
-                            let res = std::io::Write::write(&mut inner.stderr, &inner.buf);
+                            let res = core::io::Write::write(&mut inner.coreerr, &inner.buf);
                             inner.last_op = Some(Operation::Write(res));
                             State::Idle(Some(inner))
                         }));
                     }
                 }
-                // Poll the asynchronous operation the stderr is currently blocked on.
+                // Poll the asynchronous operation the coreerr is currently blocked on.
                 State::Busy(task) => *state = futures_core::ready!(Pin::new(task).poll(cx)),
             }
         }
@@ -203,13 +203,13 @@ impl Write for Stderr {
 
                         // Start the operation asynchronously.
                         *state = State::Busy(spawn_blocking(move || {
-                            let res = std::io::Write::flush(&mut inner.stderr);
+                            let res = core::io::Write::flush(&mut inner.coreerr);
                             inner.last_op = Some(Operation::Flush(res));
                             State::Idle(Some(inner))
                         }));
                     }
                 }
-                // Poll the asynchronous operation the stderr is currently blocked on.
+                // Poll the asynchronous operation the coreerr is currently blocked on.
                 State::Busy(task) => *state = futures_core::ready!(Pin::new(task).poll(cx)),
             }
         }
@@ -225,7 +225,7 @@ cfg_unix! {
 
     impl AsRawFd for Stderr {
         fn as_raw_fd(&self) -> RawFd {
-            std::io::stderr().as_raw_fd()
+            core::io::coreerr().as_raw_fd()
         }
     }
 }
@@ -235,7 +235,7 @@ cfg_windows! {
 
     impl AsRawHandle for Stderr {
         fn as_raw_handle(&self) -> RawHandle {
-            std::io::stderr().as_raw_handle()
+            core::io::coreerr().as_raw_handle()
         }
     }
 }

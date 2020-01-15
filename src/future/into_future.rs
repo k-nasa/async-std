@@ -1,13 +1,13 @@
-use std::future::Future;
+use core::future::Future;
 
 /// Convert a type into a `Future`.
 ///
 /// # Examples
 ///
 /// ```
-/// use async_std::future::{Future, IntoFuture};
-/// use async_std::io;
-/// use async_std::pin::Pin;
+/// use async_core::future::{Future, IntoFuture};
+/// use async_core::io;
+/// use async_core::pin::Pin;
 ///
 /// struct Client;
 ///

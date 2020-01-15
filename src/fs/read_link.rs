@@ -5,9 +5,9 @@ use crate::utils::Context as _;
 
 /// Reads a symbolic link and returns the path it points to.
 ///
-/// This function is an async version of [`std::fs::read_link`].
+/// This function is an async version of [`core::fs::read_link`].
 ///
-/// [`std::fs::read_link`]: https://doc.rust-lang.org/std/fs/fn.read_link.html
+/// [`core::fs::read_link`]: https://doc.rust-lang.org/core/fs/fn.read_link.html
 ///
 /// # Errors
 ///
@@ -19,9 +19,9 @@ use crate::utils::Context as _;
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::fs;
+/// use async_core::fs;
 ///
 /// let path = fs::read_link("a.txt").await?;
 /// #
@@ -30,7 +30,7 @@ use crate::utils::Context as _;
 pub async fn read_link<P: AsRef<Path>>(path: P) -> io::Result<PathBuf> {
     let path = path.as_ref().to_owned();
     spawn_blocking(move || {
-        std::fs::read_link(&path)
+        core::fs::read_link(&path)
             .map(Into::into)
             .context(|| format!("could not read link `{}`", path.display()))
     })

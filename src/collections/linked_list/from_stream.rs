@@ -1,5 +1,5 @@
-use std::collections::LinkedList;
-use std::pin::Pin;
+use core::collections::LinkedList;
+use core::pin::Pin;
 
 use crate::prelude::*;
 use crate::stream::{self, FromStream, IntoStream};

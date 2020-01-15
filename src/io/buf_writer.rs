@@ -1,5 +1,5 @@
-use std::fmt;
-use std::pin::Pin;
+use core::fmt;
+use core::pin::Pin;
 
 use pin_project_lite::pin_project;
 
@@ -22,23 +22,23 @@ pin_project! {
     /// times. It also provides no advantage when writing to a destination that is
     /// in memory, like a `Vec<u8>`.
     ///
-    /// Unlike the `BufWriter` type in `std`, this type does not write out the
+    /// Unlike the `BufWriter` type in `core`, this type does not write out the
     /// contents of its buffer when it is dropped. Therefore, it is absolutely
     /// critical that users explicitly flush the buffer before dropping a
     /// `BufWriter`.
     ///
-    /// This type is an async version of [`std::io::BufWriter`].
+    /// This type is an async version of [`core::io::BufWriter`].
     ///
-    /// [`std::io::BufWriter`]: https://doc.rust-lang.org/std/io/struct.BufWriter.html
+    /// [`core::io::BufWriter`]: https://doc.rust-lang.org/core/io/struct.BufWriter.html
     ///
     /// # Examples
     ///
     /// Let's write the numbers one through ten to a [`TcpStream`]:
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
-    /// use async_std::net::TcpStream;
-    /// use async_std::prelude::*;
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// use async_core::net::TcpStream;
+    /// use async_core::prelude::*;
     ///
     /// let mut stream = TcpStream::connect("127.0.0.1:34254").await?;
     ///
@@ -55,10 +55,10 @@ pin_project! {
     /// `BufWriter`:
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
-    /// use async_std::io::BufWriter;
-    /// use async_std::net::TcpStream;
-    /// use async_std::prelude::*;
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// use async_core::io::BufWriter;
+    /// use async_core::net::TcpStream;
+    /// use async_core::prelude::*;
     ///
     /// let mut stream = BufWriter::new(TcpStream::connect("127.0.0.1:34254").await?);
     ///
@@ -95,9 +95,9 @@ pin_project! {
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
-/// use async_std::io::BufWriter;
-/// use async_std::net::TcpStream;
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+/// use async_core::io::BufWriter;
+/// use async_core::net::TcpStream;
 ///
 /// let buf_writer = BufWriter::new(TcpStream::connect("127.0.0.1:34251").await?);
 ///
@@ -123,9 +123,9 @@ impl<W: Write> BufWriter<W> {
     ///
     /// ```no_run
     /// # #![allow(unused_mut)]
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
-    /// use async_std::io::BufWriter;
-    /// use async_std::net::TcpStream;
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// use async_core::io::BufWriter;
+    /// use async_core::net::TcpStream;
     ///
     /// let mut buffer = BufWriter::new(TcpStream::connect("127.0.0.1:34254").await?);
     /// #
@@ -143,9 +143,9 @@ impl<W: Write> BufWriter<W> {
     ///
     /// ```no_run
     /// # #![allow(unused_mut)]
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
-    /// use async_std::io::BufWriter;
-    /// use async_std::net::TcpStream;
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// use async_core::io::BufWriter;
+    /// use async_core::net::TcpStream;
     ///
     /// let stream = TcpStream::connect("127.0.0.1:34254").await?;
     /// let mut buffer = BufWriter::with_capacity(100, stream);
@@ -166,9 +166,9 @@ impl<W: Write> BufWriter<W> {
     ///
     /// ```no_run
     /// # #![allow(unused_mut)]
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
-    /// use async_std::io::BufWriter;
-    /// use async_std::net::TcpStream;
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// use async_core::io::BufWriter;
+    /// use async_core::net::TcpStream;
     ///
     /// let mut buffer = BufWriter::new(TcpStream::connect("127.0.0.1:34254").await?);
     ///
@@ -188,9 +188,9 @@ impl<W: Write> BufWriter<W> {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
-    /// use async_std::io::BufWriter;
-    /// use async_std::net::TcpStream;
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// use async_core::io::BufWriter;
+    /// use async_core::net::TcpStream;
     ///
     /// let mut buffer = BufWriter::new(TcpStream::connect("127.0.0.1:34254").await?);
     ///
@@ -219,9 +219,9 @@ impl<W: Write> BufWriter<W> {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
-    /// use async_std::io::BufWriter;
-    /// use async_std::net::TcpStream;
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// use async_core::io::BufWriter;
+    /// use async_core::net::TcpStream;
     ///
     /// let buf_writer = BufWriter::new(TcpStream::connect("127.0.0.1:34251").await?);
     ///
@@ -245,9 +245,9 @@ impl<W: Write> BufWriter<W> {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
-    /// use async_std::io::BufWriter;
-    /// use async_std::net::TcpStream;
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// use async_core::io::BufWriter;
+    /// use async_core::net::TcpStream;
     ///
     /// let buf_writer = BufWriter::new(TcpStream::connect("127.0.0.1:34251").await?);
     ///

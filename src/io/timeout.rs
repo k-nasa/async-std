@@ -1,7 +1,7 @@
-use std::pin::Pin;
-use std::task::{Context, Poll};
-use std::time::Duration;
-use std::future::Future;
+use core::pin::Pin;
+use core::task::{Context, Poll};
+use core::time::Duration;
+use core::future::Future;
 
 use futures_timer::Delay;
 use pin_project_lite::pin_project;
@@ -16,16 +16,16 @@ use crate::io;
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use std::time::Duration;
+/// use core::time::Duration;
 ///
-/// use async_std::io;
+/// use async_core::io;
 ///
 /// io::timeout(Duration::from_secs(5), async {
-///     let stdin = io::stdin();
+///     let corein = io::corein();
 ///     let mut line = String::new();
-///     let n = stdin.read_line(&mut line).await?;
+///     let n = corein.read_line(&mut line).await?;
 ///     Ok(())
 /// })
 /// .await?;

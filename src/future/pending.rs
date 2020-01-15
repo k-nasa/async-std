@@ -1,6 +1,6 @@
-use std::future::Future;
-use std::marker::PhantomData;
-use std::pin::Pin;
+use core::future::Future;
+use core::marker::PhantomData;
+use core::pin::Pin;
 
 use crate::task::{Context, Poll};
 
@@ -9,12 +9,12 @@ use crate::task::{Context, Poll};
 /// # Examples
 ///
 /// ```
-/// # async_std::task::block_on(async {
+/// # async_core::task::block_on(async {
 /// #
-/// use std::time::Duration;
+/// use core::time::Duration;
 ///
-/// use async_std::future;
-/// use async_std::io;
+/// use async_core::future;
+/// use async_core::io;
 ///
 /// let dur = Duration::from_secs(1);
 /// let fut = future::pending();

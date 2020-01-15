@@ -1,6 +1,6 @@
-use std::sync::atomic::{AtomicUsize, Ordering};
-use std::thread;
-use std::time::Duration;
+use core::sync::atomic::{AtomicUsize, Ordering};
+use core::thread;
+use core::time::Duration;
 
 use crossbeam_channel::{unbounded, Receiver, Sender};
 use once_cell::sync::Lazy;
@@ -25,9 +25,9 @@ use crate::utils::abort_on_panic;
 ///
 /// ```
 /// # #[cfg(feature = "unstable")]
-/// # async_std::task::block_on(async {
+/// # async_core::task::block_on(async {
 /// #
-/// use async_std::task;
+/// use async_core::task;
 ///
 /// task::spawn_blocking(|| {
 ///     println!("long-running task here");
@@ -71,7 +71,7 @@ fn start_thread() {
     let timeout = Duration::from_secs(1);
 
     thread::Builder::new()
-        .name("async-std/blocking".to_string())
+        .name("async-core/blocking".to_string())
         .spawn(move || {
             loop {
                 let mut task = match POOL.receiver.recv_timeout(timeout) {

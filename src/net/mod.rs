@@ -3,7 +3,7 @@
 //! This module provides networking functionality for the Transmission Control and User
 //! Datagram Protocols, as well as types for IP and socket addresses.
 //!
-//! This module is an async version of [`std::net`].
+//! This module is an async version of [`core::net`].
 //!
 //! # Organization
 //!
@@ -31,19 +31,19 @@
 //! # Platform-specific extensions
 //!
 //! APIs such as Unix domain sockets are available on certain platforms only. You can find
-//! platform-specific extensions in the [`async_std::os`] module.
+//! platform-specific extensions in the [`async_core::os`] module.
 //!
-//! [`async_std::os`]: ../os/index.html
-//! [`std::net`]: https://doc.rust-lang.org/std/net/index.html
+//! [`async_core::os`]: ../os/index.html
+//! [`core::net`]: https://doc.rust-lang.org/core/net/index.html
 //!
 //! # Examples
 //!
 //! A simple UDP echo server:
 //!
 //! ```no_run
-//! # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 //! #
-//! use async_std::net::UdpSocket;
+//! use async_core::net::UdpSocket;
 //!
 //! let socket = UdpSocket::bind("127.0.0.1:8080").await?;
 //! let mut buf = vec![0u8; 1024];
@@ -56,10 +56,10 @@
 //! # }) }
 //! ```
 
-pub use std::net::AddrParseError;
-pub use std::net::Shutdown;
-pub use std::net::{IpAddr, Ipv4Addr, Ipv6Addr};
-pub use std::net::{SocketAddr, SocketAddrV4, SocketAddrV6};
+pub use core::net::AddrParseError;
+pub use core::net::Shutdown;
+pub use core::net::{IpAddr, Ipv4Addr, Ipv6Addr};
+pub use core::net::{SocketAddr, SocketAddrV4, SocketAddrV6};
 
 pub use addr::ToSocketAddrs;
 pub use tcp::{Incoming, TcpListener, TcpStream};

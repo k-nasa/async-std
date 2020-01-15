@@ -8,16 +8,16 @@ use crate::task::spawn_blocking;
 ///
 /// The `dst` path will be a symbolic link pointing to the `src` path.
 ///
-/// This function is an async version of [`std::os::unix::fs::symlink`].
+/// This function is an async version of [`core::os::unix::fs::symlink`].
 ///
-/// [`std::os::unix::fs::symlink`]: https://doc.rust-lang.org/std/os/unix/fs/fn.symlink.html
+/// [`core::os::unix::fs::symlink`]: https://doc.rust-lang.org/core/os/unix/fs/fn.symlink.html
 ///
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::os::unix::fs::symlink;
+/// use async_core::os::unix::fs::symlink;
 ///
 /// symlink("a.txt", "b.txt").await?;
 /// #
@@ -26,11 +26,11 @@ use crate::task::spawn_blocking;
 pub async fn symlink<P: AsRef<Path>, Q: AsRef<Path>>(src: P, dst: Q) -> io::Result<()> {
     let src = src.as_ref().to_owned();
     let dst = dst.as_ref().to_owned();
-    spawn_blocking(move || std::os::unix::fs::symlink(&src, &dst)).await
+    spawn_blocking(move || core::os::unix::fs::symlink(&src, &dst)).await
 }
 
 cfg_not_docs! {
-    pub use std::os::unix::fs::{DirBuilderExt, DirEntryExt, OpenOptionsExt};
+    pub use core::os::unix::fs::{DirBuilderExt, DirEntryExt, OpenOptionsExt};
 }
 
 cfg_docs! {

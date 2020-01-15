@@ -1,6 +1,6 @@
 //! Cross-platform path manipulation.
 //!
-//! This module is an async version of [`std::path`].
+//! This module is an async version of [`core::path`].
 //!
 //! This module provides two types, [`PathBuf`] and [`Path`][`Path`] (akin to [`String`]
 //! and [`str`]), for working with paths abstractly. These types are thin wrappers
@@ -14,7 +14,7 @@
 //! [`PathBuf`]; note that the paths may differ syntactically by the
 //! normalization described in the documentation for the [`components`] method.
 //!
-//! [`std::path`]: https://doc.rust-lang.org/std/path/index.html
+//! [`core::path`]: https://doc.rust-lang.org/core/path/index.html
 //!
 //! ## Simple usage
 //!
@@ -25,8 +25,8 @@
 //! slice and start asking questions:
 //!
 //! ```
-//! use async_std::path::Path;
-//! use std::ffi::OsStr;
+//! use async_core::path::Path;
+//! use core::ffi::OsStr;
 //!
 //! let path = Path::new("/tmp/foo/bar.txt");
 //!
@@ -43,7 +43,7 @@
 //! To build or modify paths, use [`PathBuf`]:
 //!
 //! ```
-//! use async_std::path::PathBuf;
+//! use async_core::path::PathBuf;
 //!
 //! // This way works...
 //! let mut path = PathBuf::from("c:\\");
@@ -63,11 +63,11 @@
 //! [`PathBuf`]: struct.PathBuf.html
 //! [`Path`]: struct.Path.html
 //! [`push`]: struct.PathBuf.html#method.push
-//! [`String`]: https://doc.rust-lang.org/std/string/struct.String.html
+//! [`String`]: https://doc.rust-lang.org/core/string/struct.String.html
 //!
-//! [`str`]: https://doc.rust-lang.org/std/primitive.str.html
-//! [`OsString`]: https://doc.rust-lang.org/std/ffi/struct.OsString.html
-//! [`OsStr`]: https://doc.rust-lang.org/std/ffi/struct.OsStr.html
+//! [`str`]: https://doc.rust-lang.org/core/primitive.str.html
+//! [`OsString`]: https://doc.rust-lang.org/core/ffi/struct.OsString.html
+//! [`OsStr`]: https://doc.rust-lang.org/core/ffi/struct.OsStr.html
 
 mod ancestors;
 mod components;
@@ -76,7 +76,7 @@ mod path;
 mod pathbuf;
 
 #[doc(inline)]
-pub use std::path::{
+pub use core::path::{
     is_separator, Component, Display, Prefix, PrefixComponent, StripPrefixError, MAIN_SEPARATOR,
 };
 

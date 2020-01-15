@@ -1,6 +1,6 @@
-use std::ffi::OsStr;
-use std::fmt;
-use std::iter::FusedIterator;
+use core::ffi::OsStr;
+use core::fmt;
+use core::iter::FusedIterator;
 
 use crate::path::{Component, Components, Path};
 
@@ -11,7 +11,7 @@ use crate::path::{Component, Components, Path};
 ///
 /// [`Component`]: enum.Component.html
 /// [`iter`]: struct.Path.html#method.iter
-/// [`OsStr`]: ../../std/ffi/struct.OsStr.html
+/// [`OsStr`]: ../../core/ffi/struct.OsStr.html
 /// [`Path`]: struct.Path.html
 #[derive(Clone)]
 pub struct Iter<'a> {
@@ -24,7 +24,7 @@ impl<'a> Iter<'a> {
     /// # Examples
     ///
     /// ```
-    /// use async_std::path::Path;
+    /// use async_core::path::Path;
     ///
     /// let mut iter = Path::new("/tmp/foo/bar.txt").iter();
     /// iter.next();

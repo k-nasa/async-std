@@ -1,9 +1,9 @@
-use std::cell::Cell;
-use std::future::Future;
-use std::mem::{self, ManuallyDrop};
-use std::sync::Arc;
-use std::task::{RawWaker, RawWakerVTable};
-use std::thread;
+use core::cell::Cell;
+use core::future::Future;
+use core::mem::{self, ManuallyDrop};
+use core::sync::Arc;
+use core::task::{RawWaker, RawWakerVTable};
+use core::thread;
 
 use crossbeam_utils::sync::Parker;
 use kv_log_macro::trace;
@@ -20,13 +20,13 @@ use crate::task::{Context, Poll, Task, Waker};
 ///
 /// [`task::spawn_blocking`]: fn.spawn_blocking.html
 ///
-/// [spawning]: https://doc.rust-lang.org/std/thread/fn.spawn.html
-/// [joining]: https://doc.rust-lang.org/std/thread/struct.JoinHandle.html#method.join
+/// [spawning]: https://doc.rust-lang.org/core/thread/fn.spawn.html
+/// [joining]: https://doc.rust-lang.org/core/thread/struct.JoinHandle.html#method.join
 ///
 /// # Examples
 ///
 /// ```no_run
-/// use async_std::task;
+/// use async_core::task;
 ///
 /// fn main() {
 ///     task::block_on(async {

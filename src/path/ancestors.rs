@@ -1,4 +1,4 @@
-use std::iter::FusedIterator;
+use core::iter::FusedIterator;
 
 use crate::path::Path;
 
@@ -10,7 +10,7 @@ use crate::path::Path;
 /// # Examples
 ///
 /// ```
-/// use async_std::path::Path;
+/// use async_core::path::Path;
 ///
 /// let path = Path::new("/foo/bar");
 ///

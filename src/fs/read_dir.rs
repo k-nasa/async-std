@@ -1,5 +1,5 @@
-use std::future::Future;
-use std::pin::Pin;
+use core::future::Future;
+use core::pin::Pin;
 
 use crate::fs::DirEntry;
 use crate::io;
@@ -13,11 +13,11 @@ use crate::utils::Context as _;
 /// The stream yields items of type [`io::Result`]`<`[`DirEntry`]`>`. Note that I/O errors can
 /// occur while reading from the stream.
 ///
-/// This function is an async version of [`std::fs::read_dir`].
+/// This function is an async version of [`core::fs::read_dir`].
 ///
 /// [`io::Result`]: ../io/type.Result.html
 /// [`DirEntry`]: struct.DirEntry.html
-/// [`std::fs::read_dir`]: https://doc.rust-lang.org/std/fs/fn.read_dir.html
+/// [`core::fs::read_dir`]: https://doc.rust-lang.org/core/fs/fn.read_dir.html
 ///
 /// # Errors
 ///
@@ -30,10 +30,10 @@ use crate::utils::Context as _;
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::fs;
-/// use async_std::prelude::*;
+/// use async_core::fs;
+/// use async_core::prelude::*;
 ///
 /// let mut entries = fs::read_dir(".").await?;
 ///
@@ -47,7 +47,7 @@ use crate::utils::Context as _;
 pub async fn read_dir<P: AsRef<Path>>(path: P) -> io::Result<ReadDir> {
     let path = path.as_ref().to_owned();
     spawn_blocking(move || {
-        std::fs::read_dir(&path)
+        core::fs::read_dir(&path)
             .context(|| format!("could not read directory `{}`", path.display()))
     })
     .await
@@ -60,12 +60,12 @@ pub async fn read_dir<P: AsRef<Path>>(path: P) -> io::Result<ReadDir> {
 /// [`io::Result`]`<`[`DirEntry`]`>`. Each [`DirEntry`] can then retrieve information like entry's
 /// path or metadata.
 ///
-/// This type is an async version of [`std::fs::ReadDir`].
+/// This type is an async version of [`core::fs::ReadDir`].
 ///
 /// [`read_dir`]: fn.read_dir.html
 /// [`io::Result`]: ../io/type.Result.html
 /// [`DirEntry`]: struct.DirEntry.html
-/// [`std::fs::ReadDir`]: https://doc.rust-lang.org/std/fs/struct.ReadDir.html
+/// [`core::fs::ReadDir`]: https://doc.rust-lang.org/core/fs/struct.ReadDir.html
 #[derive(Debug)]
 pub struct ReadDir(State);
 
@@ -74,13 +74,13 @@ pub struct ReadDir(State);
 /// The `ReadDir` can be either idle or busy performing an asynchronous operation.
 #[derive(Debug)]
 enum State {
-    Idle(Option<std::fs::ReadDir>),
-    Busy(JoinHandle<(std::fs::ReadDir, Option<io::Result<std::fs::DirEntry>>)>),
+    Idle(Option<core::fs::ReadDir>),
+    Busy(JoinHandle<(core::fs::ReadDir, Option<io::Result<core::fs::DirEntry>>)>),
 }
 
 impl ReadDir {
     /// Creates an asynchronous `ReadDir` from a synchronous handle.
-    pub(crate) fn new(inner: std::fs::ReadDir) -> ReadDir {
+    pub(crate) fn new(inner: core::fs::ReadDir) -> ReadDir {
         ReadDir(State::Idle(Some(inner)))
     }
 }

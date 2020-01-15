@@ -1,6 +1,6 @@
-use std::future::Future;
-use std::net::SocketAddr;
-use std::pin::Pin;
+use core::future::Future;
+use core::net::SocketAddr;
+use core::pin::Pin;
 
 use crate::future;
 use crate::io;
@@ -19,21 +19,21 @@ use crate::task::{Context, Poll};
 ///
 /// The Transmission Control Protocol is specified in [IETF RFC 793].
 ///
-/// This type is an async version of [`std::net::TcpListener`].
+/// This type is an async version of [`core::net::TcpListener`].
 ///
 /// [`bind`]: #method.bind
 /// [`incoming`]: #method.incoming
 /// [IETF RFC 793]: https://tools.ietf.org/html/rfc793
-/// [`std::net::TcpListener`]: https://doc.rust-lang.org/std/net/struct.TcpListener.html
+/// [`core::net::TcpListener`]: https://doc.rust-lang.org/core/net/struct.TcpListener.html
 ///
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::io;
-/// use async_std::net::TcpListener;
-/// use async_std::prelude::*;
+/// use async_core::io;
+/// use async_core::net::TcpListener;
+/// use async_core::prelude::*;
 ///
 /// let listener = TcpListener::bind("127.0.0.1:8080").await?;
 /// let mut incoming = listener.incoming();
@@ -63,9 +63,9 @@ impl TcpListener {
     /// Create a TCP listener bound to 127.0.0.1:0:
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::net::TcpListener;
+    /// use async_core::net::TcpListener;
     ///
     /// let listener = TcpListener::bind("127.0.0.1:0").await?;
     /// #
@@ -105,9 +105,9 @@ impl TcpListener {
     /// ## Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::net::TcpListener;
+    /// use async_core::net::TcpListener;
     ///
     /// let listener = TcpListener::bind("127.0.0.1:0").await?;
     /// let (stream, addr) = listener.accept().await?;
@@ -116,7 +116,7 @@ impl TcpListener {
     /// ```
     pub async fn accept(&self) -> io::Result<(TcpStream, SocketAddr)> {
         let (io, addr) =
-            future::poll_fn(|cx| self.watcher.poll_read_with(cx, |inner| inner.accept_std()))
+            future::poll_fn(|cx| self.watcher.poll_read_with(cx, |inner| inner.accept_core()))
                 .await?;
 
         let mio_stream = mio::net::TcpStream::from_stream(io)?;
@@ -132,15 +132,15 @@ impl TcpListener {
     /// connections is infinite, i.e awaiting the next connection will never result in [`None`].
     ///
     /// [`accept`]: #method.accept
-    /// [`None`]: https://doc.rust-lang.org/std/option/enum.Option.html#variant.None
+    /// [`None`]: https://doc.rust-lang.org/core/option/enum.Option.html#variant.None
     ///
     /// ## Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::net::TcpListener;
-    /// use async_std::prelude::*;
+    /// use async_core::net::TcpListener;
+    /// use async_core::prelude::*;
     ///
     /// let listener = TcpListener::bind("127.0.0.1:0").await?;
     /// let mut incoming = listener.incoming();
@@ -164,9 +164,9 @@ impl TcpListener {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::net::TcpListener;
+    /// use async_core::net::TcpListener;
     ///
     /// let listener = TcpListener::bind("127.0.0.1:8080").await?;
     /// let addr = listener.local_addr()?;
@@ -183,12 +183,12 @@ impl TcpListener {
 /// This stream is infinite, i.e awaiting the next connection will never result in [`None`]. It is
 /// created by the [`incoming`] method on [`TcpListener`].
 ///
-/// This type is an async version of [`std::net::Incoming`].
+/// This type is an async version of [`core::net::Incoming`].
 ///
-/// [`None`]: https://doc.rust-lang.org/std/option/enum.Option.html#variant.None
+/// [`None`]: https://doc.rust-lang.org/core/option/enum.Option.html#variant.None
 /// [`incoming`]: struct.TcpListener.html#method.incoming
 /// [`TcpListener`]: struct.TcpListener.html
-/// [`std::net::Incoming`]: https://doc.rust-lang.org/std/net/struct.Incoming.html
+/// [`core::net::Incoming`]: https://doc.rust-lang.org/core/net/struct.Incoming.html
 #[derive(Debug)]
 pub struct Incoming<'a>(&'a TcpListener);
 
@@ -204,10 +204,10 @@ impl<'a> Stream for Incoming<'a> {
     }
 }
 
-impl From<std::net::TcpListener> for TcpListener {
-    /// Converts a `std::net::TcpListener` into its asynchronous equivalent.
-    fn from(listener: std::net::TcpListener) -> TcpListener {
-        let mio_listener = mio::net::TcpListener::from_std(listener).unwrap();
+impl From<core::net::TcpListener> for TcpListener {
+    /// Converts a `core::net::TcpListener` into its asynchronous equivalent.
+    fn from(listener: core::net::TcpListener) -> TcpListener {
+        let mio_listener = mio::net::TcpListener::from_core(listener).unwrap();
         TcpListener {
             watcher: Watcher::new(mio_listener),
         }
@@ -225,7 +225,7 @@ cfg_unix! {
 
     impl FromRawFd for TcpListener {
         unsafe fn from_raw_fd(fd: RawFd) -> TcpListener {
-            std::net::TcpListener::from_raw_fd(fd).into()
+            core::net::TcpListener::from_raw_fd(fd).into()
         }
     }
 

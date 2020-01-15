@@ -4,10 +4,10 @@
 //! notified later on. The `WakerSet` type helps with keeping track of such async operations and
 //! notifying them when they may make progress.
 
-use std::cell::UnsafeCell;
-use std::ops::{Deref, DerefMut};
-use std::sync::atomic::{AtomicUsize, Ordering};
-use std::task::{Context, Waker};
+use core::cell::UnsafeCell;
+use core::ops::{Deref, DerefMut};
+use core::sync::atomic::{AtomicUsize, Ordering};
+use core::task::{Context, Waker};
 
 use crossbeam_utils::Backoff;
 use slab::Slab;

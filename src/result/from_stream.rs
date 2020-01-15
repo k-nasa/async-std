@@ -1,4 +1,4 @@
-use std::pin::Pin;
+use core::pin::Pin;
 
 use crate::prelude::*;
 use crate::stream::{FromStream, IntoStream};
@@ -14,10 +14,10 @@ where
     /// # Examples
     ///
     /// ```
-    /// # fn main() { async_std::task::block_on(async {
+    /// # fn main() { async_core::task::block_on(async {
     /// #
-    /// use async_std::prelude::*;
-    /// use async_std::stream;
+    /// use async_core::prelude::*;
+    /// use async_core::stream;
     ///
     /// let v = stream::from_iter(vec![1, 2]);
     /// let res: Result<Vec<u32>, &'static str> = v.map(|x: u32|

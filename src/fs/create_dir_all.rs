@@ -5,9 +5,9 @@ use crate::utils::Context as _;
 
 /// Creates a new directory and all of its parents if they are missing.
 ///
-/// This function is an async version of [`std::fs::create_dir_all`].
+/// This function is an async version of [`core::fs::create_dir_all`].
 ///
-/// [`std::fs::create_dir_all`]: https://doc.rust-lang.org/std/fs/fn.create_dir_all.html
+/// [`core::fs::create_dir_all`]: https://doc.rust-lang.org/core/fs/fn.create_dir_all.html
 ///
 /// # Errors
 ///
@@ -20,9 +20,9 @@ use crate::utils::Context as _;
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::fs;
+/// use async_core::fs;
 ///
 /// fs::create_dir_all("./some/directory").await?;
 /// #
@@ -31,7 +31,7 @@ use crate::utils::Context as _;
 pub async fn create_dir_all<P: AsRef<Path>>(path: P) -> io::Result<()> {
     let path = path.as_ref().to_owned();
     spawn_blocking(move || {
-        std::fs::create_dir_all(&path)
+        core::fs::create_dir_all(&path)
             .context(|| format!("could not create directory path `{}`", path.display()))
     })
     .await

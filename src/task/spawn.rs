@@ -1,19 +1,19 @@
-use std::future::Future;
+use core::future::Future;
 
 use crate::task::{Builder, JoinHandle};
 
 /// Spawns a task.
 ///
-/// This function is similar to [`std::thread::spawn`], except it spawns an asynchronous task.
+/// This function is similar to [`core::thread::spawn`], except it spawns an asynchronous task.
 ///
-/// [`std::thread`]: https://doc.rust-lang.org/std/thread/fn.spawn.html
+/// [`core::thread`]: https://doc.rust-lang.org/core/thread/fn.spawn.html
 ///
 /// # Examples
 ///
 /// ```
-/// # async_std::task::block_on(async {
+/// # async_core::task::block_on(async {
 /// #
-/// use async_std::task;
+/// use async_core::task;
 ///
 /// let handle = task::spawn(async {
 ///     1 + 2

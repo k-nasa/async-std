@@ -1,4 +1,4 @@
-use std::pin::Pin;
+use core::pin::Pin;
 
 use crate::prelude::*;
 use crate::stream::{Stream, Sum};
@@ -18,10 +18,10 @@ where
         if a word did not have the character 'a' the operation returns `None`:
 
         ```
-        # fn main() { async_std::task::block_on(async {
+        # fn main() { async_core::task::block_on(async {
         #
-        use async_std::prelude::*;
-        use async_std::stream;
+        use async_core::prelude::*;
+        use async_core::stream;
 
         let words = stream::from_iter(vec!["have", "a", "great", "day"]);
         let total: Option<usize> = words.map(|w| w.find('a')).sum().await;

@@ -8,9 +8,9 @@ use crate::utils::Context as _;
 /// If a file or directory already exists at the target location, it will be overwritten by this
 /// operation.
 ///
-/// This function is an async version of [`std::fs::rename`].
+/// This function is an async version of [`core::fs::rename`].
 ///
-/// [`std::fs::rename`]: https://doc.rust-lang.org/std/fs/fn.rename.html
+/// [`core::fs::rename`]: https://doc.rust-lang.org/core/fs/fn.rename.html
 ///
 /// # Errors
 ///
@@ -24,9 +24,9 @@ use crate::utils::Context as _;
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::fs;
+/// use async_core::fs;
 ///
 /// fs::rename("a.txt", "b.txt").await?;
 /// #
@@ -36,7 +36,7 @@ pub async fn rename<P: AsRef<Path>, Q: AsRef<Path>>(from: P, to: Q) -> io::Resul
     let from = from.as_ref().to_owned();
     let to = to.as_ref().to_owned();
     spawn_blocking(move || {
-        std::fs::rename(&from, &to).context(|| {
+        core::fs::rename(&from, &to).context(|| {
             format!(
                 "could not rename `{}` to `{}`",
                 from.display(),

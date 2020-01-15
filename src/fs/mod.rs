@@ -1,10 +1,10 @@
 //! Filesystem manipulation operations.
 //!
-//! This module is an async version of [`std::fs`].
+//! This module is an async version of [`core::fs`].
 //!
 //! [`os::unix::fs`]: ../os/unix/fs/index.html
 //! [`os::windows::fs`]: ../os/windows/fs/index.html
-//! [`std::fs`]: https://doc.rust-lang.org/std/fs/index.html
+//! [`core::fs`]: https://doc.rust-lang.org/core/fs/index.html
 //!
 //! # Platform-specific extensions
 //!
@@ -16,10 +16,10 @@
 //! Create a new file and write some bytes to it:
 //!
 //! ```no_run
-//! # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 //! #
-//! use async_std::fs::File;
-//! use async_std::prelude::*;
+//! use async_core::fs::File;
+//! use async_core::prelude::*;
 //!
 //! let mut file = File::create("a.txt").await?;
 //! file.write_all(b"Hello, world!").await?;

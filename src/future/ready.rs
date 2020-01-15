@@ -1,15 +1,15 @@
 /// Resolves to the provided value.
 ///
-/// This function is an async version of [`std::convert::identity`].
+/// This function is an async version of [`core::convert::identity`].
 ///
-/// [`std::convert::identity`]: https://doc.rust-lang.org/std/convert/fn.identity.html
+/// [`core::convert::identity`]: https://doc.rust-lang.org/core/convert/fn.identity.html
 ///
 /// # Examples
 ///
 /// ```
-/// # async_std::task::block_on(async {
+/// # async_core::task::block_on(async {
 /// #
-/// use async_std::future;
+/// use async_core::future;
 ///
 /// assert_eq!(future::ready(10).await, 10);
 /// #

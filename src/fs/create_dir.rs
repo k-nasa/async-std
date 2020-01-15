@@ -8,10 +8,10 @@ use crate::utils::Context as _;
 /// Note that this function will only create the final directory in `path`. If you want to create
 /// all of its missing parent directories too, use the [`create_dir_all`] function instead.
 ///
-/// This function is an async version of [`std::fs::create_dir`].
+/// This function is an async version of [`core::fs::create_dir`].
 ///
 /// [`create_dir_all`]: fn.create_dir_all.html
-/// [`std::fs::create_dir`]: https://doc.rust-lang.org/std/fs/fn.create_dir.html
+/// [`core::fs::create_dir`]: https://doc.rust-lang.org/core/fs/fn.create_dir.html
 ///
 /// # Errors
 ///
@@ -25,9 +25,9 @@ use crate::utils::Context as _;
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::fs;
+/// use async_core::fs;
 ///
 /// fs::create_dir("./some/directory").await?;
 /// #
@@ -36,7 +36,7 @@ use crate::utils::Context as _;
 pub async fn create_dir<P: AsRef<Path>>(path: P) -> io::Result<()> {
     let path = path.as_ref().to_owned();
     spawn_blocking(move || {
-        std::fs::create_dir(&path)
+        core::fs::create_dir(&path)
             .context(|| format!("could not create directory `{}`", path.display()))
     })
     .await

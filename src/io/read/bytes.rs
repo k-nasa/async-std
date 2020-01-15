@@ -1,4 +1,4 @@
-use std::pin::Pin;
+use core::pin::Pin;
 
 use crate::io::{self, Read};
 use crate::stream::stream::Stream;
@@ -23,7 +23,7 @@ impl<T: Read + Unpin> Stream for Bytes<T> {
 
         let rd = Pin::new(&mut self.inner);
 
-        match futures_core::ready!(rd.poll_read(cx, std::slice::from_mut(&mut byte))) {
+        match futures_core::ready!(rd.poll_read(cx, core::slice::from_mut(&mut byte))) {
             Ok(0) => Poll::Ready(None),
             Ok(..) => Poll::Ready(Some(Ok(byte))),
             Err(ref e) if e.kind() == io::ErrorKind::Interrupted => Poll::Pending,
@@ -39,7 +39,7 @@ mod tests {
     use crate::task;
 
     #[test]
-    fn test_bytes_basics() -> std::io::Result<()> {
+    fn test_bytes_basics() -> core::io::Result<()> {
         task::block_on(async move {
             let raw: Vec<u8> = vec![0, 1, 2, 3, 4, 5, 6, 7, 8];
             let source: io::Cursor<Vec<u8>> = io::Cursor::new(raw.clone());

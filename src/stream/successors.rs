@@ -1,5 +1,5 @@
-use std::mem;
-use std::pin::Pin;
+use core::mem;
+use core::pin::Pin;
 
 use crate::stream::Stream;
 use crate::task::{Context, Poll};
@@ -12,10 +12,10 @@ use pin_project_lite::pin_project;
 /// # Examples
 ///
 /// ```
-/// # fn main() { async_std::task::block_on(async {
+/// # fn main() { async_core::task::block_on(async {
 /// #
-/// use async_std::prelude::*;
-/// use async_std::stream;
+/// use async_core::prelude::*;
+/// use async_core::stream;
 ///
 /// let mut s = stream::successors(Some(22), |&val| Some(val + 1));
 ///

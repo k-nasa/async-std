@@ -1,6 +1,6 @@
-use std::io::{IoSlice, IoSliceMut, Read as _, Write as _};
-use std::net::SocketAddr;
-use std::pin::Pin;
+use core::io::{IoSlice, IoSliceMut, Read as _, Write as _};
+use core::net::SocketAddr;
+use core::pin::Pin;
 
 use crate::future;
 use crate::io::{self, Read, Write};
@@ -18,7 +18,7 @@ use crate::utils::Context as _;
 /// The connection will be closed when the value is dropped. The reading and writing portions of
 /// the connection can also be shut down individually with the [`shutdown`] method.
 ///
-/// This type is an async version of [`std::net::TcpStream`].
+/// This type is an async version of [`core::net::TcpStream`].
 ///
 /// [`connect`]: struct.TcpStream.html#method.connect
 /// [accepting]: struct.TcpListener.html#method.accept
@@ -27,15 +27,15 @@ use crate::utils::Context as _;
 /// [`AsyncWrite`]: https://docs.rs/futures/0.3/futures/io/trait.AsyncWrite.html
 /// [`futures::io`]: https://docs.rs/futures/0.3/futures/io/index.html
 /// [`shutdown`]: struct.TcpStream.html#method.shutdown
-/// [`std::net::TcpStream`]: https://doc.rust-lang.org/std/net/struct.TcpStream.html
+/// [`core::net::TcpStream`]: https://doc.rust-lang.org/core/net/struct.TcpStream.html
 ///
 /// ## Examples
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::net::TcpStream;
-/// use async_std::prelude::*;
+/// use async_core::net::TcpStream;
+/// use async_core::prelude::*;
 ///
 /// let mut stream = TcpStream::connect("127.0.0.1:8080").await?;
 /// stream.write_all(b"hello world").await?;
@@ -62,9 +62,9 @@ impl TcpStream {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::net::TcpStream;
+    /// use async_core::net::TcpStream;
     ///
     /// let stream = TcpStream::connect("127.0.0.1:0").await?;
     /// #
@@ -78,9 +78,9 @@ impl TcpStream {
 
         for addr in addrs {
             let res = spawn_blocking(move || {
-                let std_stream = std::net::TcpStream::connect(addr)
+                let core_stream = core::net::TcpStream::connect(addr)
                     .context(|| format!("could not connect to {}", addr))?;
-                let mio_stream = mio::net::TcpStream::from_stream(std_stream)
+                let mio_stream = mio::net::TcpStream::from_stream(core_stream)
                     .context(|| format!("could not open async connection to {}", addr))?;
                 Ok(TcpStream {
                     watcher: Watcher::new(mio_stream),
@@ -107,9 +107,9 @@ impl TcpStream {
     /// ## Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::net::TcpStream;
+    /// use async_core::net::TcpStream;
     ///
     /// let stream = TcpStream::connect("127.0.0.1:8080").await?;
     /// let addr = stream.local_addr()?;
@@ -125,9 +125,9 @@ impl TcpStream {
     /// ## Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::net::TcpStream;
+    /// use async_core::net::TcpStream;
     ///
     /// let stream = TcpStream::connect("127.0.0.1:8080").await?;
     /// let peer = stream.peer_addr()?;
@@ -147,9 +147,9 @@ impl TcpStream {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::net::TcpStream;
+    /// use async_core::net::TcpStream;
     ///
     /// let stream = TcpStream::connect("127.0.0.1:8080").await?;
     ///
@@ -170,9 +170,9 @@ impl TcpStream {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::net::TcpStream;
+    /// use async_core::net::TcpStream;
     ///
     /// let stream = TcpStream::connect("127.0.0.1:8080").await?;
     ///
@@ -196,9 +196,9 @@ impl TcpStream {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::net::TcpStream;
+    /// use async_core::net::TcpStream;
     ///
     /// let stream = TcpStream::connect("127.0.0.1:8000").await?;
     ///
@@ -220,9 +220,9 @@ impl TcpStream {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::net::TcpStream;
+    /// use async_core::net::TcpStream;
     ///
     /// let stream = TcpStream::connect("127.0.0.1:8080").await?;
     ///
@@ -246,9 +246,9 @@ impl TcpStream {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::net::TcpStream;
+    /// use async_core::net::TcpStream;
     ///
     /// let stream = TcpStream::connect("127.0.0.1:8080").await?;
     ///
@@ -266,23 +266,23 @@ impl TcpStream {
     /// This method will cause all pending and future I/O on the specified portions to return
     /// immediately with an appropriate value (see the documentation of [`Shutdown`]).
     ///
-    /// [`Shutdown`]: https://doc.rust-lang.org/std/net/enum.Shutdown.html
+    /// [`Shutdown`]: https://doc.rust-lang.org/core/net/enum.Shutdown.html
     ///
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use std::net::Shutdown;
+    /// use core::net::Shutdown;
     ///
-    /// use async_std::net::TcpStream;
+    /// use async_core::net::TcpStream;
     ///
     /// let stream = TcpStream::connect("127.0.0.1:8080").await?;
     /// stream.shutdown(Shutdown::Both)?;
     /// #
     /// # Ok(()) }) }
     /// ```
-    pub fn shutdown(&self, how: std::net::Shutdown) -> std::io::Result<()> {
+    pub fn shutdown(&self, how: core::net::Shutdown) -> core::io::Result<()> {
         self.watcher.get_ref().shutdown(how)
     }
 }
@@ -356,14 +356,14 @@ impl Write for &TcpStream {
     }
 
     fn poll_close(self: Pin<&mut Self>, _: &mut Context<'_>) -> Poll<io::Result<()>> {
-        self.shutdown(std::net::Shutdown::Write)?;
+        self.shutdown(core::net::Shutdown::Write)?;
         Poll::Ready(Ok(()))
     }
 }
 
-impl From<std::net::TcpStream> for TcpStream {
-    /// Converts a `std::net::TcpStream` into its asynchronous equivalent.
-    fn from(stream: std::net::TcpStream) -> TcpStream {
+impl From<core::net::TcpStream> for TcpStream {
+    /// Converts a `core::net::TcpStream` into its asynchronous equivalent.
+    fn from(stream: core::net::TcpStream) -> TcpStream {
         let mio_stream = mio::net::TcpStream::from_stream(stream).unwrap();
         TcpStream {
             watcher: Watcher::new(mio_stream),
@@ -382,7 +382,7 @@ cfg_unix! {
 
     impl FromRawFd for TcpStream {
         unsafe fn from_raw_fd(fd: RawFd) -> TcpStream {
-            std::net::TcpStream::from_raw_fd(fd).into()
+            core::net::TcpStream::from_raw_fd(fd).into()
         }
     }
 

@@ -8,10 +8,10 @@ use crate::task::spawn_blocking;
 /// If you want to follow symbolic links before reading metadata of the target file or directory,
 /// use [`metadata`] instead.
 ///
-/// This function is an async version of [`std::fs::symlink_metadata`].
+/// This function is an async version of [`core::fs::symlink_metadata`].
 ///
 /// [`metadata`]: fn.metadata.html
-/// [`std::fs::symlink_metadata`]: https://doc.rust-lang.org/std/fs/fn.symlink_metadata.html
+/// [`core::fs::symlink_metadata`]: https://doc.rust-lang.org/core/fs/fn.symlink_metadata.html
 ///
 /// # Errors
 ///
@@ -24,9 +24,9 @@ use crate::task::spawn_blocking;
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::fs;
+/// use async_core::fs;
 ///
 /// let perm = fs::symlink_metadata("a.txt").await?.permissions();
 /// #
@@ -34,5 +34,5 @@ use crate::task::spawn_blocking;
 /// ```
 pub async fn symlink_metadata<P: AsRef<Path>>(path: P) -> io::Result<Metadata> {
     let path = path.as_ref().to_owned();
-    spawn_blocking(move || std::fs::symlink_metadata(path)).await
+    spawn_blocking(move || core::fs::symlink_metadata(path)).await
 }

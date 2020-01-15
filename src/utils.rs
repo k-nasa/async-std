@@ -8,21 +8,21 @@ pub fn abort_on_panic<T>(f: impl FnOnce() -> T) -> T {
 
     impl Drop for Bomb {
         fn drop(&mut self) {
-            std::process::abort();
+            core::process::abort();
         }
     }
 
     let bomb = Bomb;
     let t = f();
-    std::mem::forget(bomb);
+    core::mem::forget(bomb);
     t
 }
 
 /// Generates a random number in `0..n`.
 #[cfg(any(feature = "unstable", feature = "default"))]
 pub fn random(n: u32) -> u32 {
-    use std::cell::Cell;
-    use std::num::Wrapping;
+    use core::cell::Cell;
+    use core::num::Wrapping;
 
     thread_local! {
         static RNG: Cell<Wrapping<u32>> = {
@@ -148,13 +148,13 @@ macro_rules! cfg_not_docs {
     }
 }
 
-/// Declares std items.
+/// Declares core items.
 #[allow(unused_macros)]
 #[doc(hidden)]
-macro_rules! cfg_std {
+macro_rules! cfg_core {
     ($($item:item)*) => {
         $(
-            #[cfg(feature = "std")]
+            #[cfg(feature = "core")]
             $item
         )*
     }
@@ -204,14 +204,14 @@ macro_rules! extension_trait {
         #[allow(dead_code)]
         mod owned {
             #[doc(hidden)]
-            pub struct ImplFuture<T>(std::marker::PhantomData<T>);
+            pub struct ImplFuture<T>(core::marker::PhantomData<T>);
         }
 
         // A fake `impl Future` type that borrows its environment.
         #[allow(dead_code)]
         mod borrowed {
             #[doc(hidden)]
-            pub struct ImplFuture<'a, T>(std::marker::PhantomData<&'a T>);
+            pub struct ImplFuture<'a, T>(core::marker::PhantomData<&'a T>);
         }
 
         // Render a fake trait combining the bodies of the base trait and the extension trait.

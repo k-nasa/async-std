@@ -1,5 +1,5 @@
-use std::fmt;
-use std::pin::Pin;
+use core::fmt;
+use core::pin::Pin;
 
 use crate::io::{self, Read};
 use crate::task::{Context, Poll};
@@ -11,10 +11,10 @@ use crate::task::{Context, Poll};
 /// ## Examples
 ///
 /// ```rust
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::io;
-/// use async_std::prelude::*;
+/// use async_core::io;
+/// use async_core::prelude::*;
 ///
 /// let mut buffer = [0; 3];
 /// io::repeat(0b101).read_exact(&mut buffer).await?;

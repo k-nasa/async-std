@@ -1,5 +1,5 @@
 cfg_not_docs! {
-    pub use std::fs::FileType;
+    pub use core::fs::FileType;
 }
 
 cfg_docs! {
@@ -10,13 +10,13 @@ cfg_docs! {
     /// Note that file types are mutually exclusive, i.e. at most one of methods [`is_dir`],
     /// [`is_file`], and [`is_symlink`] can return `true`.
     ///
-    /// This type is a re-export of [`std::fs::FileType`].
+    /// This type is a re-export of [`core::fs::FileType`].
     ///
     /// [`Metadata::file_type`]: struct.Metadata.html#method.file_type
     /// [`is_dir`]: #method.is_dir
     /// [`is_file`]: #method.is_file
     /// [`is_symlink`]: #method.is_symlink
-    /// [`std::fs::FileType`]: https://doc.rust-lang.org/std/fs/struct.FileType.html
+    /// [`core::fs::FileType`]: https://doc.rust-lang.org/core/fs/struct.FileType.html
     #[derive(Copy, Clone, PartialEq, Eq, Hash, Debug)]
     pub struct FileType {
         _private: (),
@@ -30,9 +30,9 @@ cfg_docs! {
         /// # Examples
         ///
         /// ```no_run
-        /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+        /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
         /// #
-        /// use async_std::fs;
+        /// use async_core::fs;
         ///
         /// let file_type = fs::metadata(".").await?.file_type();
         /// println!("{:?}", file_type.is_dir());
@@ -50,9 +50,9 @@ cfg_docs! {
         /// # Examples
         ///
         /// ```no_run
-        /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+        /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
         /// #
-        /// use async_std::fs;
+        /// use async_core::fs;
         ///
         /// let file_type = fs::metadata("a.txt").await?.file_type();
         /// println!("{:?}", file_type.is_file());
@@ -68,9 +68,9 @@ cfg_docs! {
         /// # Examples
         ///
         /// ```no_run
-        /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+        /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
         /// #
-        /// use async_std::fs;
+        /// use async_core::fs;
         ///
         /// let file_type = fs::metadata("a.txt").await?.file_type();
         /// println!("{:?}", file_type.is_symlink());

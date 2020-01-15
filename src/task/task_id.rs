@@ -1,12 +1,12 @@
-use std::fmt;
-use std::sync::atomic::{AtomicU64, Ordering};
+use core::fmt;
+use core::sync::atomic::{AtomicU64, Ordering};
 
 /// A unique identifier for a task.
 ///
 /// # Examples
 ///
 /// ```
-/// use async_std::task;
+/// use async_core::task;
 ///
 /// task::block_on(async {
 ///     println!("id = {:?}", task::current().id());
@@ -22,7 +22,7 @@ impl TaskId {
 
         let id = COUNTER.fetch_add(1, Ordering::Relaxed);
         if id > u64::max_value() / 2 {
-            std::process::abort();
+            core::process::abort();
         }
         TaskId(id)
     }

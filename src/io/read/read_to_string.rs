@@ -1,7 +1,7 @@
-use std::mem;
-use std::pin::Pin;
-use std::str;
-use std::future::Future;
+use core::mem;
+use core::pin::Pin;
+use core::str;
+use core::future::Future;
 
 use super::read_to_end_internal;
 use crate::io::{self, Read};

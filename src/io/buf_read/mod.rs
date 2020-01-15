@@ -9,30 +9,30 @@ pub use split::Split;
 use read_line::ReadLineFuture;
 use read_until::ReadUntilFuture;
 
-use std::mem;
-use std::pin::Pin;
+use core::mem;
+use core::pin::Pin;
 
 use crate::io;
 use crate::task::{Context, Poll};
 
 extension_trait! {
-    use std::ops::{Deref, DerefMut};
+    use core::ops::{Deref, DerefMut};
 
     #[doc = r#"
         Allows reading from a buffered byte stream.
 
         This trait is a re-export of [`futures::io::AsyncBufRead`] and is an async version of
-        [`std::io::BufRead`].
+        [`core::io::BufRead`].
 
         The [provided methods] do not really exist in the trait itself, but they become
         available when [`BufReadExt`] from the [prelude] is imported:
 
         ```
         # #[allow(unused_imports)]
-        use async_std::prelude::*;
+        use async_core::prelude::*;
         ```
 
-        [`std::io::BufRead`]: https://doc.rust-lang.org/std/io/trait.BufRead.html
+        [`core::io::BufRead`]: https://doc.rust-lang.org/core/io/trait.BufRead.html
         [`futures::io::AsyncBufRead`]:
         https://docs.rs/futures/0.3/futures/io/trait.AsyncBufRead.html
         [provided methods]: #provided-methods
@@ -82,11 +82,11 @@ extension_trait! {
             # Examples
 
             ```no_run
-            # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
             #
-            use async_std::fs::File;
-            use async_std::io::BufReader;
-            use async_std::prelude::*;
+            use async_core::fs::File;
+            use async_core::io::BufReader;
+            use async_core::prelude::*;
 
             let mut file = BufReader::new(File::open("a.txt").await?);
 
@@ -99,10 +99,10 @@ extension_trait! {
             Multiple successful calls to `read_until` append all bytes up to and including to
             `buf`:
             ```
-            # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
             #
-            use async_std::io::BufReader;
-            use async_std::prelude::*;
+            use async_core::io::BufReader;
+            use async_core::prelude::*;
 
             let from: &[u8] = b"append\nexample\n";
             let mut reader = BufReader::new(from);
@@ -160,11 +160,11 @@ extension_trait! {
             # Examples
 
             ```no_run
-            # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
             #
-            use async_std::fs::File;
-            use async_std::io::BufReader;
-            use async_std::prelude::*;
+            use async_core::fs::File;
+            use async_core::io::BufReader;
+            use async_core::prelude::*;
 
             let mut file = BufReader::new(File::open("a.txt").await?);
 
@@ -197,16 +197,16 @@ extension_trait! {
             (the 0xA byte) or CRLF (0xD, 0xA bytes) at the end.
 
             [`io::Result`]: type.Result.html
-            [`String`]: https://doc.rust-lang.org/std/string/struct.String.html
+            [`String`]: https://doc.rust-lang.org/core/string/struct.String.html
 
             # Examples
 
             ```no_run
-            # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
             #
-            use async_std::fs::File;
-            use async_std::io::BufReader;
-            use async_std::prelude::*;
+            use async_core::fs::File;
+            use async_core::io::BufReader;
+            use async_core::prelude::*;
 
             let file = File::open("a.txt").await?;
             let mut lines = BufReader::new(file).lines();
@@ -248,17 +248,17 @@ extension_trait! {
 
             # Examples
 
-            [`std::io::Cursor`][`Cursor`] is a type that implements `BufRead`. In
+            [`core::io::Cursor`][`Cursor`] is a type that implements `BufRead`. In
             this example, we use [`Cursor`] to iterate over all hyphen delimited
             segments in a byte slice
 
             [`Cursor`]: struct.Cursor.html
 
             ```
-            # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::io;
+            use async_core::prelude::*;
+            use async_core::io;
 
             let cursor = io::Cursor::new(b"lorem-ipsum-dolor");
 

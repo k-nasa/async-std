@@ -14,11 +14,11 @@ use crate::utils::Context as _;
 /// If you're working with open [`File`]s and want to copy contents through those types, use the
 /// [`io::copy`] function.
 ///
-/// This function is an async version of [`std::fs::copy`].
+/// This function is an async version of [`core::fs::copy`].
 ///
 /// [`File`]: struct.File.html
 /// [`io::copy`]: ../io/fn.copy.html
-/// [`std::fs::copy`]: https://doc.rust-lang.org/std/fs/fn.copy.html
+/// [`core::fs::copy`]: https://doc.rust-lang.org/core/fs/fn.copy.html
 ///
 /// # Errors
 ///
@@ -31,9 +31,9 @@ use crate::utils::Context as _;
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::fs;
+/// use async_core::fs;
 ///
 /// let num_bytes = fs::copy("a.txt", "b.txt").await?;
 /// #
@@ -43,7 +43,7 @@ pub async fn copy<P: AsRef<Path>, Q: AsRef<Path>>(from: P, to: Q) -> io::Result<
     let from = from.as_ref().to_owned();
     let to = to.as_ref().to_owned();
     spawn_blocking(move || {
-        std::fs::copy(&from, &to)
+        core::fs::copy(&from, &to)
             .context(|| format!("could not copy `{}` to `{}`", from.display(), to.display()))
     })
     .await

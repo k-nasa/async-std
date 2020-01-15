@@ -4,4 +4,4 @@ mod extend;
 mod from_stream;
 
 #[doc(inline)]
-pub use std::collections::BinaryHeap;
+pub use core::collections::BinaryHeap;

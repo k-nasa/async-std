@@ -1,9 +1,9 @@
 //! Unix-specific networking extensions.
 
-use std::fmt;
-use std::io::{Read as _, Write as _};
-use std::net::Shutdown;
-use std::pin::Pin;
+use core::fmt;
+use core::io::{Read as _, Write as _};
+use core::net::Shutdown;
+use core::pin::Pin;
 
 use mio_uds;
 
@@ -16,18 +16,18 @@ use crate::task::{spawn_blocking, Context, Poll};
 
 /// A Unix stream socket.
 ///
-/// This type is an async version of [`std::os::unix::net::UnixStream`].
+/// This type is an async version of [`core::os::unix::net::UnixStream`].
 ///
-/// [`std::os::unix::net::UnixStream`]:
-/// https://doc.rust-lang.org/std/os/unix/net/struct.UnixStream.html
+/// [`core::os::unix::net::UnixStream`]:
+/// https://doc.rust-lang.org/core/os/unix/net/struct.UnixStream.html
 ///
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::os::unix::net::UnixStream;
-/// use async_std::prelude::*;
+/// use async_core::os::unix::net::UnixStream;
+/// use async_core::prelude::*;
 ///
 /// let mut stream = UnixStream::connect("/tmp/socket").await?;
 /// stream.write_all(b"hello world").await?;
@@ -47,9 +47,9 @@ impl UnixStream {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::os::unix::net::UnixStream;
+    /// use async_core::os::unix::net::UnixStream;
     ///
     /// let stream = UnixStream::connect("/tmp/socket").await?;
     /// #
@@ -59,8 +59,8 @@ impl UnixStream {
         let path = path.as_ref().to_owned();
 
         spawn_blocking(move || {
-            let std_stream = std::os::unix::net::UnixStream::connect(path)?;
-            let mio_stream = mio_uds::UnixStream::from_stream(std_stream)?;
+            let core_stream = core::os::unix::net::UnixStream::connect(path)?;
+            let mio_stream = mio_uds::UnixStream::from_stream(core_stream)?;
             Ok(UnixStream {
                 watcher: Watcher::new(mio_stream),
             })
@@ -75,9 +75,9 @@ impl UnixStream {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::os::unix::net::UnixStream;
+    /// use async_core::os::unix::net::UnixStream;
     ///
     /// let stream = UnixStream::pair()?;
     /// #
@@ -99,9 +99,9 @@ impl UnixStream {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::os::unix::net::UnixStream;
+    /// use async_core::os::unix::net::UnixStream;
     ///
     /// let stream = UnixStream::connect("/tmp/socket").await?;
     /// let addr = stream.local_addr()?;
@@ -117,9 +117,9 @@ impl UnixStream {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::os::unix::net::UnixStream;
+    /// use async_core::os::unix::net::UnixStream;
     ///
     /// let stream = UnixStream::connect("/tmp/socket").await?;
     /// let peer = stream.peer_addr()?;
@@ -135,13 +135,13 @@ impl UnixStream {
     /// This function will cause all pending and future I/O calls on the specified portions to
     /// immediately return with an appropriate value (see the documentation of [`Shutdown`]).
     ///
-    /// [`Shutdown`]: https://doc.rust-lang.org/std/net/enum.Shutdown.html
+    /// [`Shutdown`]: https://doc.rust-lang.org/core/net/enum.Shutdown.html
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::os::unix::net::UnixStream;
-    /// use std::net::Shutdown;
+    /// use async_core::os::unix::net::UnixStream;
+    /// use core::net::Shutdown;
     ///
     /// let stream = UnixStream::connect("/tmp/socket").await?;
     /// stream.shutdown(Shutdown::Both)?;
@@ -227,9 +227,9 @@ impl fmt::Debug for UnixStream {
     }
 }
 
-impl From<std::os::unix::net::UnixStream> for UnixStream {
-    /// Converts a `std::os::unix::net::UnixStream` into its asynchronous equivalent.
-    fn from(stream: std::os::unix::net::UnixStream) -> UnixStream {
+impl From<core::os::unix::net::UnixStream> for UnixStream {
+    /// Converts a `core::os::unix::net::UnixStream` into its asynchronous equivalent.
+    fn from(stream: core::os::unix::net::UnixStream) -> UnixStream {
         let mio_stream = mio_uds::UnixStream::from_stream(stream).unwrap();
         UnixStream {
             watcher: Watcher::new(mio_stream),
@@ -245,7 +245,7 @@ impl AsRawFd for UnixStream {
 
 impl FromRawFd for UnixStream {
     unsafe fn from_raw_fd(fd: RawFd) -> UnixStream {
-        let stream = std::os::unix::net::UnixStream::from_raw_fd(fd);
+        let stream = core::os::unix::net::UnixStream::from_raw_fd(fd);
         stream.into()
     }
 }

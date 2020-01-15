@@ -1,7 +1,7 @@
 //! Unix-specific networking extensions.
 
-use std::fmt;
-use std::net::Shutdown;
+use core::fmt;
+use core::net::Shutdown;
 
 use mio_uds;
 
@@ -18,10 +18,10 @@ use crate::task::spawn_blocking;
 /// After creating a `UnixDatagram` by [`bind`]ing it to a path, data can be [sent to] and
 /// [received from] any other socket address.
 ///
-/// This type is an async version of [`std::os::unix::net::UnixDatagram`].
+/// This type is an async version of [`core::os::unix::net::UnixDatagram`].
 ///
-/// [`std::os::unix::net::UnixDatagram`]:
-/// https://doc.rust-lang.org/std/os/unix/net/struct.UnixDatagram.html
+/// [`core::os::unix::net::UnixDatagram`]:
+/// https://doc.rust-lang.org/core/os/unix/net/struct.UnixDatagram.html
 /// [`bind`]: #method.bind
 /// [received from]: #method.recv_from
 /// [sent to]: #method.send_to
@@ -29,9 +29,9 @@ use crate::task::spawn_blocking;
 /// ## Examples
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::os::unix::net::UnixDatagram;
+/// use async_core::os::unix::net::UnixDatagram;
 ///
 /// let socket = UnixDatagram::bind("/tmp/socket1").await?;
 /// socket.send_to(b"hello world", "/tmp/socket2").await?;
@@ -57,9 +57,9 @@ impl UnixDatagram {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::os::unix::net::UnixDatagram;
+    /// use async_core::os::unix::net::UnixDatagram;
     ///
     /// let socket = UnixDatagram::bind("/tmp/socket").await?;
     /// #
@@ -76,9 +76,9 @@ impl UnixDatagram {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::os::unix::net::UnixDatagram;
+    /// use async_core::os::unix::net::UnixDatagram;
     ///
     /// let socket = UnixDatagram::unbound()?;
     /// #
@@ -96,9 +96,9 @@ impl UnixDatagram {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::os::unix::net::UnixDatagram;
+    /// use async_core::os::unix::net::UnixDatagram;
     ///
     /// let (socket1, socket2) = UnixDatagram::pair()?;
     /// #
@@ -123,9 +123,9 @@ impl UnixDatagram {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::os::unix::net::UnixDatagram;
+    /// use async_core::os::unix::net::UnixDatagram;
     ///
     /// let socket = UnixDatagram::unbound()?;
     /// socket.connect("/tmp/socket").await?;
@@ -143,9 +143,9 @@ impl UnixDatagram {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::os::unix::net::UnixDatagram;
+    /// use async_core::os::unix::net::UnixDatagram;
     ///
     /// let socket = UnixDatagram::bind("/tmp/socket").await?;
     /// let addr = socket.local_addr()?;
@@ -165,9 +165,9 @@ impl UnixDatagram {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::os::unix::net::UnixDatagram;
+    /// use async_core::os::unix::net::UnixDatagram;
     ///
     /// let socket = UnixDatagram::unbound()?;
     /// socket.connect("/tmp/socket").await?;
@@ -186,9 +186,9 @@ impl UnixDatagram {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::os::unix::net::UnixDatagram;
+    /// use async_core::os::unix::net::UnixDatagram;
     ///
     /// let socket = UnixDatagram::unbound()?;
     /// let mut buf = vec![0; 1024];
@@ -211,9 +211,9 @@ impl UnixDatagram {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::os::unix::net::UnixDatagram;
+    /// use async_core::os::unix::net::UnixDatagram;
     ///
     /// let socket = UnixDatagram::bind("/tmp/socket").await?;
     /// let mut buf = vec![0; 1024];
@@ -232,9 +232,9 @@ impl UnixDatagram {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::os::unix::net::UnixDatagram;
+    /// use async_core::os::unix::net::UnixDatagram;
     ///
     /// let socket = UnixDatagram::unbound()?;
     /// socket.send_to(b"hello world", "/tmp/socket").await?;
@@ -256,9 +256,9 @@ impl UnixDatagram {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::os::unix::net::UnixDatagram;
+    /// use async_core::os::unix::net::UnixDatagram;
     ///
     /// let socket = UnixDatagram::unbound()?;
     /// socket.connect("/tmp/socket").await?;
@@ -275,15 +275,15 @@ impl UnixDatagram {
     /// This function will cause all pending and future I/O calls on the specified portions to
     /// immediately return with an appropriate value (see the documentation of [`Shutdown`]).
     ///
-    /// [`Shutdown`]: https://doc.rust-lang.org/std/net/enum.Shutdown.html
+    /// [`Shutdown`]: https://doc.rust-lang.org/core/net/enum.Shutdown.html
     ///
     /// ## Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::os::unix::net::UnixDatagram;
-    /// use std::net::Shutdown;
+    /// use async_core::os::unix::net::UnixDatagram;
+    /// use core::net::Shutdown;
     ///
     /// let socket = UnixDatagram::unbound()?;
     /// socket.shutdown(Shutdown::Both)?;
@@ -312,9 +312,9 @@ impl fmt::Debug for UnixDatagram {
     }
 }
 
-impl From<std::os::unix::net::UnixDatagram> for UnixDatagram {
-    /// Converts a `std::os::unix::net::UnixDatagram` into its asynchronous equivalent.
-    fn from(datagram: std::os::unix::net::UnixDatagram) -> UnixDatagram {
+impl From<core::os::unix::net::UnixDatagram> for UnixDatagram {
+    /// Converts a `core::os::unix::net::UnixDatagram` into its asynchronous equivalent.
+    fn from(datagram: core::os::unix::net::UnixDatagram) -> UnixDatagram {
         let mio_datagram = mio_uds::UnixDatagram::from_datagram(datagram).unwrap();
         UnixDatagram {
             watcher: Watcher::new(mio_datagram),
@@ -330,7 +330,7 @@ impl AsRawFd for UnixDatagram {
 
 impl FromRawFd for UnixDatagram {
     unsafe fn from_raw_fd(fd: RawFd) -> UnixDatagram {
-        let datagram = std::os::unix::net::UnixDatagram::from_raw_fd(fd);
+        let datagram = core::os::unix::net::UnixDatagram::from_raw_fd(fd);
         datagram.into()
     }
 }

@@ -1,11 +1,11 @@
-use std::cell::UnsafeCell;
-use std::fmt;
-use std::isize;
-use std::ops::{Deref, DerefMut};
-use std::pin::Pin;
-use std::process;
-use std::future::Future;
-use std::sync::atomic::{AtomicUsize, Ordering};
+use core::cell::UnsafeCell;
+use core::fmt;
+use core::isize;
+use core::ops::{Deref, DerefMut};
+use core::pin::Pin;
+use core::process;
+use core::future::Future;
+use core::sync::atomic::{AtomicUsize, Ordering};
 
 use crate::sync::WakerSet;
 use crate::task::{Context, Poll};
@@ -22,16 +22,16 @@ const READ_COUNT_MASK: usize = !(ONE_READ - 1);
 
 /// A reader-writer lock for protecting shared data.
 ///
-/// This type is an async version of [`std::sync::RwLock`].
+/// This type is an async version of [`core::sync::RwLock`].
 ///
-/// [`std::sync::RwLock`]: https://doc.rust-lang.org/std/sync/struct.RwLock.html
+/// [`core::sync::RwLock`]: https://doc.rust-lang.org/core/sync/struct.RwLock.html
 ///
 /// # Examples
 ///
 /// ```
-/// # async_std::task::block_on(async {
+/// # async_core::task::block_on(async {
 /// #
-/// use async_std::sync::RwLock;
+/// use async_core::sync::RwLock;
 ///
 /// let lock = RwLock::new(5);
 ///
@@ -65,7 +65,7 @@ impl<T> RwLock<T> {
     /// # Examples
     ///
     /// ```
-    /// use async_std::sync::RwLock;
+    /// use async_core::sync::RwLock;
     ///
     /// let lock = RwLock::new(0);
     /// ```
@@ -87,9 +87,9 @@ impl<T: ?Sized> RwLock<T> {
     /// # Examples
     ///
     /// ```
-    /// # async_std::task::block_on(async {
+    /// # async_core::task::block_on(async {
     /// #
-    /// use async_std::sync::RwLock;
+    /// use async_core::sync::RwLock;
     ///
     /// let lock = RwLock::new(1);
     ///
@@ -160,14 +160,14 @@ impl<T: ?Sized> RwLock<T> {
     /// If a read lock could not be acquired at this time, then [`None`] is returned. Otherwise, a
     /// guard is returned that releases the lock when dropped.
     ///
-    /// [`None`]: https://doc.rust-lang.org/std/option/enum.Option.html#variant.None
+    /// [`None`]: https://doc.rust-lang.org/core/option/enum.Option.html#variant.None
     ///
     /// # Examples
     ///
     /// ```
-    /// # async_std::task::block_on(async {
+    /// # async_core::task::block_on(async {
     /// #
-    /// use async_std::sync::RwLock;
+    /// use async_core::sync::RwLock;
     ///
     /// let lock = RwLock::new(1);
     ///
@@ -212,9 +212,9 @@ impl<T: ?Sized> RwLock<T> {
     /// # Examples
     ///
     /// ```
-    /// # async_std::task::block_on(async {
+    /// # async_core::task::block_on(async {
     /// #
-    /// use async_std::sync::RwLock;
+    /// use async_core::sync::RwLock;
     ///
     /// let lock = RwLock::new(1);
     ///
@@ -282,14 +282,14 @@ impl<T: ?Sized> RwLock<T> {
     /// If a write lock could not be acquired at this time, then [`None`] is returned. Otherwise, a
     /// guard is returned that releases the lock when dropped.
     ///
-    /// [`None`]: https://doc.rust-lang.org/std/option/enum.Option.html#variant.None
+    /// [`None`]: https://doc.rust-lang.org/core/option/enum.Option.html#variant.None
     ///
     /// # Examples
     ///
     /// ```
-    /// # async_std::task::block_on(async {
+    /// # async_core::task::block_on(async {
     /// #
-    /// use async_std::sync::RwLock;
+    /// use async_core::sync::RwLock;
     ///
     /// let lock = RwLock::new(1);
     ///
@@ -313,7 +313,7 @@ impl<T: ?Sized> RwLock<T> {
     /// # Examples
     ///
     /// ```
-    /// use async_std::sync::RwLock;
+    /// use async_core::sync::RwLock;
     ///
     /// let lock = RwLock::new(10);
     /// assert_eq!(lock.into_inner(), 10);
@@ -330,9 +330,9 @@ impl<T: ?Sized> RwLock<T> {
     /// # Examples
     ///
     /// ```
-    /// # async_std::task::block_on(async {
+    /// # async_core::task::block_on(async {
     /// #
-    /// use async_std::sync::RwLock;
+    /// use async_core::sync::RwLock;
     ///
     /// let mut lock = RwLock::new(0);
     /// *lock.get_mut() = 10;

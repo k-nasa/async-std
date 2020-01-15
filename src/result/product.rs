@@ -1,4 +1,4 @@
-use std::pin::Pin;
+use core::pin::Pin;
 
 use crate::prelude::*;
 use crate::stream::{Stream, Product};
@@ -18,10 +18,10 @@ where
         encountered:
 
         ```
-        # fn main() { async_std::task::block_on(async {
+        # fn main() { async_core::task::block_on(async {
         #
-        use async_std::prelude::*;
-        use async_std::stream;
+        use async_core::prelude::*;
+        use async_core::stream;
 
         let v = stream::from_iter(vec![1, 2, 4]);
         let res: Result<i32, &'static str> = v.map(|x|

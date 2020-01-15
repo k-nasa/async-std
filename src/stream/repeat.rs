@@ -1,4 +1,4 @@
-use std::pin::Pin;
+use core::pin::Pin;
 
 use crate::stream::Stream;
 use crate::task::{Context, Poll};
@@ -8,10 +8,10 @@ use crate::task::{Context, Poll};
 /// # Examples
 ///
 /// ```
-/// # async_std::task::block_on(async {
+/// # async_core::task::block_on(async {
 /// #
-/// use async_std::prelude::*;
-/// use async_std::stream;
+/// use async_core::prelude::*;
+/// use async_core::stream;
 ///
 /// let mut s = stream::repeat(7);
 ///

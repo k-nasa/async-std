@@ -1,5 +1,5 @@
-use std::fmt;
-use std::sync::{Arc, Mutex};
+use core::fmt;
+use core::sync::{Arc, Mutex};
 
 use mio::{self, Evented};
 use once_cell::sync::Lazy;
@@ -104,8 +104,8 @@ impl Reactor {
 static REACTOR: Lazy<Reactor> = Lazy::new(|| {
     // Spawn a thread that waits on the poller for new events and wakes up tasks blocked on I/O
     // handles.
-    std::thread::Builder::new()
-        .name("async-std/net".to_string())
+    core::thread::Builder::new()
+        .name("async-core/net".to_string())
         .spawn(move || {
             // If the driver thread panics, there's not much we can do. It is not a
             // recoverable error and there is no place to propagate it into so we just abort.

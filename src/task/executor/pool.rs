@@ -1,7 +1,7 @@
-use std::cell::Cell;
-use std::iter;
-use std::thread;
-use std::time::Duration;
+use core::cell::Cell;
+use core::iter;
+use core::thread;
+use core::time::Duration;
 
 use crossbeam_deque::{Injector, Stealer, Worker};
 use once_cell::sync::Lazy;
@@ -40,7 +40,7 @@ static POOL: Lazy<Pool> = Lazy::new(|| {
         };
 
         thread::Builder::new()
-            .name("async-std/executor".to_string())
+            .name("async-core/executor".to_string())
             .spawn(|| {
                 let _ = PROCESSOR.with(|p| p.set(proc));
                 abort_on_panic(main_loop);

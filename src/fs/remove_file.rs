@@ -5,9 +5,9 @@ use crate::utils::Context as _;
 
 /// Removes a file.
 ///
-/// This function is an async version of [`std::fs::remove_file`].
+/// This function is an async version of [`core::fs::remove_file`].
 ///
-/// [`std::fs::remove_file`]: https://doc.rust-lang.org/std/fs/fn.remove_file.html
+/// [`core::fs::remove_file`]: https://doc.rust-lang.org/core/fs/fn.remove_file.html
 ///
 /// # Errors
 ///
@@ -20,9 +20,9 @@ use crate::utils::Context as _;
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::fs;
+/// use async_core::fs;
 ///
 /// fs::remove_file("a.txt").await?;
 /// #
@@ -31,7 +31,7 @@ use crate::utils::Context as _;
 pub async fn remove_file<P: AsRef<Path>>(path: P) -> io::Result<()> {
     let path = path.as_ref().to_owned();
     spawn_blocking(move || {
-        std::fs::remove_file(&path)
+        core::fs::remove_file(&path)
             .context(|| format!("could not remove file `{}`", path.display()))
     })
     .await

@@ -1,5 +1,5 @@
-use std::borrow::Cow;
-use std::pin::Pin;
+use core::borrow::Cow;
+use core::pin::Pin;
 
 use crate::prelude::*;
 use crate::stream::{self, FromStream, IntoStream};

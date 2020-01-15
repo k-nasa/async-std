@@ -1,5 +1,5 @@
-use std::collections::BinaryHeap;
-use std::pin::Pin;
+use core::collections::BinaryHeap;
+use core::pin::Pin;
 
 use crate::prelude::*;
 use crate::stream::{self, FromStream, IntoStream};

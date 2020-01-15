@@ -1,8 +1,8 @@
-use std::future::Future;
-use std::mem;
-use std::net::{IpAddr, Ipv4Addr, Ipv6Addr};
-use std::net::{SocketAddr, SocketAddrV4, SocketAddrV6};
-use std::pin::Pin;
+use core::future::Future;
+use core::mem;
+use core::net::{IpAddr, Ipv4Addr, Ipv6Addr};
+use core::net::{SocketAddr, SocketAddrV4, SocketAddrV6};
+use core::pin::Pin;
 
 use crate::io;
 use crate::task::{spawn_blocking, Context, JoinHandle, Poll};
@@ -16,7 +16,7 @@ cfg_not_docs! {
 
 cfg_docs! {
     #[doc(hidden)]
-    pub struct ImplFuture<T>(std::marker::PhantomData<T>);
+    pub struct ImplFuture<T>(core::marker::PhantomData<T>);
 
     macro_rules! ret {
         (impl Future<Output = $out:ty>, $fut:ty) => (ImplFuture<$out>);
@@ -25,17 +25,17 @@ cfg_docs! {
 
 /// Converts or resolves addresses to [`SocketAddr`] values.
 ///
-/// This trait is an async version of [`std::net::ToSocketAddrs`].
+/// This trait is an async version of [`core::net::ToSocketAddrs`].
 ///
-/// [`std::net::ToSocketAddrs`]: https://doc.rust-lang.org/std/net/trait.ToSocketAddrs.html
+/// [`core::net::ToSocketAddrs`]: https://doc.rust-lang.org/core/net/trait.ToSocketAddrs.html
 /// [`SocketAddr`]: enum.SocketAddr.html
 ///
 /// # Examples
 ///
 /// ```
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::net::ToSocketAddrs;
+/// use async_core::net::ToSocketAddrs;
 ///
 /// let addr = "localhost:8080".to_socket_addrs().await?.next().unwrap();
 /// println!("resolved: {:?}", addr);
@@ -68,7 +68,7 @@ pub enum ToSocketAddrsFuture<I> {
     Done,
 }
 
-/// Wrap `std::io::Error` with additional message
+/// Wrap `core::io::Error` with additional message
 ///
 /// Keeps the original error kind and stores the original I/O error as `source`.
 impl<T> ErrorContext for ToSocketAddrsFuture<T> {
@@ -102,7 +102,7 @@ impl<I: Iterator<Item = SocketAddr>> Future for ToSocketAddrsFuture<I> {
 }
 
 impl ToSocketAddrs for SocketAddr {
-    type Iter = std::option::IntoIter<SocketAddr>;
+    type Iter = core::option::IntoIter<SocketAddr>;
 
     fn to_socket_addrs(
         &self,
@@ -115,7 +115,7 @@ impl ToSocketAddrs for SocketAddr {
 }
 
 impl ToSocketAddrs for SocketAddrV4 {
-    type Iter = std::option::IntoIter<SocketAddr>;
+    type Iter = core::option::IntoIter<SocketAddr>;
 
     fn to_socket_addrs(
         &self,
@@ -130,7 +130,7 @@ impl ToSocketAddrs for SocketAddrV4 {
 }
 
 impl ToSocketAddrs for SocketAddrV6 {
-    type Iter = std::option::IntoIter<SocketAddr>;
+    type Iter = core::option::IntoIter<SocketAddr>;
 
     fn to_socket_addrs(
         &self,
@@ -145,7 +145,7 @@ impl ToSocketAddrs for SocketAddrV6 {
 }
 
 impl ToSocketAddrs for (IpAddr, u16) {
-    type Iter = std::option::IntoIter<SocketAddr>;
+    type Iter = core::option::IntoIter<SocketAddr>;
 
     fn to_socket_addrs(
         &self,
@@ -162,7 +162,7 @@ impl ToSocketAddrs for (IpAddr, u16) {
 }
 
 impl ToSocketAddrs for (Ipv4Addr, u16) {
-    type Iter = std::option::IntoIter<SocketAddr>;
+    type Iter = core::option::IntoIter<SocketAddr>;
 
     fn to_socket_addrs(
         &self,
@@ -176,7 +176,7 @@ impl ToSocketAddrs for (Ipv4Addr, u16) {
 }
 
 impl ToSocketAddrs for (Ipv6Addr, u16) {
-    type Iter = std::option::IntoIter<SocketAddr>;
+    type Iter = core::option::IntoIter<SocketAddr>;
 
     fn to_socket_addrs(
         &self,
@@ -190,7 +190,7 @@ impl ToSocketAddrs for (Ipv6Addr, u16) {
 }
 
 impl ToSocketAddrs for (&str, u16) {
-    type Iter = std::vec::IntoIter<SocketAddr>;
+    type Iter = core::vec::IntoIter<SocketAddr>;
 
     fn to_socket_addrs(
         &self,
@@ -213,7 +213,7 @@ impl ToSocketAddrs for (&str, u16) {
         let host = host.to_string();
         let task = spawn_blocking(move || {
             let addr = (host.as_str(), port);
-            std::net::ToSocketAddrs::to_socket_addrs(&addr)
+            core::net::ToSocketAddrs::to_socket_addrs(&addr)
                 .context(|| format!("could not resolve address `{:?}`", addr))
         });
         ToSocketAddrsFuture::Resolving(task)
@@ -221,7 +221,7 @@ impl ToSocketAddrs for (&str, u16) {
 }
 
 impl ToSocketAddrs for str {
-    type Iter = std::vec::IntoIter<SocketAddr>;
+    type Iter = core::vec::IntoIter<SocketAddr>;
 
     fn to_socket_addrs(
         &self,
@@ -235,7 +235,7 @@ impl ToSocketAddrs for str {
 
         let addr = self.to_string();
         let task = spawn_blocking(move || {
-            std::net::ToSocketAddrs::to_socket_addrs(addr.as_str())
+            core::net::ToSocketAddrs::to_socket_addrs(addr.as_str())
                 .context(|| format!("could not resolve address `{:?}`", addr))
         });
         ToSocketAddrsFuture::Resolving(task)
@@ -243,7 +243,7 @@ impl ToSocketAddrs for str {
 }
 
 impl<'a> ToSocketAddrs for &'a [SocketAddr] {
-    type Iter = std::iter::Cloned<std::slice::Iter<'a, SocketAddr>>;
+    type Iter = core::iter::Cloned<core::slice::Iter<'a, SocketAddr>>;
 
     fn to_socket_addrs(
         &self,
@@ -269,7 +269,7 @@ impl<T: ToSocketAddrs + ?Sized> ToSocketAddrs for &T {
 }
 
 impl ToSocketAddrs for String {
-    type Iter = std::vec::IntoIter<SocketAddr>;
+    type Iter = core::vec::IntoIter<SocketAddr>;
 
     fn to_socket_addrs(
         &self,

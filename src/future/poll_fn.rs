@@ -1,5 +1,5 @@
-use std::pin::Pin;
-use std::future::Future;
+use core::pin::Pin;
+use core::future::Future;
 
 use crate::task::{Context, Poll};
 
@@ -10,10 +10,10 @@ use crate::task::{Context, Poll};
 /// # Examples
 ///
 /// ```
-/// # async_std::task::block_on(async {
+/// # async_core::task::block_on(async {
 /// #
-/// use async_std::future;
-/// use async_std::task::{Context, Poll};
+/// use async_core::future;
+/// use async_core::task::{Context, Poll};
 ///
 /// fn poll_greeting(_: &mut Context<'_>) -> Poll<String> {
 ///     Poll::Ready("hello world".to_string())

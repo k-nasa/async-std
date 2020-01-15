@@ -13,8 +13,8 @@ use write_vectored::WriteVectoredFuture;
 use crate::io::{self, IoSlice};
 
 extension_trait! {
-    use std::pin::Pin;
-    use std::ops::{Deref, DerefMut};
+    use core::pin::Pin;
+    use core::ops::{Deref, DerefMut};
 
     use crate::task::{Context, Poll};
 
@@ -22,7 +22,7 @@ extension_trait! {
         Allows writing to a byte stream.
 
         This trait is a re-export of [`futures::io::AsyncWrite`] and is an async version of
-        [`std::io::Write`].
+        [`core::io::Write`].
 
         Methods other than [`poll_write`], [`poll_write_vectored`], [`poll_flush`], and
         [`poll_close`] do not really exist in the trait itself, but they become available when
@@ -30,10 +30,10 @@ extension_trait! {
 
         ```
         # #[allow(unused_imports)]
-        use async_std::prelude::*;
+        use async_core::prelude::*;
         ```
 
-        [`std::io::Write`]: https://doc.rust-lang.org/std/io/trait.Write.html
+        [`core::io::Write`]: https://doc.rust-lang.org/core/io/trait.Write.html
         [`futures::io::AsyncWrite`]:
         https://docs.rs/futures/0.3/futures/io/trait.AsyncWrite.html
         [`poll_write`]: #tymethod.poll_write
@@ -95,10 +95,10 @@ extension_trait! {
             # Examples
 
             ```no_run
-            # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
             #
-            use async_std::fs::File;
-            use async_std::prelude::*;
+            use async_core::fs::File;
+            use async_core::prelude::*;
 
             let mut file = File::create("a.txt").await?;
 
@@ -123,10 +123,10 @@ extension_trait! {
             # Examples
 
             ```no_run
-            # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
             #
-            use async_std::fs::File;
-            use async_std::prelude::*;
+            use async_core::fs::File;
+            use async_core::prelude::*;
 
             let mut file = File::create("a.txt").await?;
 
@@ -177,10 +177,10 @@ extension_trait! {
             # Examples
 
             ```no_run
-            # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
             #
-            use async_std::fs::File;
-            use async_std::prelude::*;
+            use async_core::fs::File;
+            use async_core::prelude::*;
 
             let mut file = File::create("a.txt").await?;
 
@@ -213,10 +213,10 @@ extension_trait! {
             # Examples
 
             ```no_run
-            # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
             #
-            use async_std::io::prelude::*;
-            use async_std::fs::File;
+            use async_core::io::prelude::*;
+            use async_core::fs::File;
 
             let mut buffer = File::create("foo.txt").await?;
 
@@ -230,7 +230,7 @@ extension_trait! {
         "#]
         fn write_fmt<'a>(
             &'a mut self,
-            fmt: std::fmt::Arguments<'_>,
+            fmt: core::fmt::Arguments<'_>,
         ) -> impl Future<Output = io::Result<()>> + 'a [WriteFmtFuture<'a, Self>]
         where
             Self: Unpin,
@@ -239,7 +239,7 @@ extension_trait! {
             // and all, we convert `Arguments` to a `Result<Vec<u8>>` and pass that to the Future.
             // Doing an owned conversion saves us from juggling references.
             let mut string = String::new();
-            let res = std::fmt::write(&mut string, fmt)
+            let res = core::fmt::write(&mut string, fmt)
                 .map(|_| string.into_bytes())
                 .map_err(|_| io::Error::new(io::ErrorKind::Other, "formatter error"));
             WriteFmtFuture { writer: self, res: Some(res), buffer: None, amt: 0 }

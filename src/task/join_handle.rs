@@ -1,5 +1,5 @@
-use std::future::Future;
-use std::pin::Pin;
+use core::future::Future;
+use core::pin::Pin;
 
 use crate::task::{Context, Poll, Task};
 
@@ -28,9 +28,9 @@ impl<T> JoinHandle<T> {
     /// # Examples
     ///
     /// ```
-    /// # async_std::task::block_on(async {
+    /// # async_core::task::block_on(async {
     /// #
-    /// use async_std::task;
+    /// use async_core::task;
     ///
     /// let handle = task::spawn(async {
     ///     1 + 2

@@ -3,8 +3,8 @@
 /// Equivalent to the [`println!`] macro except that a newline is not printed at
 /// the end of the message.
 ///
-/// Note that stdout is frequently line-buffered by default so it may be
-/// necessary to use [`io::stdout().flush()`][flush] to ensure the output is emitted
+/// Note that coreout is frequently line-buffered by default so it may be
+/// necessary to use [`io::coreout().flush()`][flush] to ensure the output is emitted
 /// immediately.
 ///
 /// Use `print!` only for the primary output of your program. Use
@@ -16,16 +16,16 @@
 ///
 /// # Panics
 ///
-/// Panics if writing to `io::stdout()` fails.
+/// Panics if writing to `io::coreout()` fails.
 ///
 /// # Examples
 ///
 /// ```
-/// # async_std::task::block_on(async {
+/// # async_core::task::block_on(async {
 /// #
-/// use async_std::io;
-/// use async_std::prelude::*;
-/// use async_std::print;
+/// use async_core::io;
+/// use async_core::prelude::*;
+/// use async_core::print;
 ///
 /// print!("this ").await;
 /// print!("will ").await;
@@ -35,11 +35,11 @@
 /// print!("same ").await;
 /// print!("line ").await;
 ///
-/// io::stdout().flush().await.unwrap();
+/// io::coreout().flush().await.unwrap();
 ///
 /// print!("this string has a newline, why not choose println! instead?\n").await;
 ///
-/// io::stdout().flush().await.unwrap();
+/// io::coreout().flush().await.unwrap();
 /// #
 /// # })
 /// ```
@@ -56,24 +56,24 @@ macro_rules! print {
 /// (no additional CARRIAGE RETURN (`\r`/`U+000D`)).
 ///
 /// Use the [`format!`] syntax to write data to the standard output.
-/// See [`std::fmt`] for more information.
+/// See [`core::fmt`] for more information.
 ///
 /// Use `println!` only for the primary output of your program. Use
 /// [`eprintln!`] instead to print error and progress messages.
 ///
 /// [`format!`]: macro.format.html
-/// [`std::fmt`]: https://doc.rust-lang.org/std/fmt/index.html
+/// [`core::fmt`]: https://doc.rust-lang.org/core/fmt/index.html
 /// [`eprintln!`]: macro.eprintln.html
 /// # Panics
 ///
-/// Panics if writing to `io::stdout` fails.
+/// Panics if writing to `io::coreout` fails.
 ///
 /// # Examples
 ///
 /// ```
-/// # async_std::task::block_on(async {
+/// # async_core::task::block_on(async {
 /// #
-/// use async_std::println;
+/// use async_core::println;
 ///
 /// println!().await; // prints just a newline
 /// println!("hello there!").await;
@@ -95,25 +95,25 @@ macro_rules! println {
 /// Prints to the standard error.
 ///
 /// Equivalent to the [`print!`] macro, except that output goes to
-/// [`io::stderr`] instead of `io::stdout`. See [`print!`] for
+/// [`io::coreerr`] instead of `io::coreout`. See [`print!`] for
 /// example usage.
 ///
 /// Use `eprint!` only for error and progress messages. Use `print!`
 /// instead for the primary output of your program.
 ///
-/// [`io::stderr`]: io/struct.Stderr.html
+/// [`io::coreerr`]: io/struct.Stderr.html
 /// [`print!`]: macro.print.html
 ///
 /// # Panics
 ///
-/// Panics if writing to `io::stderr` fails.
+/// Panics if writing to `io::coreerr` fails.
 ///
 /// # Examples
 ///
 /// ```
-/// # async_std::task::block_on(async {
+/// # async_core::task::block_on(async {
 /// #
-/// use async_std::eprint;
+/// use async_core::eprint;
 ///
 /// eprint!("Error: Could not complete task").await;
 /// #
@@ -129,25 +129,25 @@ macro_rules! eprint {
 /// Prints to the standard error, with a newline.
 ///
 /// Equivalent to the [`println!`] macro, except that output goes to
-/// [`io::stderr`] instead of `io::stdout`. See [`println!`] for
+/// [`io::coreerr`] instead of `io::coreout`. See [`println!`] for
 /// example usage.
 ///
 /// Use `eprintln!` only for error and progress messages. Use `println!`
 /// instead for the primary output of your program.
 ///
-/// [`io::stderr`]: io/struct.Stderr.html
+/// [`io::coreerr`]: io/struct.Stderr.html
 /// [`println!`]: macro.println.html
 ///
 /// # Panics
 ///
-/// Panics if writing to `io::stderr` fails.
+/// Panics if writing to `io::coreerr` fails.
 ///
 /// # Examples
 ///
 /// ```
-/// # async_std::task::block_on(async {
+/// # async_core::task::block_on(async {
 /// #
-/// use async_std::eprintln;
+/// use async_core::eprintln;
 ///
 /// eprintln!("Error: Could not complete task").await;
 /// #
@@ -179,10 +179,10 @@ macro_rules! eprintln {
 ///
 /// ```
 /// #
-/// use std::cell::Cell;
+/// use core::cell::Cell;
 ///
-/// use async_std::prelude::*;
-/// use async_std::task;
+/// use async_core::prelude::*;
+/// use async_core::task;
 ///
 /// task_local! {
 ///     static VAL: Cell<u32> = Cell::new(5);
@@ -207,7 +207,7 @@ macro_rules! task_local {
 
             $crate::task::LocalKey {
                 __init,
-                __key: ::std::sync::atomic::AtomicU32::new(0),
+                __key: ::core::sync::atomic::AtomicU32::new(0),
             }
         };
     );

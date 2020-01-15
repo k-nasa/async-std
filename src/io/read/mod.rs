@@ -13,7 +13,7 @@ use read_to_end::{read_to_end_internal, ReadToEndFuture};
 use read_to_string::ReadToStringFuture;
 use read_vectored::ReadVectoredFuture;
 
-use std::mem;
+use core::mem;
 
 use crate::io::IoSliceMut;
 
@@ -22,8 +22,8 @@ pub use bytes::Bytes;
 pub use chain::Chain;
 
 extension_trait! {
-    use std::pin::Pin;
-    use std::ops::{Deref, DerefMut};
+    use core::pin::Pin;
+    use core::ops::{Deref, DerefMut};
 
     use crate::io;
     use crate::task::{Context, Poll};
@@ -32,17 +32,17 @@ extension_trait! {
         Allows reading from a byte stream.
 
         This trait is a re-export of [`futures::io::AsyncRead`] and is an async version of
-        [`std::io::Read`].
+        [`core::io::Read`].
 
         Methods other than [`poll_read`] and [`poll_read_vectored`] do not really exist in the
         trait itself, but they become available when [`ReadExt`] from the [prelude] is imported:
 
         ```
         # #[allow(unused_imports)]
-        use async_std::prelude::*;
+        use async_core::prelude::*;
         ```
 
-        [`std::io::Read`]: https://doc.rust-lang.org/std/io/trait.Read.html
+        [`core::io::Read`]: https://doc.rust-lang.org/core/io/trait.Read.html
         [`futures::io::AsyncRead`]:
         https://docs.rs/futures/0.3/futures/io/trait.AsyncRead.html
         [`poll_read`]: #tymethod.poll_read
@@ -96,10 +96,10 @@ extension_trait! {
             # Examples
 
             ```no_run
-            # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
             #
-            use async_std::fs::File;
-            use async_std::prelude::*;
+            use async_core::fs::File;
+            use async_core::prelude::*;
 
             let mut file = File::open("a.txt").await?;
 
@@ -155,10 +155,10 @@ extension_trait! {
             # Examples
 
             ```no_run
-            # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
             #
-            use async_std::fs::File;
-            use async_std::prelude::*;
+            use async_core::fs::File;
+            use async_core::prelude::*;
 
             let mut file = File::open("a.txt").await?;
 
@@ -194,10 +194,10 @@ extension_trait! {
             # Examples
 
             ```no_run
-            # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
             #
-            use async_std::fs::File;
-            use async_std::prelude::*;
+            use async_core::fs::File;
+            use async_core::prelude::*;
 
             let mut file = File::open("a.txt").await?;
 
@@ -249,10 +249,10 @@ extension_trait! {
             # Examples
 
             ```no_run
-            # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
             #
-            use async_std::fs::File;
-            use async_std::prelude::*;
+            use async_core::fs::File;
+            use async_core::prelude::*;
 
             let mut file = File::open("a.txt").await?;
 
@@ -285,14 +285,14 @@ extension_trait! {
             [`File`]s implement `Read`:
 
             [`File`]: ../fs/struct.File.html
-            [`Ok(0)`]: ../../std/result/enum.Result.html#variant.Ok
+            [`Ok(0)`]: ../../core/result/enum.Result.html#variant.Ok
             [`read`]: tymethod.read
 
             ```no_run
-            # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
             #
-            use async_std::io::prelude::*;
-            use async_std::fs::File;
+            use async_core::io::prelude::*;
+            use async_core::fs::File;
 
             let f = File::open("foo.txt").await?;
             let mut buffer = [0; 5];
@@ -325,10 +325,10 @@ extension_trait! {
             [file]: ../fs/struct.File.html
 
             ```no_run
-            # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::fs::File;
+            use async_core::prelude::*;
+            use async_core::fs::File;
 
             let mut f = File::open("foo.txt").await?;
             let mut buffer = Vec::new();
@@ -366,10 +366,10 @@ extension_trait! {
             [file]: ../fs/struct.File.html
 
             ```no_run
-            # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::fs::File;
+            use async_core::prelude::*;
+            use async_core::fs::File;
 
             let f = File::open("foo.txt").await?;
             let mut s = f.bytes();
@@ -399,10 +399,10 @@ extension_trait! {
             [file]: ../fs/struct.File.html
 
             ```no_run
-            # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::fs::File;
+            use async_core::prelude::*;
+            use async_core::fs::File;
 
             let f1 = File::open("foo.txt").await?;
             let f2 = File::open("bar.txt").await?;
@@ -474,7 +474,7 @@ extension_trait! {
 /// feature is not stable.
 #[inline]
 unsafe fn initialize<R: futures_io::AsyncRead>(_reader: &R, buf: &mut [u8]) {
-    std::ptr::write_bytes(buf.as_mut_ptr(), 0, buf.len())
+    core::ptr::write_bytes(buf.as_mut_ptr(), 0, buf.len())
 }
 
 #[cfg(test)]

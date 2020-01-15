@@ -1,10 +1,10 @@
-use std::pin::Pin;
+use core::pin::Pin;
 
 use crate::future::MaybeDone;
 use pin_project_lite::pin_project;
 
 use crate::task::{Context, Poll};
-use std::future::Future;
+use core::future::Future;
 
 pin_project! {
     #[allow(missing_docs)]

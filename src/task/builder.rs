@@ -1,6 +1,6 @@
 use kv_log_macro::trace;
 use log::log_enabled;
-use std::future::Future;
+use core::future::Future;
 
 use crate::io;
 use crate::task::executor;

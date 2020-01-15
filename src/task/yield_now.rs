@@ -1,5 +1,5 @@
-use std::pin::Pin;
-use std::future::Future;
+use core::pin::Pin;
+use core::future::Future;
 
 use crate::task::{Context, Poll};
 
@@ -18,9 +18,9 @@ use crate::task::{Context, Poll};
 /// Basic usage:
 ///
 /// ```
-/// # async_std::task::block_on(async {
+/// # async_core::task::block_on(async {
 /// #
-/// use async_std::task;
+/// use async_core::task;
 ///
 /// task::yield_now().await;
 /// #

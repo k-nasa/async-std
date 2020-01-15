@@ -1,12 +1,12 @@
 //! Unix-specific I/O extensions.
 
 cfg_not_docs! {
-    pub use std::os::unix::io::{AsRawFd, FromRawFd, IntoRawFd, RawFd};
+    pub use core::os::unix::io::{AsRawFd, FromRawFd, IntoRawFd, RawFd};
 }
 
 cfg_docs! {
     /// Raw file descriptors.
-    pub type RawFd = std::os::raw::c_int;
+    pub type RawFd = core::os::raw::c_int;
 
     /// A trait to extract the raw unix file descriptor from an underlying
     /// object.

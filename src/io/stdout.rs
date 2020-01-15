@@ -1,20 +1,20 @@
-use std::pin::Pin;
-use std::sync::Mutex;
-use std::future::Future;
+use core::pin::Pin;
+use core::sync::Mutex;
+use core::future::Future;
 
 use crate::io::{self, Write};
 use crate::task::{spawn_blocking, Context, JoinHandle, Poll};
 
 cfg_unstable! {
     use once_cell::sync::Lazy;
-    use std::io::Write as _;
+    use core::io::Write as _;
 }
 
 /// Constructs a new handle to the standard output of the current process.
 ///
-/// This function is an async version of [`std::io::stdout`].
+/// This function is an async version of [`core::io::coreout`].
 ///
-/// [`std::io::stdout`]: https://doc.rust-lang.org/std/io/fn.stdout.html
+/// [`core::io::coreout`]: https://doc.rust-lang.org/core/io/fn.coreout.html
 ///
 /// ### Note: Windows Portability Consideration
 ///
@@ -25,19 +25,19 @@ cfg_unstable! {
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::io;
-/// use async_std::prelude::*;
+/// use async_core::io;
+/// use async_core::prelude::*;
 ///
-/// let mut stdout = io::stdout();
-/// stdout.write_all(b"Hello, world!").await?;
+/// let mut coreout = io::coreout();
+/// coreout.write_all(b"Hello, world!").await?;
 /// #
 /// # Ok(()) }) }
 /// ```
-pub fn stdout() -> Stdout {
+pub fn coreout() -> Stdout {
     Stdout(Mutex::new(State::Idle(Some(Inner {
-        stdout: std::io::stdout(),
+        coreout: core::io::coreout(),
         buf: Vec::new(),
         last_op: None,
     }))))
@@ -45,7 +45,7 @@ pub fn stdout() -> Stdout {
 
 /// A handle to the standard output of the current process.
 ///
-/// This writer is created by the [`stdout`] function. See its documentation
+/// This writer is created by the [`coreout`] function. See its documentation
 /// for more.
 ///
 /// ### Note: Windows Portability Consideration
@@ -54,7 +54,7 @@ pub fn stdout() -> Stdout {
 /// non-UTF-8 byte sequences. Attempting to write bytes that are not valid UTF-8 will return
 /// an error.
 ///
-/// [`stdout`]: fn.stdout.html
+/// [`coreout`]: fn.coreout.html
 #[derive(Debug)]
 pub struct Stdout(Mutex<State>);
 
@@ -68,40 +68,40 @@ pub struct Stdout(Mutex<State>);
 #[cfg(feature = "unstable")]
 #[cfg_attr(feature = "docs", doc(cfg(unstable)))]
 #[derive(Debug)]
-pub struct StdoutLock<'a>(std::io::StdoutLock<'a>);
+pub struct StdoutLock<'a>(core::io::StdoutLock<'a>);
 
 #[cfg(feature = "unstable")]
 #[cfg_attr(feature = "docs", doc(cfg(unstable)))]
 unsafe impl Send for StdoutLock<'_> {}
 
-/// The state of the asynchronous stdout.
+/// The state of the asynchronous coreout.
 ///
-/// The stdout can be either idle or busy performing an asynchronous operation.
+/// The coreout can be either idle or busy performing an asynchronous operation.
 #[derive(Debug)]
 enum State {
-    /// The stdout is idle.
+    /// The coreout is idle.
     Idle(Option<Inner>),
 
-    /// The stdout is blocked on an asynchronous operation.
+    /// The coreout is blocked on an asynchronous operation.
     ///
-    /// Awaiting this operation will result in the new state of the stdout.
+    /// Awaiting this operation will result in the new state of the coreout.
     Busy(JoinHandle<State>),
 }
 
-/// Inner representation of the asynchronous stdout.
+/// Inner representation of the asynchronous coreout.
 #[derive(Debug)]
 struct Inner {
-    /// The blocking stdout handle.
-    stdout: std::io::Stdout,
+    /// The blocking coreout handle.
+    coreout: core::io::Stdout,
 
     /// The write buffer.
     buf: Vec<u8>,
 
-    /// The result of the last asynchronous operation on the stdout.
+    /// The result of the last asynchronous operation on the coreout.
     last_op: Option<Operation>,
 }
 
-/// Possible results of an asynchronous operation on the stdout.
+/// Possible results of an asynchronous operation on the coreout.
 #[derive(Debug)]
 enum Operation {
     Write(io::Result<usize>),
@@ -116,13 +116,13 @@ impl Stdout {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::io;
-    /// use async_std::prelude::*;
+    /// use async_core::io;
+    /// use async_core::prelude::*;
     ///
-    /// let stdout = io::stdout();
-    /// let mut handle = stdout.lock().await;
+    /// let coreout = io::coreout();
+    /// let mut handle = coreout.lock().await;
     ///
     /// handle.write_all(b"hello world").await?;
     /// #
@@ -131,7 +131,7 @@ impl Stdout {
     #[cfg_attr(feature = "docs", doc(cfg(unstable)))]
     #[cfg(any(feature = "unstable", feature = "docs"))]
     pub async fn lock(&self) -> StdoutLock<'static> {
-        static STDOUT: Lazy<std::io::Stdout> = Lazy::new(std::io::stdout);
+        static STDOUT: Lazy<core::io::Stdout> = Lazy::new(core::io::coreout);
 
         spawn_blocking(move || StdoutLock(STDOUT.lock())).await
     }
@@ -175,13 +175,13 @@ impl Write for Stdout {
 
                         // Start the operation asynchronously.
                         *state = State::Busy(spawn_blocking(move || {
-                            let res = std::io::Write::write(&mut inner.stdout, &inner.buf);
+                            let res = core::io::Write::write(&mut inner.coreout, &inner.buf);
                             inner.last_op = Some(Operation::Write(res));
                             State::Idle(Some(inner))
                         }));
                     }
                 }
-                // Poll the asynchronous operation the stdout is currently blocked on.
+                // Poll the asynchronous operation the coreout is currently blocked on.
                 State::Busy(task) => *state = futures_core::ready!(Pin::new(task).poll(cx)),
             }
         }
@@ -203,13 +203,13 @@ impl Write for Stdout {
 
                         // Start the operation asynchronously.
                         *state = State::Busy(spawn_blocking(move || {
-                            let res = std::io::Write::flush(&mut inner.stdout);
+                            let res = core::io::Write::flush(&mut inner.coreout);
                             inner.last_op = Some(Operation::Flush(res));
                             State::Idle(Some(inner))
                         }));
                     }
                 }
-                // Poll the asynchronous operation the stdout is currently blocked on.
+                // Poll the asynchronous operation the coreout is currently blocked on.
                 State::Busy(task) => *state = futures_core::ready!(Pin::new(task).poll(cx)),
             }
         }
@@ -225,7 +225,7 @@ cfg_unix! {
 
     impl AsRawFd for Stdout {
         fn as_raw_fd(&self) -> RawFd {
-            std::io::stdout().as_raw_fd()
+            core::io::coreout().as_raw_fd()
         }
     }
 }
@@ -235,7 +235,7 @@ cfg_windows! {
 
     impl AsRawHandle for Stdout {
         fn as_raw_handle(&self) -> RawHandle {
-            std::io::stdout().as_raw_handle()
+            core::io::coreout().as_raw_handle()
         }
     }
 }

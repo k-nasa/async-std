@@ -1,13 +1,13 @@
 cfg_not_docs! {
-    pub use std::fs::Permissions;
+    pub use core::fs::Permissions;
 }
 
 cfg_docs! {
     /// A set of permissions on a file or directory.
     ///
-    /// This type is a re-export of [`std::fs::Permissions`].
+    /// This type is a re-export of [`core::fs::Permissions`].
     ///
-    /// [`std::fs::Permissions`]: https://doc.rust-lang.org/std/fs/struct.Permissions.html
+    /// [`core::fs::Permissions`]: https://doc.rust-lang.org/core/fs/struct.Permissions.html
     #[derive(Clone, PartialEq, Eq, Debug)]
     pub struct Permissions {
         _private: (),
@@ -19,9 +19,9 @@ cfg_docs! {
         /// # Examples
         ///
         /// ```no_run
-        /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+        /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
         /// #
-        /// use async_std::fs;
+        /// use async_core::fs;
         ///
         /// let perm = fs::metadata("a.txt").await?.permissions();
         /// println!("{:?}", perm.readonly());
@@ -39,9 +39,9 @@ cfg_docs! {
         /// # Examples
         ///
         /// ```no_run
-        /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+        /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
         /// #
-        /// use async_std::fs;
+        /// use async_core::fs;
         ///
         /// let mut perm = fs::metadata("a.txt").await?.permissions();
         /// perm.set_readonly(true);

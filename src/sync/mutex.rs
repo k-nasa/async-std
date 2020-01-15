@@ -1,26 +1,26 @@
-use std::cell::UnsafeCell;
-use std::fmt;
-use std::ops::{Deref, DerefMut};
-use std::pin::Pin;
-use std::sync::atomic::{AtomicBool, Ordering};
-use std::future::Future;
+use core::cell::UnsafeCell;
+use core::fmt;
+use core::ops::{Deref, DerefMut};
+use core::pin::Pin;
+use core::sync::atomic::{AtomicBool, Ordering};
+use core::future::Future;
 
 use crate::sync::WakerSet;
 use crate::task::{Context, Poll};
 
 /// A mutual exclusion primitive for protecting shared data.
 ///
-/// This type is an async version of [`std::sync::Mutex`].
+/// This type is an async version of [`core::sync::Mutex`].
 ///
-/// [`std::sync::Mutex`]: https://doc.rust-lang.org/std/sync/struct.Mutex.html
+/// [`core::sync::Mutex`]: https://doc.rust-lang.org/core/sync/struct.Mutex.html
 ///
 /// # Examples
 ///
 /// ```
-/// # async_std::task::block_on(async {
+/// # async_core::task::block_on(async {
 /// #
-/// use async_std::sync::{Arc, Mutex};
-/// use async_std::task;
+/// use async_core::sync::{Arc, Mutex};
+/// use async_core::task;
 ///
 /// let m = Arc::new(Mutex::new(0));
 /// let mut tasks = vec![];
@@ -54,7 +54,7 @@ impl<T> Mutex<T> {
     /// # Examples
     ///
     /// ```
-    /// use async_std::sync::Mutex;
+    /// use async_core::sync::Mutex;
     ///
     /// let mutex = Mutex::new(0);
     /// ```
@@ -75,10 +75,10 @@ impl<T: ?Sized> Mutex<T> {
     /// # Examples
     ///
     /// ```
-    /// # async_std::task::block_on(async {
+    /// # async_core::task::block_on(async {
     /// #
-    /// use async_std::sync::{Arc, Mutex};
-    /// use async_std::task;
+    /// use async_core::sync::{Arc, Mutex};
+    /// use async_core::task;
     ///
     /// let m1 = Arc::new(Mutex::new(10));
     /// let m2 = m1.clone();
@@ -146,15 +146,15 @@ impl<T: ?Sized> Mutex<T> {
     /// If the lock could not be acquired at this time, then [`None`] is returned. Otherwise, a
     /// guard is returned that releases the lock when dropped.
     ///
-    /// [`None`]: https://doc.rust-lang.org/std/option/enum.Option.html#variant.None
+    /// [`None`]: https://doc.rust-lang.org/core/option/enum.Option.html#variant.None
     ///
     /// # Examples
     ///
     /// ```
-    /// # async_std::task::block_on(async {
+    /// # async_core::task::block_on(async {
     /// #
-    /// use async_std::sync::{Arc, Mutex};
-    /// use async_std::task;
+    /// use async_core::sync::{Arc, Mutex};
+    /// use async_core::task;
     ///
     /// let m1 = Arc::new(Mutex::new(10));
     /// let m2 = m1.clone();
@@ -186,7 +186,7 @@ impl<T: ?Sized> Mutex<T> {
     /// # Examples
     ///
     /// ```
-    /// use async_std::sync::Mutex;
+    /// use async_core::sync::Mutex;
     ///
     /// let mutex = Mutex::new(10);
     /// assert_eq!(mutex.into_inner(), 10);
@@ -203,9 +203,9 @@ impl<T: ?Sized> Mutex<T> {
     /// # Examples
     ///
     /// ```
-    /// # async_std::task::block_on(async {
+    /// # async_core::task::block_on(async {
     /// #
-    /// use async_std::sync::Mutex;
+    /// use async_core::sync::Mutex;
     ///
     /// let mut mutex = Mutex::new(0);
     /// *mutex.get_mut() = 10;

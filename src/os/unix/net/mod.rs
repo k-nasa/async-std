@@ -9,11 +9,11 @@ mod listener;
 mod stream;
 
 cfg_not_docs! {
-    pub use std::os::unix::net::SocketAddr;
+    pub use core::os::unix::net::SocketAddr;
 }
 
 cfg_docs! {
-    use std::fmt;
+    use core::fmt;
 
     use crate::path::Path;
 
@@ -22,7 +22,7 @@ cfg_docs! {
     /// # Examples
     ///
     /// ```
-    /// use async_std::os::unix::net::UnixListener;
+    /// use async_core::os::unix::net::UnixListener;
     ///
     /// let socket = UnixListener::bind("/tmp/socket").await?;
     /// let addr = socket.local_addr()?;
@@ -40,7 +40,7 @@ cfg_docs! {
         /// A named address:
         ///
         /// ```no_run
-        /// use async_std::os::unix::net::UnixListener;
+        /// use async_core::os::unix::net::UnixListener;
         ///
         /// let socket = UnixListener::bind("/tmp/socket").await?;
         /// let addr = socket.local_addr()?;
@@ -50,7 +50,7 @@ cfg_docs! {
         /// An unnamed address:
         ///
         /// ```no_run
-        /// use async_std::os::unix::net::UnixDatagram;
+        /// use async_core::os::unix::net::UnixDatagram;
         ///
         /// let socket = UnixDatagram::unbound().await?;
         /// let addr = socket.local_addr()?;
@@ -67,8 +67,8 @@ cfg_docs! {
         /// With a pathname:
         ///
         /// ```no_run
-        /// use async_std::os::unix::net::UnixListener;
-        /// use async_std::path::Path;
+        /// use async_core::os::unix::net::UnixListener;
+        /// use async_core::path::Path;
         ///
         /// let socket = UnixListener::bind("/tmp/socket").await?;
         /// let addr = socket.local_addr()?;
@@ -78,7 +78,7 @@ cfg_docs! {
         /// Without a pathname:
         ///
         /// ```
-        /// use async_std::os::unix::net::UnixDatagram;
+        /// use async_core::os::unix::net::UnixDatagram;
         ///
         /// let socket = UnixDatagram::unbound()?;
         /// let addr = socket.local_addr()?;

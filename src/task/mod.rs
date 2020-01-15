@@ -1,9 +1,9 @@
 //! Types and traits for working with asynchronous tasks.
 //!
-//! This module is similar to [`std::thread`], except it uses asynchronous tasks in place of
+//! This module is similar to [`core::thread`], except it uses asynchronous tasks in place of
 //! threads.
 //!
-//! [`std::thread`]: https://doc.rust-lang.org/std/thread
+//! [`core::thread`]: https://doc.rust-lang.org/core/thread
 //!
 //! ## The task model
 //!
@@ -26,7 +26,7 @@
 //! A new task can be spawned using the [`task::spawn`][`spawn`] function:
 //!
 //! ```no_run
-//! use async_std::task;
+//! use async_core::task;
 //!
 //! task::spawn(async {
 //!     // some work here
@@ -40,9 +40,9 @@
 //! [`JoinHandle`], which implements `Future` and can be `await`ed:
 //!
 //! ```
-//! use async_std::task;
+//! use async_core::task;
 //!
-//! # async_std::task::block_on(async {
+//! # async_core::task::block_on(async {
 //! #
 //! let child = task::spawn(async {
 //!     // some work here
@@ -62,9 +62,9 @@
 //!
 //! ```
 //! # #![allow(unused_must_use)]
-//! use async_std::task;
+//! use async_core::task;
 //!
-//! # async_std::task::block_on(async {
+//! # async_core::task::block_on(async {
 //! #
 //! task::Builder::new().name("child1".to_string()).spawn(async {
 //!     println!("Hello, world!");
@@ -108,7 +108,7 @@
 //! [`JoinHandle`]: struct.JoinHandle.html
 //! [`JoinHandle::task`]: struct.JoinHandle.html#method.task
 //! [`join`]: struct.JoinHandle.html#method.join
-//! [`panic!`]: https://doc.rust-lang.org/std/macro.panic.html
+//! [`panic!`]: https://doc.rust-lang.org/core/macro.panic.html
 //! [`Builder`]: struct.Builder.html
 //! [`Builder::name`]: struct.Builder.html#method.name
 //! [`task::current`]: fn.current.html
@@ -117,9 +117,9 @@
 //! [`task_local!`]: ../macro.task_local.html
 //! [`with`]: struct.LocalKey.html#method.with
 
-cfg_std! {
+cfg_core! {
     #[doc(inline)]
-    pub use std::task::{Context, Poll, Waker};
+    pub use core::task::{Context, Poll, Waker};
 
     pub use ready::ready;
     pub use yield_now::yield_now;

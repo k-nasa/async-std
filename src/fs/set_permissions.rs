@@ -5,9 +5,9 @@ use crate::task::spawn_blocking;
 
 /// Changes the permissions of a file or directory.
 ///
-/// This function is an async version of [`std::fs::set_permissions`].
+/// This function is an async version of [`core::fs::set_permissions`].
 ///
-/// [`std::fs::set_permissions`]: https://doc.rust-lang.org/std/fs/fn.set_permissions.html
+/// [`core::fs::set_permissions`]: https://doc.rust-lang.org/core/fs/fn.set_permissions.html
 ///
 /// # Errors
 ///
@@ -20,9 +20,9 @@ use crate::task::spawn_blocking;
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::fs;
+/// use async_core::fs;
 ///
 /// let mut perm = fs::metadata("a.txt").await?.permissions();
 /// perm.set_readonly(true);
@@ -32,5 +32,5 @@ use crate::task::spawn_blocking;
 /// ```
 pub async fn set_permissions<P: AsRef<Path>>(path: P, perm: Permissions) -> io::Result<()> {
     let path = path.as_ref().to_owned();
-    spawn_blocking(move || std::fs::set_permissions(path, perm)).await
+    spawn_blocking(move || core::fs::set_permissions(path, perm)).await
 }

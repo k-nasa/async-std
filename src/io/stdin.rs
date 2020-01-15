@@ -1,6 +1,6 @@
-use std::future::Future;
-use std::pin::Pin;
-use std::sync::Mutex;
+use core::future::Future;
+use core::pin::Pin;
+use core::sync::Mutex;
 
 use crate::future;
 use crate::io::{self, Read};
@@ -9,14 +9,14 @@ use crate::utils::Context as _;
 
 cfg_unstable! {
     use once_cell::sync::Lazy;
-    use std::io::Read as _;
+    use core::io::Read as _;
 }
 
 /// Constructs a new handle to the standard input of the current process.
 ///
-/// This function is an async version of [`std::io::stdin`].
+/// This function is an async version of [`core::io::corein`].
 ///
-/// [`std::io::stdin`]: https://doc.rust-lang.org/std/io/fn.stdin.html
+/// [`core::io::corein`]: https://doc.rust-lang.org/core/io/fn.corein.html
 ///
 /// ### Note: Windows Portability Consideration
 ///
@@ -27,19 +27,19 @@ cfg_unstable! {
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::io;
+/// use async_core::io;
 ///
-/// let stdin = io::stdin();
+/// let corein = io::corein();
 /// let mut line = String::new();
-/// stdin.read_line(&mut line).await?;
+/// corein.read_line(&mut line).await?;
 /// #
 /// # Ok(()) }) }
 /// ```
-pub fn stdin() -> Stdin {
+pub fn corein() -> Stdin {
     Stdin(Mutex::new(State::Idle(Some(Inner {
-        stdin: std::io::stdin(),
+        corein: core::io::corein(),
         line: String::new(),
         buf: Vec::new(),
         last_op: None,
@@ -48,7 +48,7 @@ pub fn stdin() -> Stdin {
 
 /// A handle to the standard input of the current process.
 ///
-/// This reader is created by the [`stdin`] function. See its documentation for
+/// This reader is created by the [`corein`] function. See its documentation for
 /// more.
 ///
 /// ### Note: Windows Portability Consideration
@@ -57,7 +57,7 @@ pub fn stdin() -> Stdin {
 /// non-UTF-8 byte sequences. Attempting to write bytes that are not valid UTF-8 will return
 /// an error.
 ///
-/// [`stdin`]: fn.stdin.html
+/// [`corein`]: fn.corein.html
 #[derive(Debug)]
 pub struct Stdin(Mutex<State>);
 
@@ -70,31 +70,31 @@ pub struct Stdin(Mutex<State>);
 #[cfg_attr(feature = "docs", doc(cfg(unstable)))]
 #[cfg(feature = "unstable")]
 #[derive(Debug)]
-pub struct StdinLock<'a>(std::io::StdinLock<'a>);
+pub struct StdinLock<'a>(core::io::StdinLock<'a>);
 
 #[cfg(feature = "unstable")]
 #[cfg_attr(feature = "docs", doc(cfg(unstable)))]
 unsafe impl Send for StdinLock<'_> {}
 
-/// The state of the asynchronous stdin.
+/// The state of the asynchronous corein.
 ///
-/// The stdin can be either idle or busy performing an asynchronous operation.
+/// The corein can be either idle or busy performing an asynchronous operation.
 #[derive(Debug)]
 enum State {
-    /// The stdin is idle.
+    /// The corein is idle.
     Idle(Option<Inner>),
 
-    /// The stdin is blocked on an asynchronous operation.
+    /// The corein is blocked on an asynchronous operation.
     ///
-    /// Awaiting this operation will result in the new state of the stdin.
+    /// Awaiting this operation will result in the new state of the corein.
     Busy(JoinHandle<State>),
 }
 
-/// Inner representation of the asynchronous stdin.
+/// Inner representation of the asynchronous corein.
 #[derive(Debug)]
 struct Inner {
-    /// The blocking stdin handle.
-    stdin: std::io::Stdin,
+    /// The blocking corein handle.
+    corein: core::io::Stdin,
 
     /// The line buffer.
     line: String,
@@ -102,11 +102,11 @@ struct Inner {
     /// The write buffer.
     buf: Vec<u8>,
 
-    /// The result of the last asynchronous operation on the stdin.
+    /// The result of the last asynchronous operation on the corein.
     last_op: Option<Operation>,
 }
 
-/// Possible results of an asynchronous operation on the stdin.
+/// Possible results of an asynchronous operation on the corein.
 #[derive(Debug)]
 enum Operation {
     ReadLine(io::Result<usize>),
@@ -119,13 +119,13 @@ impl Stdin {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::io;
+    /// use async_core::io;
     ///
-    /// let stdin = io::stdin();
+    /// let corein = io::corein();
     /// let mut line = String::new();
-    /// stdin.read_line(&mut line).await?;
+    /// corein.read_line(&mut line).await?;
     /// #
     /// # Ok(()) }) }
     /// ```
@@ -151,19 +151,19 @@ impl Stdin {
                             // Start the operation asynchronously.
                             *state = State::Busy(spawn_blocking(move || {
                                 inner.line.clear();
-                                let res = inner.stdin.read_line(&mut inner.line);
+                                let res = inner.corein.read_line(&mut inner.line);
                                 inner.last_op = Some(Operation::ReadLine(res));
                                 State::Idle(Some(inner))
                             }));
                         }
                     }
-                    // Poll the asynchronous operation the stdin is currently blocked on.
+                    // Poll the asynchronous operation the corein is currently blocked on.
                     State::Busy(task) => *state = futures_core::ready!(Pin::new(task).poll(cx)),
                 }
             }
         })
         .await
-        .context(|| String::from("could not read line on stdin"))
+        .context(|| String::from("could not read line on corein"))
     }
 
     /// Locks this handle to the standard input stream, returning a readable guard.
@@ -173,15 +173,15 @@ impl Stdin {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::io;
-    /// use async_std::prelude::*;
+    /// use async_core::io;
+    /// use async_core::prelude::*;
     ///
     /// let mut buffer = String::new();
     ///
-    /// let stdin = io::stdin();
-    /// let mut handle = stdin.lock().await;
+    /// let corein = io::corein();
+    /// let mut handle = corein.lock().await;
     ///
     /// handle.read_to_string(&mut buffer).await?;
     /// #
@@ -190,7 +190,7 @@ impl Stdin {
     #[cfg_attr(feature = "docs", doc(cfg(unstable)))]
     #[cfg(any(feature = "unstable", feature = "docs"))]
     pub async fn lock(&self) -> StdinLock<'static> {
-        static STDIN: Lazy<std::io::Stdin> = Lazy::new(std::io::stdin);
+        static STDIN: Lazy<core::io::Stdin> = Lazy::new(core::io::corein);
 
         spawn_blocking(move || StdinLock(STDIN.lock())).await
     }
@@ -233,13 +233,13 @@ impl Read for Stdin {
 
                         // Start the operation asynchronously.
                         *state = State::Busy(spawn_blocking(move || {
-                            let res = std::io::Read::read(&mut inner.stdin, &mut inner.buf);
+                            let res = core::io::Read::read(&mut inner.corein, &mut inner.buf);
                             inner.last_op = Some(Operation::Read(res));
                             State::Idle(Some(inner))
                         }));
                     }
                 }
-                // Poll the asynchronous operation the stdin is currently blocked on.
+                // Poll the asynchronous operation the corein is currently blocked on.
                 State::Busy(task) => *state = futures_core::ready!(Pin::new(task).poll(cx)),
             }
         }
@@ -251,7 +251,7 @@ cfg_unix! {
 
     impl AsRawFd for Stdin {
         fn as_raw_fd(&self) -> RawFd {
-            std::io::stdin().as_raw_fd()
+            core::io::corein().as_raw_fd()
         }
     }
 }
@@ -261,7 +261,7 @@ cfg_windows! {
 
     impl AsRawHandle for Stdin {
         fn as_raw_handle(&self) -> RawHandle {
-            std::io::stdin().as_raw_handle()
+            core::io::corein().as_raw_handle()
         }
     }
 }

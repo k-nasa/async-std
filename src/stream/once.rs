@@ -1,4 +1,4 @@
-use std::pin::Pin;
+use core::pin::Pin;
 
 use pin_project_lite::pin_project;
 
@@ -13,10 +13,10 @@ use crate::stream::DoubleEndedStream;
 /// # Examples
 ///
 /// ```
-/// # async_std::task::block_on(async {
+/// # async_core::task::block_on(async {
 /// #
-/// use async_std::prelude::*;
-/// use async_std::stream;
+/// use async_core::prelude::*;
+/// use async_core::stream;
 ///
 /// let mut s = stream::once(7);
 ///

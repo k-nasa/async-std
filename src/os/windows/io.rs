@@ -1,14 +1,14 @@
 //! Windows-specific I/O extensions.
 
 cfg_not_docs! {
-    pub use std::os::windows::io::{
+    pub use core::os::windows::io::{
         AsRawHandle, FromRawHandle, IntoRawHandle, RawHandle, RawSocket,
     };
 }
 
 cfg_docs! {
     /// Raw HANDLEs.
-    pub type RawHandle = *mut std::os::raw::c_void;
+    pub type RawHandle = *mut core::os::raw::c_void;
 
     /// Raw SOCKETs.
     pub type RawSocket = u64;

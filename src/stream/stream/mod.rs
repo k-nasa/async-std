@@ -1,16 +1,16 @@
 //! Asynchronous iteration.
 //!
-//! This module is an async version of [`std::iter`].
+//! This module is an async version of [`core::iter`].
 //!
-//! [`std::iter`]: https://doc.rust-lang.org/std/iter/index.html
+//! [`core::iter`]: https://doc.rust-lang.org/core/iter/index.html
 //!
 //! # Examples
 //!
 //! ```
-//! # async_std::task::block_on(async {
+//! # async_core::task::block_on(async {
 //! #
-//! use async_std::prelude::*;
-//! use async_std::stream;
+//! use async_core::prelude::*;
+//! use async_core::stream;
 //!
 //! let mut s = stream::repeat(9).take(3);
 //!
@@ -110,12 +110,12 @@ pub use take::Take;
 pub use take_while::TakeWhile;
 pub use zip::Zip;
 
-use std::cmp::Ordering;
+use core::cmp::Ordering;
 
 cfg_unstable! {
-    use std::future::Future;
-    use std::pin::Pin;
-    use std::time::Duration;
+    use core::future::Future;
+    use core::pin::Pin;
+    use core::time::Duration;
 
     use crate::stream::into_stream::IntoStream;
     use crate::stream::{FromStream, Product, Sum};
@@ -144,7 +144,7 @@ cfg_unstable! {
 }
 
 extension_trait! {
-    use std::ops::{Deref, DerefMut};
+    use core::ops::{Deref, DerefMut};
 
     use crate::task::{Context, Poll};
 
@@ -152,17 +152,17 @@ extension_trait! {
         An asynchronous stream of values.
 
         This trait is a re-export of [`futures::stream::Stream`] and is an async version of
-        [`std::iter::Iterator`].
+        [`core::iter::Iterator`].
 
         The [provided methods] do not really exist in the trait itself, but they become
         available when [`StreamExt`] from the [prelude] is imported:
 
         ```
         # #[allow(unused_imports)]
-        use async_std::prelude::*;
+        use async_core::prelude::*;
         ```
 
-        [`std::iter::Iterator`]: https://doc.rust-lang.org/std/iter/trait.Iterator.html
+        [`core::iter::Iterator`]: https://doc.rust-lang.org/core/iter/trait.Iterator.html
         [`futures::stream::Stream`]:
         https://docs.rs/futures/0.3/futures/stream/trait.Stream.html
         [provided methods]: #provided-methods
@@ -187,13 +187,13 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use std::pin::Pin;
+            use core::pin::Pin;
 
-            use async_std::prelude::*;
-            use async_std::stream;
-            use async_std::task::{Context, Poll};
+            use async_core::prelude::*;
+            use async_core::stream;
+            use async_core::task::{Context, Poll};
 
             fn increment(
                 s: impl Stream<Item = i32> + Unpin,
@@ -242,15 +242,15 @@ extension_trait! {
             choose to resume iteration, and so calling `next()` again may or may not eventually
             start returning more values.
 
-            [`None`]: https://doc.rust-lang.org/std/option/enum.Option.html#variant.None
+            [`None`]: https://doc.rust-lang.org/core/option/enum.Option.html#variant.None
 
             # Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let mut s = stream::once(7);
 
@@ -273,10 +273,10 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let mut s = stream::repeat(9).take(3);
 
@@ -300,10 +300,10 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let s = stream::from_iter(vec![1, 2, 3, 4]);
             let mut s = s.take_while(|x| x < &3 );
@@ -329,11 +329,11 @@ extension_trait! {
             This stream does not drop any items, but will only limit the rate at which items pass through.
             # Examples
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
-            use std::time::{Duration, Instant};
+            use async_core::prelude::*;
+            use async_core::stream;
+            use core::time::{Duration, Instant};
 
             let start = Instant::now();
 
@@ -376,10 +376,10 @@ extension_trait! {
             Basic usage:
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let s = stream::from_iter(vec![0u8, 1, 2, 3, 4]);
             let mut stepped = s.step_by(2);
@@ -408,10 +408,10 @@ extension_trait! {
             Basic usage:
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let first = stream::from_iter(vec![0u8, 1]);
             let second = stream::from_iter(vec![2, 3]);
@@ -443,10 +443,10 @@ extension_trait! {
             Basic usage:
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let v = stream::from_iter(vec![&1, &2, &3]);
 
@@ -478,10 +478,10 @@ extension_trait! {
             Basic usage:
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let s = stream::from_iter(vec![&1, &2, &3]);
             let mut s_copied  = s.copied();
@@ -510,10 +510,10 @@ extension_trait! {
             Basic usage:
 
             ```
-            # async_std::task::block_on(async {
+            # async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let mut s = stream::once(7).cycle();
 
@@ -543,10 +543,10 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let s = stream::from_iter(vec!['a', 'b', 'c']);
             let mut s = s.enumerate();
@@ -572,11 +572,11 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
-            use std::time::{Duration, Instant};
+            use async_core::prelude::*;
+            use async_core::stream;
+            use core::time::{Duration, Instant};
 
             let start = Instant::now();
             let mut s = stream::from_iter(vec![0u8, 1, 2]).delay(Duration::from_millis(200));
@@ -600,7 +600,7 @@ extension_trait! {
         "#]
         #[cfg(any(feature = "unstable", feature = "docs"))]
         #[cfg_attr(feature = "docs", doc(cfg(unstable)))]
-        fn delay(self, dur: std::time::Duration) -> Delay<Self>
+        fn delay(self, dur: core::time::Duration) -> Delay<Self>
         where
             Self: Sized,
         {
@@ -613,10 +613,10 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let s = stream::from_iter(vec![1, 2, 3]);
             let mut s = s.map(|x| 2 * x);
@@ -647,10 +647,10 @@ extension_trait! {
             Basic usage:
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let s = stream::from_iter(vec![1, 2, 3, 4, 5]);
 
@@ -682,10 +682,10 @@ extension_trait! {
             Basic usage:
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let s = stream::from_iter(vec![1, 2, 3]);
 
@@ -697,10 +697,10 @@ extension_trait! {
 
             An empty stream will return `None`:
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::stream;
-            use crate::async_std::prelude::*;
+            use async_core::stream;
+            use crate::async_core::prelude::*;
 
             let s = stream::empty::<()>();
 
@@ -729,10 +729,10 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let mut s = stream::once(1).fuse();
             assert_eq!(s.next().await, Some(1));
@@ -757,10 +757,10 @@ extension_trait! {
             Basic usage:
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let s = stream::from_iter(vec![1, 2, 3, 4]);
             let mut s = s.filter(|i| i % 2 == 0);
@@ -788,10 +788,10 @@ extension_trait! {
             Basic usage:
 
             ```
-            # async_std::task::block_on(async {
+            # async_core::task::block_on(async {
 
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let words = stream::from_iter(&["alpha", "beta", "gamma"]);
 
@@ -829,10 +829,10 @@ extension_trait! {
             Basic usage:
 
             ```
-            # async_std::task::block_on(async {
+            # async_core::task::block_on(async {
 
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let inner1 = stream::from_iter(vec![1u8,2,3]);
             let inner2 = stream::from_iter(vec![4u8,5,6]);
@@ -862,11 +862,11 @@ extension_trait! {
             Basic usage:
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
 
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let s = stream::from_iter(vec!["1", "lol", "3", "NaN", "5"]);
 
@@ -903,10 +903,10 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let s = stream::from_iter(vec![-1isize, 2, -3]);
 
@@ -939,10 +939,10 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let s = stream::from_iter(vec![-3_i32, 0, 1, 5, -10]);
 
@@ -975,10 +975,10 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let s = stream::from_iter(vec![1u8, 2, 3]);
 
@@ -1012,10 +1012,10 @@ extension_trait! {
             # Examples
 
             ```ignore
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let s = stream::from_iter(vec![1usize, 2, 3]);
 
@@ -1045,10 +1045,10 @@ extension_trait! {
             # Examples
 
             ```ignore
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let s = stream::from_iter(vec![1usize, 2, 3]);
 
@@ -1079,10 +1079,10 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let s = stream::from_iter(vec![1u8, 2, 3]);
 
@@ -1117,10 +1117,10 @@ extension_trait! {
             Basic usage:
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let mut s = stream::from_iter(vec![1u8, 2, 3]);
 
@@ -1132,10 +1132,10 @@ extension_trait! {
             Calling `nth()` multiple times:
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::stream;
-            use async_std::prelude::*;
+            use async_core::stream;
+            use async_core::prelude::*;
 
             let mut s = stream::from_iter(vec![1u8, 2, 3]);
 
@@ -1149,10 +1149,10 @@ extension_trait! {
             ```
             Returning `None` if the stream finished before returning `n` elements:
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let mut s  = stream::from_iter(vec![1u8, 2, 3]);
 
@@ -1191,10 +1191,10 @@ extension_trait! {
             Basic usage:
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let mut s = stream::repeat::<u32>(42).take(3);
             assert!(s.all(|x| x ==  42).await);
@@ -1206,10 +1206,10 @@ extension_trait! {
             Empty stream:
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let mut s = stream::empty::<u32>();
             assert!(s.all(|_| false).await);
@@ -1237,10 +1237,10 @@ extension_trait! {
             Basic usage:
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let mut s = stream::from_iter(vec![1u8, 2, 3]);
             let res = s.find(|x| *x == 2).await;
@@ -1252,10 +1252,10 @@ extension_trait! {
             Resuming after a first find:
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let mut s= stream::from_iter(vec![1, 2, 3]);
             let res = s.find(|x| *x == 2).await;
@@ -1282,10 +1282,10 @@ extension_trait! {
             Applies function to the elements of stream and returns the first non-none result.
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let mut s = stream::from_iter(vec!["lol", "NaN", "2", "5"]);
             let first_number = s.find_map(|s| s.parse().ok()).await;
@@ -1315,10 +1315,10 @@ extension_trait! {
             Basic usage:
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let s = stream::from_iter(vec![1u8, 2, 3]);
             let sum = s.fold(0, |acc, x| acc + x).await;
@@ -1349,10 +1349,10 @@ extension_trait! {
             Basic usage:
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let (even, odd): (Vec<i32>, Vec<i32>) = stream::from_iter(vec![1, 2, 3])
                 .partition(|&n| n % 2 == 0).await;
@@ -1384,11 +1384,11 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
-            use std::sync::mpsc::channel;
+            use async_core::prelude::*;
+            use async_core::stream;
+            use core::sync::mpsc::channel;
 
             let (tx, rx) = channel();
 
@@ -1432,10 +1432,10 @@ extension_trait! {
             Basic usage:
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let mut s = stream::repeat::<u32>(42).take(3);
             assert!(s.any(|x| x ==  42).await);
@@ -1446,10 +1446,10 @@ extension_trait! {
             Empty stream:
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let mut s = stream::empty::<u32>();
             assert!(!s.any(|_| false).await);
@@ -1477,10 +1477,10 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let a = vec![1isize, 2, 3];
 
@@ -1534,10 +1534,10 @@ extension_trait! {
             ## Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let s = stream::from_iter(vec![1isize, 2, 3]);
             let mut s = s.scan(1, |state, x| {
@@ -1574,10 +1574,10 @@ extension_trait! {
             ## Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let a = stream::from_iter(vec![-1i32, 0, 1]);
             let mut s = a.skip_while(|x| x.is_negative());
@@ -1603,10 +1603,10 @@ extension_trait! {
             ## Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let s = stream::from_iter(vec![1u8, 2, 3]);
             let mut skipped = s.skip(2);
@@ -1633,12 +1633,12 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
             #
-            use std::time::Duration;
+            use core::time::Duration;
 
-            use async_std::stream;
-            use async_std::prelude::*;
+            use async_core::stream;
+            use async_core::prelude::*;
 
             let mut s = stream::repeat(1).take(3).timeout(Duration::from_secs(1));
 
@@ -1667,10 +1667,10 @@ extension_trait! {
             Basic usage:
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let mut s = stream::from_iter(vec![1usize, 2, 3]);
             let sum = s.try_fold(0, |acc, v| {
@@ -1704,11 +1704,11 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use std::sync::mpsc::channel;
-            use async_std::prelude::*;
-            use async_std::stream;
+            use core::sync::mpsc::channel;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let (tx, rx) = channel();
 
@@ -1756,16 +1756,16 @@ extension_trait! {
             [`None`]. If the first stream returns [`None`], `zip` will short-circuit and
             `poll_next` will not be called on the second stream.
 
-            [`None`]: https://doc.rust-lang.org/std/option/enum.Option.html#variant.None
+            [`None`]: https://doc.rust-lang.org/core/option/enum.Option.html#variant.None
             [`poll_next`]: #tymethod.poll_next
 
             ## Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let l = stream::from_iter(vec![1u8, 2, 3]);
             let r = stream::from_iter(vec![4u8, 5, 6, 7]);
@@ -1800,10 +1800,10 @@ extension_trait! {
             # Example
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let s  = stream::from_iter(vec![(1,2), (3,4)]);
 
@@ -1846,10 +1846,10 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let s = stream::repeat(9u8).take(3);
             let buf: Vec<u8> = s.collect().await;
@@ -1898,9 +1898,9 @@ extension_trait! {
             # Examples
 
             ```
-            # async_std::task::block_on(async {
-            use async_std::prelude::*;
-            use async_std::stream::{self, FromStream};
+            # async_core::task::block_on(async {
+            use async_core::prelude::*;
+            use async_core::stream::{self, FromStream};
 
             let a = stream::once(1u8);
             let b = stream::once(2u8);
@@ -1931,12 +1931,12 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
-            use std::cmp::Ordering;
+            use core::cmp::Ordering;
 
             let s1 = stream::from_iter(vec![1]);
             let s2 = stream::from_iter(vec![1, 2]);
@@ -1970,10 +1970,10 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let s = stream::from_iter(vec![1usize, 2, 3]);
             let res = s.clone().position(|x| x == 1).await;
@@ -2009,11 +2009,11 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
-            use std::cmp::Ordering;
+            use async_core::prelude::*;
+            use async_core::stream;
+            use core::cmp::Ordering;
 
             let s1 = stream::from_iter(vec![1]);
             let s2 = stream::from_iter(vec![1, 2]);
@@ -2047,10 +2047,10 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let s1 = stream::from_iter(vec![0]);
             let s2 = stream::from_iter(vec![1, 2, 3]);
@@ -2077,10 +2077,10 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let single     = stream::from_iter(vec![1usize]);
             let single_ne  = stream::from_iter(vec![10usize]);
@@ -2114,10 +2114,10 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let single    = stream::from_iter(vec![1]);
             let single_gt = stream::from_iter(vec![10]);
@@ -2151,10 +2151,10 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let single     = stream::from_iter(vec![1]);
             let single_eq  = stream::from_iter(vec![10]);
@@ -2188,10 +2188,10 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let single = stream::from_iter(vec![1]);
             let single_gt = stream::from_iter(vec![10]);
@@ -2225,10 +2225,10 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let single = stream::from_iter(vec![1]);
             let single_gt = stream::from_iter(vec![10]);
@@ -2262,10 +2262,10 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let single = stream::from_iter(vec![1]);
             let single_gt = stream::from_iter(vec![10]);
@@ -2310,10 +2310,10 @@ extension_trait! {
             Basic usage:
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::stream;
+            use async_core::prelude::*;
+            use async_core::stream;
 
             let s = stream::from_iter(vec![0u8, 1, 2, 3, 4]);
             let sum: u8 = s.sum().await;
@@ -2352,11 +2352,11 @@ extension_trait! {
             n, inclusive):
 
             ```
-            # fn main() { async_std::task::block_on(async {
+            # fn main() { async_core::task::block_on(async {
             #
             async fn factorial(n: u32) -> u32 {
-                use async_std::prelude::*;
-                use async_std::stream;
+                use async_core::prelude::*;
+                use async_core::stream;
 
                 let s = stream::from_iter(1..=n);
                 s.product().await
@@ -2410,7 +2410,7 @@ extension_trait! {
         }
     }
 
-    impl<S: Stream> Stream for std::panic::AssertUnwindSafe<S> {
+    impl<S: Stream> Stream for core::panic::AssertUnwindSafe<S> {
         type Item = S::Item;
 
         fn poll_next(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>> {

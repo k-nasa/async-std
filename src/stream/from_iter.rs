@@ -1,4 +1,4 @@
-use std::pin::Pin;
+use core::pin::Pin;
 
 use pin_project_lite::pin_project;
 
@@ -25,10 +25,10 @@ pin_project! {
 /// # Examples
 ///
 /// ```
-/// # async_std::task::block_on(async {
+/// # async_core::task::block_on(async {
 /// #
-/// use async_std::prelude::*;
-/// use async_std::stream;
+/// use async_core::prelude::*;
+/// use async_core::stream;
 ///
 /// let mut s = stream::from_iter(vec![0, 1, 2, 3]);
 ///

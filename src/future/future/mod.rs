@@ -6,7 +6,7 @@ cfg_unstable! {
     mod join;
     mod try_join;
 
-    use std::time::Duration;
+    use core::time::Duration;
     use delay::DelayFuture;
     use flatten::FlattenFuture;
     use crate::future::IntoFuture;
@@ -21,8 +21,8 @@ cfg_unstable_default! {
 }
 
 extension_trait! {
-    use std::pin::Pin;
-    use std::ops::{Deref, DerefMut};
+    use core::pin::Pin;
+    use core::ops::{Deref, DerefMut};
 
     use crate::task::{Context, Poll};
 
@@ -38,7 +38,7 @@ extension_trait! {
 
         ```
         # #[allow(unused_imports)]
-        use async_std::prelude::*;
+        use async_core::prelude::*;
         ```
 
         # The `poll` method
@@ -136,16 +136,16 @@ extension_trait! {
 
         [`Future`]: ../future/trait.Future.html
     "#]
-    pub trait FutureExt: std::future::Future {
+    pub trait FutureExt: core::future::Future {
         /// Returns a Future that delays execution for a specified time.
         ///
         /// # Examples
         ///
         /// ```
-        /// # async_std::task::block_on(async {
-        /// use async_std::prelude::*;
-        /// use async_std::future;
-        /// use std::time::Duration;
+        /// # async_core::task::block_on(async {
+        /// use async_core::prelude::*;
+        /// use async_core::future;
+        /// use core::time::Duration;
         ///
         /// let a = future::ready(1).delay(Duration::from_millis(2000));
         /// dbg!(a.await);
@@ -166,8 +166,8 @@ extension_trait! {
         /// # Examples
         ///
         /// ```
-        /// # async_std::task::block_on(async {
-        /// use async_std::prelude::*;
+        /// # async_core::task::block_on(async {
+        /// use async_core::prelude::*;
         ///
         /// let nested_future = async { async { 1 } };
         /// let future = nested_future.flatten();
@@ -203,9 +203,9 @@ extension_trait! {
             # Examples
 
             ```
-            # async_std::task::block_on(async {
-            use async_std::prelude::*;
-            use async_std::future;
+            # async_core::task::block_on(async {
+            use async_core::prelude::*;
+            use async_core::future;
 
             let a = future::pending();
             let b = future::ready(1u8);
@@ -221,10 +221,10 @@ extension_trait! {
         fn race<F>(
             self,
             other: F,
-        ) -> impl Future<Output = <Self as std::future::Future>::Output> [Race<Self, F>]
+        ) -> impl Future<Output = <Self as core::future::Future>::Output> [Race<Self, F>]
         where
-            Self: std::future::Future + Sized,
-            F: std::future::Future<Output = <Self as std::future::Future>::Output>,
+            Self: core::future::Future + Sized,
+            F: core::future::Future<Output = <Self as core::future::Future>::Output>,
         {
             Race::new(self, other)
         }
@@ -246,11 +246,11 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::future;
-            use std::io::{Error, ErrorKind};
+            use async_core::prelude::*;
+            use async_core::future;
+            use core::io::{Error, ErrorKind};
 
             let a = future::pending::<Result<_, Error>>();
             let b = future::ready(Err(Error::from(ErrorKind::Other)));
@@ -267,10 +267,10 @@ extension_trait! {
         fn try_race<F, T, E>(
             self,
             other: F
-        ) -> impl Future<Output = <Self as std::future::Future>::Output> [TryRace<Self, F>]
+        ) -> impl Future<Output = <Self as core::future::Future>::Output> [TryRace<Self, F>]
         where
-            Self: std::future::Future<Output = Result<T, E>> + Sized,
-            F: std::future::Future<Output = <Self as std::future::Future>::Output>,
+            Self: core::future::Future<Output = Result<T, E>> + Sized,
+            F: core::future::Future<Output = <Self as core::future::Future>::Output>,
         {
             TryRace::new(self, other)
         }
@@ -287,9 +287,9 @@ extension_trait! {
             # Examples
 
             ```
-            # async_std::task::block_on(async {
-            use async_std::prelude::*;
-            use async_std::future;
+            # async_core::task::block_on(async {
+            use async_core::prelude::*;
+            use async_core::future;
 
             let a = future::ready(1u8);
             let b = future::ready(2u16);
@@ -304,10 +304,10 @@ extension_trait! {
         fn join<F>(
             self,
             other: F
-        ) -> impl Future<Output = (<Self as std::future::Future>::Output, <F as std::future::Future>::Output)> [Join<Self, F>]
+        ) -> impl Future<Output = (<Self as core::future::Future>::Output, <F as core::future::Future>::Output)> [Join<Self, F>]
         where
-            Self: std::future::Future + Sized,
-            F: std::future::Future,
+            Self: core::future::Future + Sized,
+            F: core::future::Future,
         {
             Join::new(self, other)
         }
@@ -326,10 +326,10 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
             #
-            use async_std::prelude::*;
-            use async_std::future;
+            use async_core::prelude::*;
+            use async_core::future;
 
             let a = future::ready(Err::<u8, &str>("Error"));
             let b = future::ready(Ok(1u8));
@@ -353,8 +353,8 @@ extension_trait! {
             other: F
         ) -> impl Future<Output = Result<(A, B), E>> [TryJoin<Self, F>]
         where
-            Self: std::future::Future<Output = Result<A, E>> + Sized,
-            F: std::future::Future<Output = Result<B, E>>,
+            Self: core::future::Future<Output = Result<A, E>> + Sized,
+            F: core::future::Future<Output = Result<B, E>>,
         {
             TryJoin::new(self, other)
         }
@@ -365,12 +365,12 @@ extension_trait! {
 
             # Example
             ```
-            # async_std::task::block_on(async {
+            # async_core::task::block_on(async {
             #
-            use std::time::Duration;
+            use core::time::Duration;
 
-            use async_std::prelude::*;
-            use async_std::future;
+            use async_core::prelude::*;
+            use async_core::future;
 
             let fut = future::ready(0);
             let dur = Duration::from_millis(100);
@@ -422,7 +422,7 @@ extension_trait! {
         }
     }
 
-    impl<F: Future> Future for std::panic::AssertUnwindSafe<F> {
+    impl<F: Future> Future for core::panic::AssertUnwindSafe<F> {
         type Output = F::Output;
 
         fn poll(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {

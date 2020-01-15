@@ -6,7 +6,7 @@
 mod from_stream;
 
 #[doc(inline)]
-pub use std::option::Option;
+pub use core::option::Option;
 
 cfg_unstable! {
     mod product;

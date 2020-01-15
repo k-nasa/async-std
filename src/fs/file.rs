@@ -1,11 +1,11 @@
-use std::cell::UnsafeCell;
-use std::cmp;
-use std::fmt;
-use std::io::{Read as _, Seek as _, Write as _};
-use std::ops::{Deref, DerefMut};
-use std::pin::Pin;
-use std::sync::atomic::{AtomicBool, Ordering};
-use std::sync::{Arc, Mutex};
+use core::cell::UnsafeCell;
+use core::cmp;
+use core::fmt;
+use core::io::{Read as _, Seek as _, Write as _};
+use core::ops::{Deref, DerefMut};
+use core::pin::Pin;
+use core::sync::atomic::{AtomicBool, Ordering};
+use core::sync::{Arc, Mutex};
 
 use crate::fs::{Metadata, Permissions};
 use crate::future;
@@ -23,20 +23,20 @@ use crate::utils::Context as _;
 /// Files are automatically closed when they get dropped and any errors detected on closing are
 /// ignored. Use the [`sync_all`] method before dropping a file if such errors need to be handled.
 ///
-/// This type is an async version of [`std::fs::File`].
+/// This type is an async version of [`core::fs::File`].
 ///
 /// [`sync_all`]: #method.sync_all
-/// [`std::fs::File`]: https://doc.rust-lang.org/std/fs/struct.File.html
+/// [`core::fs::File`]: https://doc.rust-lang.org/core/fs/struct.File.html
 ///
 /// # Examples
 ///
 /// Create a new file and write some bytes to it:
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::fs::File;
-/// use async_std::prelude::*;
+/// use async_core::fs::File;
+/// use async_core::prelude::*;
 ///
 /// let mut file = File::create("a.txt").await?;
 /// file.write_all(b"Hello, world!").await?;
@@ -47,10 +47,10 @@ use crate::utils::Context as _;
 /// Read the contents of a file into a vector of bytes:
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::fs::File;
-/// use async_std::prelude::*;
+/// use async_core::fs::File;
+/// use async_core::prelude::*;
 ///
 /// let mut file = File::open("a.txt").await?;
 /// let mut contents = Vec::new();
@@ -60,7 +60,7 @@ use crate::utils::Context as _;
 /// ```
 pub struct File {
     /// A reference to the inner file.
-    file: Arc<std::fs::File>,
+    file: Arc<core::fs::File>,
 
     /// The state of the file protected by an async lock.
     lock: Lock<State>,
@@ -68,7 +68,7 @@ pub struct File {
 
 impl File {
     /// Creates an async file handle.
-    pub(crate) fn new(file: std::fs::File, is_flushed: bool) -> File {
+    pub(crate) fn new(file: core::fs::File, is_flushed: bool) -> File {
         let file = Arc::new(file);
 
         File {
@@ -103,9 +103,9 @@ impl File {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::fs::File;
+    /// use async_core::fs::File;
     ///
     /// let file = File::open("a.txt").await?;
     /// #
@@ -114,7 +114,7 @@ impl File {
     pub async fn open<P: AsRef<Path>>(path: P) -> io::Result<File> {
         let path = path.as_ref().to_owned();
         let file = spawn_blocking(move || {
-            std::fs::File::open(&path).context(|| format!("could not open `{}`", path.display()))
+            core::fs::File::open(&path).context(|| format!("could not open `{}`", path.display()))
         })
         .await?;
         Ok(File::new(file, true))
@@ -141,9 +141,9 @@ impl File {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::fs::File;
+    /// use async_core::fs::File;
     ///
     /// let file = File::create("a.txt").await?;
     /// #
@@ -152,7 +152,7 @@ impl File {
     pub async fn create<P: AsRef<Path>>(path: P) -> io::Result<File> {
         let path = path.as_ref().to_owned();
         let file = spawn_blocking(move || {
-            std::fs::File::create(&path)
+            core::fs::File::create(&path)
                 .context(|| format!("could not create `{}`", path.display()))
         })
         .await?;
@@ -169,10 +169,10 @@ impl File {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::fs::File;
-    /// use async_std::prelude::*;
+    /// use async_core::fs::File;
+    /// use async_core::prelude::*;
     ///
     /// let mut file = File::create("a.txt").await?;
     /// file.write_all(b"Hello, world!").await?;
@@ -205,10 +205,10 @@ impl File {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::fs::File;
-    /// use async_std::prelude::*;
+    /// use async_core::fs::File;
+    /// use async_core::prelude::*;
     ///
     /// let mut file = File::create("a.txt").await?;
     /// file.write_all(b"Hello, world!").await?;
@@ -239,9 +239,9 @@ impl File {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::fs::File;
+    /// use async_core::fs::File;
     ///
     /// let file = File::create("a.txt").await?;
     /// file.set_len(10).await?;
@@ -265,9 +265,9 @@ impl File {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::fs::File;
+    /// use async_core::fs::File;
     ///
     /// let file = File::open("a.txt").await?;
     /// let metadata = file.metadata().await?;
@@ -291,9 +291,9 @@ impl File {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::fs::File;
+    /// use async_core::fs::File;
     ///
     /// let file = File::create("a.txt").await?;
     ///
@@ -406,8 +406,8 @@ impl Seek for &File {
     }
 }
 
-impl From<std::fs::File> for File {
-    fn from(file: std::fs::File) -> File {
+impl From<core::fs::File> for File {
+    fn from(file: core::fs::File) -> File {
         File::new(file, false)
     }
 }
@@ -423,7 +423,7 @@ cfg_unix! {
 
     impl FromRawFd for File {
         unsafe fn from_raw_fd(fd: RawFd) -> File {
-            std::fs::File::from_raw_fd(fd).into()
+            core::fs::File::from_raw_fd(fd).into()
         }
     }
 
@@ -449,7 +449,7 @@ cfg_windows! {
 
     impl FromRawHandle for File {
         unsafe fn from_raw_handle(handle: RawHandle) -> File {
-            std::fs::File::from_raw_handle(handle).into()
+            core::fs::File::from_raw_handle(handle).into()
         }
     }
 
@@ -585,7 +585,7 @@ enum Mode {
 /// of the state and return it back once the operation completes.
 struct State {
     /// The inner file.
-    file: Arc<std::fs::File>,
+    file: Arc<core::fs::File>,
 
     /// The current mode (idle, reading, or writing).
     mode: Mode,

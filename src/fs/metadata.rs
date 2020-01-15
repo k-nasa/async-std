@@ -8,10 +8,10 @@ use crate::task::spawn_blocking;
 /// If you want to read metadata without following symbolic links, use [`symlink_metadata`]
 /// instead.
 ///
-/// This function is an async version of [`std::fs::metadata`].
+/// This function is an async version of [`core::fs::metadata`].
 ///
 /// [`symlink_metadata`]: fn.symlink_metadata.html
-/// [`std::fs::metadata`]: https://doc.rust-lang.org/std/fs/fn.metadata.html
+/// [`core::fs::metadata`]: https://doc.rust-lang.org/core/fs/fn.metadata.html
 ///
 /// # Errors
 ///
@@ -24,9 +24,9 @@ use crate::task::spawn_blocking;
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::fs;
+/// use async_core::fs;
 ///
 /// let perm = fs::metadata("a.txt").await?.permissions();
 /// #
@@ -34,15 +34,15 @@ use crate::task::spawn_blocking;
 /// ```
 pub async fn metadata<P: AsRef<Path>>(path: P) -> io::Result<Metadata> {
     let path = path.as_ref().to_owned();
-    spawn_blocking(move || std::fs::metadata(path)).await
+    spawn_blocking(move || core::fs::metadata(path)).await
 }
 
 cfg_not_docs! {
-    pub use std::fs::Metadata;
+    pub use core::fs::Metadata;
 }
 
 cfg_docs! {
-    use std::time::SystemTime;
+    use core::time::SystemTime;
 
     use crate::fs::{FileType, Permissions};
 
@@ -50,13 +50,13 @@ cfg_docs! {
     ///
     /// Metadata is returned by [`metadata`] and [`symlink_metadata`].
     ///
-    /// This type is a re-export of [`std::fs::Metadata`].
+    /// This type is a re-export of [`core::fs::Metadata`].
     ///
     /// [`metadata`]: fn.metadata.html
     /// [`symlink_metadata`]: fn.symlink_metadata.html
     /// [`is_dir`]: #method.is_dir
     /// [`is_file`]: #method.is_file
-    /// [`std::fs::Metadata`]: https://doc.rust-lang.org/std/fs/struct.Metadata.html
+    /// [`core::fs::Metadata`]: https://doc.rust-lang.org/core/fs/struct.Metadata.html
     #[derive(Clone, Debug)]
     pub struct Metadata {
         _private: (),
@@ -68,9 +68,9 @@ cfg_docs! {
         /// # Examples
         ///
         /// ```no_run
-        /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+        /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
         /// #
-        /// use async_std::fs;
+        /// use async_core::fs;
         ///
         /// let metadata = fs::metadata("a.txt").await?;
         /// println!("{:?}", metadata.file_type());
@@ -88,9 +88,9 @@ cfg_docs! {
         /// # Examples
         ///
         /// ```no_run
-        /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+        /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
         /// #
-        /// use async_std::fs;
+        /// use async_core::fs;
         ///
         /// let metadata = fs::metadata(".").await?;
         /// println!("{:?}", metadata.is_dir());
@@ -108,9 +108,9 @@ cfg_docs! {
         /// # Examples
         ///
         /// ```no_run
-        /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+        /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
         /// #
-        /// use async_std::fs;
+        /// use async_core::fs;
         ///
         /// let metadata = fs::metadata("a.txt").await?;
         /// println!("{:?}", metadata.is_file());
@@ -126,9 +126,9 @@ cfg_docs! {
         /// # Examples
         ///
         /// ```no_run
-        /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+        /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
         /// #
-        /// use async_std::fs;
+        /// use async_core::fs;
         ///
         /// let metadata = fs::metadata("a.txt").await?;
         /// println!("{}", metadata.len());
@@ -144,9 +144,9 @@ cfg_docs! {
         /// # Examples
         ///
         /// ```no_run
-        /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+        /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
         /// #
-        /// use async_std::fs;
+        /// use async_core::fs;
         ///
         /// let metadata = fs::metadata("a.txt").await?;
         /// println!("{:?}", metadata.permissions());
@@ -167,9 +167,9 @@ cfg_docs! {
         /// # Examples
         ///
         /// ```no_run
-        /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+        /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
         /// #
-        /// use async_std::fs;
+        /// use async_core::fs;
         ///
         /// let metadata = fs::metadata("a.txt").await?;
         /// println!("{:?}", metadata.modified());
@@ -190,9 +190,9 @@ cfg_docs! {
         /// # Examples
         ///
         /// ```no_run
-        /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+        /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
         /// #
-        /// use async_std::fs;
+        /// use async_core::fs;
         ///
         /// let metadata = fs::metadata("a.txt").await?;
         /// println!("{:?}", metadata.accessed());
@@ -213,9 +213,9 @@ cfg_docs! {
         /// # Examples
         ///
         /// ```no_run
-        /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+        /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
         /// #
-        /// use async_std::fs;
+        /// use async_core::fs;
         ///
         /// let metadata = fs::metadata("a.txt").await?;
         /// println!("{:?}", metadata.created());

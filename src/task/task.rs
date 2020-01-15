@@ -1,9 +1,9 @@
-use std::cell::Cell;
-use std::fmt;
-use std::mem::ManuallyDrop;
-use std::ptr;
-use std::sync::atomic::{AtomicPtr, Ordering};
-use std::sync::Arc;
+use core::cell::Cell;
+use core::fmt;
+use core::mem::ManuallyDrop;
+use core::ptr;
+use core::sync::atomic::{AtomicPtr, Ordering};
+use core::sync::Arc;
 
 use crate::task::{LocalsMap, TaskId};
 use crate::utils::abort_on_panic;

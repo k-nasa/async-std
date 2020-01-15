@@ -1,5 +1,5 @@
-use std::cmp;
-use std::pin::Pin;
+use core::cmp;
+use core::pin::Pin;
 
 use pin_project_lite::pin_project;
 
@@ -35,10 +35,10 @@ impl<T> Take<T> {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> async_std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> async_core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::prelude::*;
-    /// use async_std::fs::File;
+    /// use async_core::prelude::*;
+    /// use async_core::fs::File;
     ///
     /// let f = File::open("foo.txt").await?;
     ///
@@ -61,10 +61,10 @@ impl<T> Take<T> {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> async_std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> async_core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::prelude::*;
-    /// use async_std::fs::File;
+    /// use async_core::prelude::*;
+    /// use async_core::fs::File;
     ///
     /// let f = File::open("foo.txt").await?;
     ///
@@ -85,10 +85,10 @@ impl<T> Take<T> {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> async_std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> async_core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::prelude::*;
-    /// use async_std::fs::File;
+    /// use async_core::prelude::*;
+    /// use async_core::fs::File;
     ///
     /// let file = File::open("foo.txt").await?;
     ///
@@ -109,10 +109,10 @@ impl<T> Take<T> {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> async_std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> async_core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::prelude::*;
-    /// use async_std::fs::File;
+    /// use async_core::prelude::*;
+    /// use async_core::fs::File;
     ///
     /// let file = File::open("foo.txt").await?;
     ///
@@ -137,10 +137,10 @@ impl<T> Take<T> {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> async_std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> async_core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::prelude::*;
-    /// use async_std::fs::File;
+    /// use async_core::prelude::*;
+    /// use async_core::fs::File;
     ///
     /// let file = File::open("foo.txt").await?;
     ///
@@ -225,7 +225,7 @@ mod tests {
     use crate::task;
 
     #[test]
-    fn test_take_basics() -> std::io::Result<()> {
+    fn test_take_basics() -> core::io::Result<()> {
         let source: io::Cursor<Vec<u8>> = io::Cursor::new(vec![0, 1, 2, 3, 4, 5, 6, 7, 8]);
 
         task::block_on(async move {

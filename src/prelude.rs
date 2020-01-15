@@ -8,12 +8,12 @@
 //!
 //! ```
 //! # #[allow(unused_imports)]
-//! use async_std::prelude::*;
+//! use async_core::prelude::*;
 //! ```
 
-cfg_std! {
+cfg_core! {
     #[doc(no_inline)]
-    pub use std::future::Future;
+    pub use core::future::Future;
     #[doc(no_inline)]
     pub use crate::stream::Stream;
 

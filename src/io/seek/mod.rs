@@ -5,8 +5,8 @@ use seek::SeekFuture;
 use crate::io::SeekFrom;
 
 extension_trait! {
-    use std::ops::{Deref, DerefMut};
-    use std::pin::Pin;
+    use core::ops::{Deref, DerefMut};
+    use core::pin::Pin;
 
     use crate::io;
     use crate::task::{Context, Poll};
@@ -15,17 +15,17 @@ extension_trait! {
         Allows seeking through a byte stream.
 
         This trait is a re-export of [`futures::io::AsyncSeek`] and is an async version of
-        [`std::io::Seek`].
+        [`core::io::Seek`].
 
         The [provided methods] do not really exist in the trait itself, but they become
         available when [`SeekExt`] the [prelude] is imported:
 
         ```
         # #[allow(unused_imports)]
-        use async_std::prelude::*;
+        use async_core::prelude::*;
         ```
 
-        [`std::io::Seek`]: https://doc.rust-lang.org/std/io/trait.Seek.html
+        [`core::io::Seek`]: https://doc.rust-lang.org/core/io/trait.Seek.html
         [`futures::io::AsyncSeek`]:
         https://docs.rs/futures/0.3/futures/io/trait.AsyncSeek.html
         [provided methods]: #provided-methods
@@ -60,11 +60,11 @@ extension_trait! {
             # Examples
 
             ```no_run
-            # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
             #
-            use async_std::fs::File;
-            use async_std::io::SeekFrom;
-            use async_std::prelude::*;
+            use async_core::fs::File;
+            use async_core::io::SeekFrom;
+            use async_core::prelude::*;
 
             let mut file = File::open("a.txt").await?;
 

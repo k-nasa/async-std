@@ -1,8 +1,8 @@
 //! Unix-specific networking extensions.
 
-use std::fmt;
-use std::pin::Pin;
-use std::future::Future;
+use core::fmt;
+use core::pin::Pin;
+use core::future::Future;
 
 use mio_uds;
 
@@ -24,20 +24,20 @@ use crate::task::{spawn_blocking, Context, Poll};
 ///
 /// The socket will be closed when the value is dropped.
 ///
-/// This type is an async version of [`std::os::unix::net::UnixListener`].
+/// This type is an async version of [`core::os::unix::net::UnixListener`].
 ///
-/// [`std::os::unix::net::UnixListener`]:
-/// https://doc.rust-lang.org/std/os/unix/net/struct.UnixListener.html
+/// [`core::os::unix::net::UnixListener`]:
+/// https://doc.rust-lang.org/core/os/unix/net/struct.UnixListener.html
 /// [`bind`]: #method.bind
 /// [`incoming`]: #method.incoming
 ///
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::os::unix::net::UnixListener;
-/// use async_std::prelude::*;
+/// use async_core::os::unix::net::UnixListener;
+/// use async_core::prelude::*;
 ///
 /// let listener = UnixListener::bind("/tmp/socket").await?;
 /// let mut incoming = listener.incoming();
@@ -59,9 +59,9 @@ impl UnixListener {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::os::unix::net::UnixListener;
+    /// use async_core::os::unix::net::UnixListener;
     ///
     /// let listener = UnixListener::bind("/tmp/socket").await?;
     /// #
@@ -83,9 +83,9 @@ impl UnixListener {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::os::unix::net::UnixListener;
+    /// use async_core::os::unix::net::UnixListener;
     ///
     /// let listener = UnixListener::bind("/tmp/socket").await?;
     /// let (socket, addr) = listener.accept().await?;
@@ -95,7 +95,7 @@ impl UnixListener {
     pub async fn accept(&self) -> io::Result<(UnixStream, SocketAddr)> {
         future::poll_fn(|cx| {
             let res = futures_core::ready!(self.watcher.poll_read_with(cx, |inner| {
-                match inner.accept_std() {
+                match inner.accept_core() {
                     // Converting to `WouldBlock` so that the watcher will
                     // add the waker of this task to a list of readers.
                     Ok(None) => Err(io::ErrorKind::WouldBlock.into()),
@@ -124,15 +124,15 @@ impl UnixListener {
     /// connections is infinite, i.e awaiting the next connection will never result in [`None`].
     ///
     /// [`accept`]: #method.accept
-    /// [`None`]: https://doc.rust-lang.org/std/option/enum.Option.html#variant.None
+    /// [`None`]: https://doc.rust-lang.org/core/option/enum.Option.html#variant.None
     ///
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::os::unix::net::UnixListener;
-    /// use async_std::prelude::*;
+    /// use async_core::os::unix::net::UnixListener;
+    /// use async_core::prelude::*;
     ///
     /// let listener = UnixListener::bind("/tmp/socket").await?;
     /// let mut incoming = listener.incoming();
@@ -153,9 +153,9 @@ impl UnixListener {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::os::unix::net::UnixListener;
+    /// use async_core::os::unix::net::UnixListener;
     ///
     /// let listener = UnixListener::bind("/tmp/socket").await?;
     /// let addr = listener.local_addr()?;
@@ -185,10 +185,10 @@ impl fmt::Debug for UnixListener {
 /// This stream is infinite, i.e awaiting the next connection will never result in [`None`]. It is
 /// created by the [`incoming`] method on [`UnixListener`].
 ///
-/// This type is an async version of [`std::os::unix::net::Incoming`].
+/// This type is an async version of [`core::os::unix::net::Incoming`].
 ///
-/// [`std::os::unix::net::Incoming`]: https://doc.rust-lang.org/std/os/unix/net/struct.Incoming.html
-/// [`None`]: https://doc.rust-lang.org/std/option/enum.Option.html#variant.None
+/// [`core::os::unix::net::Incoming`]: https://doc.rust-lang.org/core/os/unix/net/struct.Incoming.html
+/// [`None`]: https://doc.rust-lang.org/core/option/enum.Option.html#variant.None
 /// [`incoming`]: struct.UnixListener.html#method.incoming
 /// [`UnixListener`]: struct.UnixListener.html
 #[derive(Debug)]
@@ -206,9 +206,9 @@ impl Stream for Incoming<'_> {
     }
 }
 
-impl From<std::os::unix::net::UnixListener> for UnixListener {
-    /// Converts a `std::os::unix::net::UnixListener` into its asynchronous equivalent.
-    fn from(listener: std::os::unix::net::UnixListener) -> UnixListener {
+impl From<core::os::unix::net::UnixListener> for UnixListener {
+    /// Converts a `core::os::unix::net::UnixListener` into its asynchronous equivalent.
+    fn from(listener: core::os::unix::net::UnixListener) -> UnixListener {
         let mio_listener = mio_uds::UnixListener::from_listener(listener).unwrap();
         UnixListener {
             watcher: Watcher::new(mio_listener),
@@ -224,7 +224,7 @@ impl AsRawFd for UnixListener {
 
 impl FromRawFd for UnixListener {
     unsafe fn from_raw_fd(fd: RawFd) -> UnixListener {
-        let listener = std::os::unix::net::UnixListener::from_raw_fd(fd);
+        let listener = core::os::unix::net::UnixListener::from_raw_fd(fd);
         listener.into()
     }
 }

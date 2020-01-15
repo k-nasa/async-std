@@ -11,7 +11,7 @@ use crate::stream::Stream;
 /// on the stream. If the stream is already fused, the additional [`Fuse`]
 /// wrapper will be a no-op with no performance penalty.
 ///
-/// [`None`]: https://doc.rust-lang.org/std/option/enum.Option.html#variant.None
+/// [`None`]: https://doc.rust-lang.org/core/option/enum.Option.html#variant.None
 /// [`Stream::fuse`]: trait.Stream.html#method.fuse
 /// [`Fuse`]: struct.Fuse.html
 #[cfg(feature = "unstable")]

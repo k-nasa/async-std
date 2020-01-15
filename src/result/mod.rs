@@ -6,7 +6,7 @@
 mod from_stream;
 
 #[doc(inline)]
-pub use std::result::Result;
+pub use core::result::Result;
 
 cfg_unstable! {
     mod product;

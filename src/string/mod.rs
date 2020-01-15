@@ -6,4 +6,4 @@ mod extend;
 mod from_stream;
 
 #[doc(inline)]
-pub use std::string::String;
+pub use core::string::String;

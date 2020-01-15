@@ -1,6 +1,6 @@
 //! Composable asynchronous iteration.
 //!
-//! This module is an async version of [`std::iter`].
+//! This module is an async version of [`core::iter`].
 //!
 //! If you've found yourself with an asynchronous collection of some kind,
 //! and needed to perform an operation on the elements of said collection,
@@ -34,8 +34,8 @@
 //! [`Stream`] looks like this:
 //!
 //! ```
-//! # use async_std::task::{Context, Poll};
-//! # use std::pin::Pin;
+//! # use async_core::task::{Context, Poll};
+//! # use core::pin::Pin;
 //! trait Stream {
 //!     type Item;
 //!     fn poll_next(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>>;
@@ -63,7 +63,7 @@
 //! [`Poll`]: ../task/enum.Poll.html
 //! [`Stream`]: trait.Stream.html
 //! [`next`]: trait.Stream.html#tymethod.next
-//! [`Option`]: ../../std/option/enum.Option.html
+//! [`Option`]: ../../core/option/enum.Option.html
 //!
 //! # The three forms of streaming
 //!
@@ -73,7 +73,7 @@
 //! * `stream_mut()`, which iterates over `&mut T`.
 //! * `into_stream()`, which iterates over `T`.
 //!
-//! Various things in async-std may implement one or more of the
+//! Various things in async-core may implement one or more of the
 //! three, where appropriate.
 //!
 //! # Implementing Stream
@@ -86,9 +86,9 @@
 //! Let's make a stream named `Counter` which counts from `1` to `5`:
 //!
 //! ```
-//! # use async_std::prelude::*;
-//! # use async_std::task::{Context, Poll};
-//! # use std::pin::Pin;
+//! # use async_core::prelude::*;
+//! # use async_core::task::{Context, Poll};
+//! # use core::pin::Pin;
 //! // First, the struct:
 //!
 //! /// A stream which counts from one to five
@@ -126,7 +126,7 @@
 //! }
 //!
 //! // And now we can use it!
-//! # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 //! #
 //! let mut counter = Counter::new();
 //!
@@ -160,10 +160,10 @@
 //! example of `while let`:
 //!
 //! ```
-//! # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 //! #
-//! # use async_std::prelude::*;
-//! # use async_std::stream;
+//! # use async_core::prelude::*;
+//! # use async_core::stream;
 //! let mut values = stream::repeat(1u8).take(5);
 //!
 //! while let Some(x) = values.next().await {
@@ -181,7 +181,7 @@
 //! stream: [`IntoStream`]. This trait has one method, [`into_stream`],
 //! which converts the thing implementing [`IntoStream`] into a stream.
 //!
-//! Unlike `std::iter::IntoIterator`, `IntoStream` does not have compiler
+//! Unlike `core::iter::IntoIterator`, `IntoStream` does not have compiler
 //! support yet. This means that automatic conversions like with `for` loops
 //! doesn't occur yet, and `into_stream` will always have to be called manually.
 //!
@@ -211,10 +211,10 @@
 //!
 //! ```
 //! # #![allow(unused_must_use)]
-//! # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 //! #
-//! # use async_std::prelude::*;
-//! # use async_std::stream;
+//! # use async_core::prelude::*;
+//! # use async_core::stream;
 //! let v = stream::repeat(1u8).take(5);
 //! v.map(|x| println!("{}", x));
 //! #
@@ -233,10 +233,10 @@
 //! `while let` loop instead:
 //!
 //! ```
-//! # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 //! #
-//! # use async_std::prelude::*;
-//! # use async_std::stream;
+//! # use async_core::prelude::*;
+//! # use async_core::stream;
 //! let mut v = stream::repeat(1u8).take(5);
 //!
 //! while let Some(x) = &v.next().await {
@@ -259,7 +259,7 @@
 //! an infinite stream:
 //!
 //! ```
-//! # use async_std::stream;
+//! # use async_core::stream;
 //! let numbers = stream::repeat(1u8);
 //! ```
 //!
@@ -267,10 +267,10 @@
 //! stream into a finite one:
 //!
 //! ```
-//! # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 //! #
-//! # use async_std::prelude::*;
-//! # use async_std::stream;
+//! # use async_core::prelude::*;
+//! # use async_core::stream;
 //! let numbers = stream::repeat(1u8);
 //! let mut five_numbers = numbers.take(5);
 //!
@@ -290,13 +290,13 @@
 //! successfully for any infinite streams.
 //!
 //! ```ignore
-//! let ones = async_std::stream::repeat(1);
+//! let ones = async_core::stream::repeat(1);
 //! let least = ones.min().await.unwrap(); // Oh no! An infinite loop!
 //! // `ones.min()` causes an infinite loop, so we won't reach this point!
 //! println!("The smallest number one is {}.", least);
 //! ```
 //!
-//! [`std::iter`]: https://doc.rust-lang.org/std/iter/index.html
+//! [`core::iter`]: https://doc.rust-lang.org/core/iter/index.html
 //! [`take`]: trait.Stream.html#method.take
 //! [`min`]: trait.Stream.html#method.min
 

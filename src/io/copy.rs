@@ -1,5 +1,5 @@
-use std::future::Future;
-use std::pin::Pin;
+use core::future::Future;
+use core::pin::Pin;
 
 use pin_project_lite::pin_project;
 
@@ -19,9 +19,9 @@ use crate::utils::Context as _;
 /// If you’re wanting to copy the contents of one file to another and you’re
 /// working with filesystem paths, see the [`fs::copy`] function.
 ///
-/// This function is an async version of [`std::io::copy`].
+/// This function is an async version of [`core::io::copy`].
 ///
-/// [`std::io::copy`]: https://doc.rust-lang.org/std/io/fn.copy.html
+/// [`core::io::copy`]: https://doc.rust-lang.org/core/io/fn.copy.html
 /// [`fs::copy`]: ../fs/fn.copy.html
 ///
 /// # Errors
@@ -33,12 +33,12 @@ use crate::utils::Context as _;
 /// # Examples
 ///
 /// ```
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::io;
+/// use async_core::io;
 ///
 /// let mut reader: &[u8] = b"hello";
-/// let mut writer = io::stdout();
+/// let mut writer = io::coreout();
 ///
 /// io::copy(&mut reader, &mut writer).await?;
 /// #
@@ -106,9 +106,9 @@ where
 /// If you’re wanting to copy the contents of one file to another and you’re
 /// working with filesystem paths, see the [`fs::copy`] function.
 ///
-/// This function is an async version of [`std::io::copy`].
+/// This function is an async version of [`core::io::copy`].
 ///
-/// [`std::io::copy`]: https://doc.rust-lang.org/std/io/fn.copy.html
+/// [`core::io::copy`]: https://doc.rust-lang.org/core/io/fn.copy.html
 /// [`fs::copy`]: ../fs/fn.copy.html
 ///
 /// # Errors
@@ -120,12 +120,12 @@ where
 /// # Examples
 ///
 /// ```
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::io;
+/// use async_core::io;
 ///
 /// let mut reader: &[u8] = b"hello";
-/// let mut writer = io::stdout();
+/// let mut writer = io::coreout();
 ///
 /// io::copy(&mut reader, &mut writer).await?;
 /// #

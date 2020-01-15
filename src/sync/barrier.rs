@@ -8,10 +8,10 @@ use crate::sync::Mutex;
 /// # Examples
 ///
 /// ```
-/// # async_std::task::block_on(async {
+/// # async_core::task::block_on(async {
 /// #
-/// use async_std::sync::{Arc, Barrier};
-/// use async_std::task;
+/// use async_core::sync::{Arc, Barrier};
+/// use async_core::task;
 ///
 /// let mut handles = Vec::with_capacity(10);
 /// let barrier = Arc::new(Barrier::new(10));
@@ -56,7 +56,7 @@ struct BarrierState {
 /// # Examples
 ///
 /// ```
-/// use async_std::sync::Barrier;
+/// use async_core::sync::Barrier;
 ///
 /// let barrier = Barrier::new(1);
 /// let barrier_wait_result = barrier.wait();
@@ -77,7 +77,7 @@ impl Barrier {
     /// # Examples
     ///
     /// ```
-    /// use std::sync::Barrier;
+    /// use core::sync::Barrier;
     ///
     /// let barrier = Barrier::new(10);
     /// ```
@@ -87,7 +87,7 @@ impl Barrier {
 
         if n == 0 {
             // if n is 0, it's not clear what behavior the user wants.
-            // in std::sync::Barrier, an n of 0 exhibits the same behavior as n == 1, where every
+            // in core::sync::Barrier, an n of 0 exhibits the same behavior as n == 1, where every
             // .wait() immediately unblocks, so we adopt that here as well.
             n = 1;
         }
@@ -119,10 +119,10 @@ impl Barrier {
     /// # Examples
     ///
     /// ```
-    /// # async_std::task::block_on(async {
+    /// # async_core::task::block_on(async {
     /// #
-    /// use async_std::sync::{Arc, Barrier};
-    /// use async_std::task;
+    /// use async_core::sync::{Arc, Barrier};
+    /// use async_core::task;
     ///
     /// let mut handles = Vec::with_capacity(10);
     /// let barrier = Arc::new(Barrier::new(10));
@@ -188,9 +188,9 @@ impl BarrierWaitResult {
     /// # Examples
     ///
     /// ```
-    /// # async_std::task::block_on(async {
+    /// # async_core::task::block_on(async {
     /// #
-    /// use async_std::sync::Barrier;
+    /// use async_core::sync::Barrier;
     ///
     /// let barrier = Barrier::new(1);
     /// let barrier_wait_result = barrier.wait().await;
@@ -213,7 +213,7 @@ mod test {
 
     #[test]
     fn test_barrier() {
-        // NOTE(dignifiedquire): Based on the test in std, I was seeing some
+        // NOTE(dignifiedquire): Based on the test in core, I was seeing some
         // race conditions, so running it in a loop to make sure things are
         // solid.
 

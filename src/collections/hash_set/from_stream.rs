@@ -1,6 +1,6 @@
-use std::collections::HashSet;
-use std::hash::{BuildHasher, Hash};
-use std::pin::Pin;
+use core::collections::HashSet;
+use core::hash::{BuildHasher, Hash};
+use core::pin::Pin;
 
 use crate::prelude::*;
 use crate::stream::{self, FromStream, IntoStream};

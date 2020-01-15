@@ -1,13 +1,13 @@
 //! Traits, helpers, and type definitions for core I/O functionality.
 //!
-//! The `async_std::io` module contains a number of common things you'll need
+//! The `async_core::io` module contains a number of common things you'll need
 //! when doing input and output. The most core part of this module is
 //! the [`Read`] and [`Write`] traits, which provide the
 //! most general interface for reading and writing input and output.
 //!
-//! This module is an async version of [`std::io`].
+//! This module is an async version of [`core::io`].
 //!
-//! [`std::io`]: https://doc.rust-lang.org/std/io/index.html
+//! [`core::io`]: https://doc.rust-lang.org/core/io/index.html
 //!
 //! # Read and Write
 //!
@@ -19,10 +19,10 @@
 //! [`File`]s:
 //!
 //! ```no_run
-//! use async_std::fs::File;
-//! use async_std::prelude::*;
+//! use async_core::fs::File;
+//! use async_core::prelude::*;
 //!
-//! # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 //! #
 //! let mut f = File::open("foo.txt").await?;
 //! let mut buffer = [0; 10];
@@ -47,11 +47,11 @@
 //! coming from:
 //!
 //! ```no_run
-//! use async_std::fs::File;
-//! use async_std::io::SeekFrom;
-//! use async_std::prelude::*;
+//! use async_core::fs::File;
+//! use async_core::io::SeekFrom;
+//! use async_core::prelude::*;
 //!
-//! # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 //! #
 //! let mut f = File::open("foo.txt").await?;
 //! let mut buffer = [0; 10];
@@ -74,7 +74,7 @@
 //!
 //! Byte-based interfaces are unwieldy and can be inefficient, as we'd need to be
 //! making near-constant calls to the operating system. To help with this,
-//! `std::io` comes with two structs, [`BufReader`] and [`BufWriter`], which wrap
+//! `core::io` comes with two structs, [`BufReader`] and [`BufWriter`], which wrap
 //! readers and writers. The wrapper uses a buffer, reducing the number of
 //! calls and providing nicer methods for accessing exactly what you want.
 //!
@@ -82,11 +82,11 @@
 //! methods to any reader:
 //!
 //! ```no_run
-//! use async_std::fs::File;
-//! use async_std::io::BufReader;
-//! use async_std::prelude::*;
+//! use async_core::fs::File;
+//! use async_core::io::BufReader;
+//! use async_core::prelude::*;
 //!
-//! # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 //! #
 //! let f = File::open("foo.txt").await?;
 //! let mut reader = BufReader::new(f);
@@ -104,11 +104,11 @@
 //! to [`write`][`Write::write`]:
 //!
 //! ```no_run
-//! use async_std::fs::File;
-//! use async_std::io::prelude::*;
-//! use async_std::io::BufWriter;
+//! use async_core::fs::File;
+//! use async_core::io::prelude::*;
+//! use async_core::io::BufWriter;
 //!
-//! # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 //! #
 //! let f = File::create("foo.txt").await?;
 //! {
@@ -127,13 +127,13 @@
 //! A very common source of input is standard input:
 //!
 //! ```no_run
-//! use async_std::io;
+//! use async_core::io;
 //!
-//! # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 //! #
 //! let mut input = String::new();
 //!
-//! io::stdin().read_line(&mut input).await?;
+//! io::corein().read_line(&mut input).await?;
 //!
 //! println!("You typed: {}", input.trim());
 //! #
@@ -145,13 +145,13 @@
 //! or `match` on the return value to catch any possible errors:
 //!
 //! ```no_run
-//! use async_std::io;
+//! use async_core::io;
 //!
-//! # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 //! #
 //! let mut input = String::new();
 //!
-//! io::stdin().read_line(&mut input).await.unwrap();
+//! io::corein().read_line(&mut input).await.unwrap();
 //! #
 //! # Ok(()) }) }
 //! ```
@@ -159,31 +159,31 @@
 //! And a very common source of output is standard output:
 //!
 //! ```no_run
-//! use async_std::io;
-//! use async_std::io::prelude::*;
+//! use async_core::io;
+//! use async_core::io::prelude::*;
 //!
-//! # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 //! #
-//! io::stdout().write(&[42]).await?;
+//! io::coreout().write(&[42]).await?;
 //! #
 //! # Ok(()) }) }
 //! ```
 //!
-//! Of course, using [`io::stdout`] directly is less common than something like
+//! Of course, using [`io::coreout`] directly is less common than something like
 //! [`println!`].
 //!
 //! ## Iterator types
 //!
-//! A large number of the structures provided by `std::io` are for various
+//! A large number of the structures provided by `core::io` are for various
 //! ways of iterating over I/O. For example, [`Lines`] is used to split over
 //! lines:
 //!
 //! ```no_run
-//! use async_std::fs::File;
-//! use async_std::io::BufReader;
-//! use async_std::prelude::*;
+//! use async_core::fs::File;
+//! use async_core::io::BufReader;
+//! use async_core::prelude::*;
 //!
-//! # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 //! #
 //! let f = File::open("foo.txt").await?;
 //! let reader = BufReader::new(f);
@@ -203,11 +203,11 @@
 //! from standard input to standard output:
 //!
 //! ```no_run
-//! use async_std::io;
+//! use async_core::io;
 //!
-//! # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 //! #
-//! io::copy(&mut io::stdin(), &mut io::stdout()).await?;
+//! io::copy(&mut io::corein(), &mut io::coreout()).await?;
 //! #
 //! # Ok(()) }) }
 //! ```
@@ -217,18 +217,18 @@
 //! ## io::Result
 //!
 //! Last, but certainly not least, is [`io::Result`]. This type is used
-//! as the return type of many `std::io` functions that can cause an error, and
+//! as the return type of many `core::io` functions that can cause an error, and
 //! can be returned from your own functions as well. Many of the examples in this
 //! module use the [`?` operator]:
 //!
 //! ```
 //! #![allow(dead_code)]
-//! use async_std::io;
+//! use async_core::io;
 //!
 //! async fn read_input() -> io::Result<()> {
 //!     let mut input = String::new();
 //!
-//!     io::stdin().read_line(&mut input).await?;
+//!     io::corein().read_line(&mut input).await?;
 //!
 //!     println!("You typed: {}", input.trim());
 //!
@@ -260,20 +260,20 @@
 //! [`BufReader`]: struct.BufReader.html
 //! [`BufWriter`]: struct.BufWriter.html
 //! [`Write::write`]: trait.Write.html#tymethod.write
-//! [`io::stdout`]: fn.stdout.html
+//! [`io::coreout`]: fn.coreout.html
 //! [`println!`]: ../macro.println.html
 //! [`Lines`]: struct.Lines.html
 //! [`io::Result`]: type.Result.html
 //! [`?` operator]: https://doc.rust-lang.org/stable/book/appendix-02-operators.html
 //! [`Read::read`]: trait.Read.html#tymethod.read
-//! [`Result`]: https://doc.rust-lang.org/std/result/enum.Result.html
-//! [`.unwrap()`]: https://doc.rust-lang.org/std/result/enum.Result.html#method.unwrap
+//! [`Result`]: https://doc.rust-lang.org/core/result/enum.Result.html
+//! [`.unwrap()`]: https://doc.rust-lang.org/core/result/enum.Result.html#method.unwrap
 
 const DEFAULT_BUF_SIZE: usize = 8 * 1024;
 
-cfg_std! {
+cfg_core! {
     #[doc(inline)]
-    pub use std::io::{Error, ErrorKind, IoSlice, IoSliceMut, Result, SeekFrom};
+    pub use core::io::{Error, ErrorKind, IoSlice, IoSliceMut, Result, SeekFrom};
 
     pub use buf_read::{BufRead, Lines};
     pub use buf_reader::BufReader;
@@ -307,22 +307,22 @@ cfg_std! {
 cfg_default! {
     // For use in the print macros.
     #[doc(hidden)]
-    pub use stdio::{_eprint, _print};
+    pub use coreio::{_eprint, _print};
 
-    pub use stderr::{stderr, Stderr};
-    pub use stdin::{stdin, Stdin};
-    pub use stdout::{stdout, Stdout};
+    pub use coreerr::{coreerr, Stderr};
+    pub use corein::{corein, Stdin};
+    pub use coreout::{coreout, Stdout};
     pub use timeout::timeout;
 
     mod timeout;
-    mod stderr;
-    mod stdin;
-    mod stdio;
-    mod stdout;
+    mod coreerr;
+    mod corein;
+    mod coreio;
+    mod coreout;
 }
 
 cfg_unstable_default! {
-    pub use stderr::StderrLock;
-    pub use stdin::StdinLock;
-    pub use stdout::StdoutLock;
+    pub use coreerr::StderrLock;
+    pub use corein::StdinLock;
+    pub use coreout::StdoutLock;
 }

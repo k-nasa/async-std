@@ -1,7 +1,7 @@
-use std::borrow::Cow;
-use std::pin::Pin;
-use std::rc::Rc;
-use std::sync::Arc;
+use core::borrow::Cow;
+use core::pin::Pin;
+use core::rc::Rc;
+use core::sync::Arc;
 
 use crate::prelude::*;
 use crate::stream::{self, FromStream, IntoStream};

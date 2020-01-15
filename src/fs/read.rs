@@ -11,10 +11,10 @@ use crate::utils::Context as _;
 ///
 /// If you want to read the contents as a string, use [`read_to_string`] instead.
 ///
-/// This function is an async version of [`std::fs::read`].
+/// This function is an async version of [`core::fs::read`].
 ///
 /// [`read_to_string`]: fn.read_to_string.html
-/// [`std::fs::read`]: https://doc.rust-lang.org/std/fs/fn.read.html
+/// [`core::fs::read`]: https://doc.rust-lang.org/core/fs/fn.read.html
 ///
 /// # Errors
 ///
@@ -27,9 +27,9 @@ use crate::utils::Context as _;
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::fs;
+/// use async_core::fs;
 ///
 /// let contents = fs::read("a.txt").await?;
 /// #
@@ -38,7 +38,7 @@ use crate::utils::Context as _;
 pub async fn read<P: AsRef<Path>>(path: P) -> io::Result<Vec<u8>> {
     let path = path.as_ref().to_owned();
     spawn_blocking(move || {
-        std::fs::read(&path).context(|| format!("could not read file `{}`", path.display()))
+        core::fs::read(&path).context(|| format!("could not read file `{}`", path.display()))
     })
     .await
 }

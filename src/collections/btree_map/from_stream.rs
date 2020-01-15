@@ -1,5 +1,5 @@
-use std::collections::BTreeMap;
-use std::pin::Pin;
+use core::collections::BTreeMap;
+use core::pin::Pin;
 
 use crate::prelude::*;
 use crate::stream::{self, FromStream, IntoStream};

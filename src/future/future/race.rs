@@ -1,5 +1,5 @@
-use std::future::Future;
-use std::pin::Pin;
+use core::future::Future;
+use core::pin::Pin;
 
 use crate::future::MaybeDone;
 use pin_project_lite::pin_project;

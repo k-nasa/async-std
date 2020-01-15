@@ -1,6 +1,6 @@
-use std::ffi::OsString;
-use std::fmt;
-use std::sync::Arc;
+use core::ffi::OsString;
+use core::fmt;
+use core::sync::Arc;
 
 use crate::fs::{FileType, Metadata};
 use crate::io;
@@ -11,15 +11,15 @@ use crate::task::spawn_blocking;
 ///
 /// A stream of entries in a directory is returned by [`read_dir`].
 ///
-/// This type is an async version of [`std::fs::DirEntry`].
+/// This type is an async version of [`core::fs::DirEntry`].
 ///
 /// [`read_dir`]: fn.read_dir.html
-/// [`std::fs::DirEntry`]: https://doc.rust-lang.org/std/fs/struct.DirEntry.html
-pub struct DirEntry(Arc<std::fs::DirEntry>);
+/// [`core::fs::DirEntry`]: https://doc.rust-lang.org/core/fs/struct.DirEntry.html
+pub struct DirEntry(Arc<core::fs::DirEntry>);
 
 impl DirEntry {
     /// Creates an asynchronous `DirEntry` from a synchronous one.
-    pub(crate) fn new(inner: std::fs::DirEntry) -> DirEntry {
+    pub(crate) fn new(inner: core::fs::DirEntry) -> DirEntry {
         DirEntry(Arc::new(inner))
     }
 
@@ -33,10 +33,10 @@ impl DirEntry {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::fs;
-    /// use async_std::prelude::*;
+    /// use async_core::fs;
+    /// use async_core::prelude::*;
     ///
     /// let mut dir = fs::read_dir(".").await?;
     ///
@@ -71,10 +71,10 @@ impl DirEntry {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::fs;
-    /// use async_std::prelude::*;
+    /// use async_core::fs;
+    /// use async_core::prelude::*;
     ///
     /// let mut dir = fs::read_dir(".").await?;
     ///
@@ -109,10 +109,10 @@ impl DirEntry {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::fs;
-    /// use async_std::prelude::*;
+    /// use async_core::fs;
+    /// use async_core::prelude::*;
     ///
     /// let mut dir = fs::read_dir(".").await?;
     ///
@@ -133,10 +133,10 @@ impl DirEntry {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::fs;
-    /// use async_std::prelude::*;
+    /// use async_core::fs;
+    /// use async_core::prelude::*;
     ///
     /// let mut dir = fs::read_dir(".").await?;
     ///

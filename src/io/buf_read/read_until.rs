@@ -1,5 +1,5 @@
-use std::pin::Pin;
-use std::future::Future;
+use core::pin::Pin;
+use core::future::Future;
 
 use super::read_until_internal;
 use crate::io::{self, BufRead};

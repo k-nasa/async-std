@@ -1,4 +1,4 @@
-use std::time::Duration;
+use core::time::Duration;
 
 use crate::future;
 use crate::io;
@@ -7,9 +7,9 @@ use crate::io;
 ///
 /// This function might sleep for slightly longer than the specified duration but never less.
 ///
-/// This function is an async version of [`std::thread::sleep`].
+/// This function is an async version of [`core::thread::sleep`].
 ///
-/// [`std::thread::sleep`]: https://doc.rust-lang.org/std/thread/fn.sleep.html
+/// [`core::thread::sleep`]: https://doc.rust-lang.org/core/thread/fn.sleep.html
 ///
 /// See also: [`stream::interval`].
 ///
@@ -18,11 +18,11 @@ use crate::io;
 /// # Examples
 ///
 /// ```
-/// # async_std::task::block_on(async {
+/// # async_core::task::block_on(async {
 /// #
-/// use std::time::Duration;
+/// use core::time::Duration;
 ///
-/// use async_std::task;
+/// use async_core::task;
 ///
 /// task::sleep(Duration::from_secs(1)).await;
 /// #

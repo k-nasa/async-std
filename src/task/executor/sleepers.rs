@@ -1,5 +1,5 @@
-use std::sync::atomic::{AtomicBool, Ordering};
-use std::sync::{Condvar, Mutex};
+use core::sync::atomic::{AtomicBool, Ordering};
+use core::sync::{Condvar, Mutex};
 
 /// The place where worker threads go to sleep.
 ///

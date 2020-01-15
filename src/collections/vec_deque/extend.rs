@@ -1,5 +1,5 @@
-use std::collections::VecDeque;
-use std::pin::Pin;
+use core::collections::VecDeque;
+use core::pin::Pin;
 
 use crate::prelude::*;
 use crate::stream::{self, IntoStream};

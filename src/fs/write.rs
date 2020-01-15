@@ -8,9 +8,9 @@ use crate::utils::Context as _;
 /// This function will create a file if it does not exist, and will entirely replace its contents
 /// if it does.
 ///
-/// This function is an async version of [`std::fs::write`].
+/// This function is an async version of [`core::fs::write`].
 ///
-/// [`std::fs::write`]: https://doc.rust-lang.org/std/fs/fn.write.html
+/// [`core::fs::write`]: https://doc.rust-lang.org/core/fs/fn.write.html
 ///
 /// # Errors
 ///
@@ -23,9 +23,9 @@ use crate::utils::Context as _;
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::fs;
+/// use async_core::fs;
 ///
 /// fs::write("a.txt", b"Hello world!").await?;
 /// #
@@ -35,7 +35,7 @@ pub async fn write<P: AsRef<Path>, C: AsRef<[u8]>>(path: P, contents: C) -> io::
     let path = path.as_ref().to_owned();
     let contents = contents.as_ref().to_owned();
     spawn_blocking(move || {
-        std::fs::write(&path, contents)
+        core::fs::write(&path, contents)
             .context(|| format!("could not write to file `{}`", path.display()))
     })
     .await

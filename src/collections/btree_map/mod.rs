@@ -4,4 +4,4 @@ mod extend;
 mod from_stream;
 
 #[doc(inline)]
-pub use std::collections::BTreeMap;
+pub use core::collections::BTreeMap;

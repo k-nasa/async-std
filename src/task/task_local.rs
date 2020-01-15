@@ -1,7 +1,7 @@
-use std::cell::UnsafeCell;
-use std::error::Error;
-use std::fmt;
-use std::sync::atomic::{AtomicU32, Ordering};
+use core::cell::UnsafeCell;
+use core::error::Error;
+use core::fmt;
+use core::sync::atomic::{AtomicU32, Ordering};
 
 use crate::task::Task;
 
@@ -38,10 +38,10 @@ impl<T: Send + 'static> LocalKey<T> {
     ///
     /// ```
     /// #
-    /// use std::cell::Cell;
+    /// use core::cell::Cell;
     ///
-    /// use async_std::task;
-    /// use async_std::prelude::*;
+    /// use async_core::task;
+    /// use async_core::prelude::*;
     ///
     /// task_local! {
     ///     static NUMBER: Cell<u32> = Cell::new(5);
@@ -77,10 +77,10 @@ impl<T: Send + 'static> LocalKey<T> {
     ///
     /// ```
     /// #
-    /// use std::cell::Cell;
+    /// use core::cell::Cell;
     ///
-    /// use async_std::task;
-    /// use async_std::prelude::*;
+    /// use async_core::task;
+    /// use async_core::prelude::*;
     ///
     /// task_local! {
     ///     static VAL: Cell<u32> = Cell::new(5);
@@ -121,7 +121,7 @@ impl<T: Send + 'static> LocalKey<T> {
 
             let counter = COUNTER.fetch_add(1, Ordering::Relaxed);
             if counter > u32::max_value() / 2 {
-                std::process::abort();
+                core::process::abort();
             }
 
             match key.compare_and_swap(0, counter, Ordering::AcqRel) {

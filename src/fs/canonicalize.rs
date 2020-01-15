@@ -8,9 +8,9 @@ use crate::utils::Context as _;
 /// The returned path is in absolute form with all intermediate components normalized and symbolic
 /// links resolved.
 ///
-/// This function is an async version of [`std::fs::canonicalize`].
+/// This function is an async version of [`core::fs::canonicalize`].
 ///
-/// [`std::fs::canonicalize`]: https://doc.rust-lang.org/std/fs/fn.canonicalize.html
+/// [`core::fs::canonicalize`]: https://doc.rust-lang.org/core/fs/fn.canonicalize.html
 ///
 /// # Errors
 ///
@@ -23,9 +23,9 @@ use crate::utils::Context as _;
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::fs;
+/// use async_core::fs;
 ///
 /// let path = fs::canonicalize(".").await?;
 /// #
@@ -34,7 +34,7 @@ use crate::utils::Context as _;
 pub async fn canonicalize<P: AsRef<Path>>(path: P) -> io::Result<PathBuf> {
     let path = path.as_ref().to_owned();
     spawn_blocking(move || {
-        std::fs::canonicalize(&path)
+        core::fs::canonicalize(&path)
             .map(Into::into)
             .context(|| format!("could not canonicalize `{}`", path.display()))
     })

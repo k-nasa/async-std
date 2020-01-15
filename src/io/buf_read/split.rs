@@ -1,5 +1,5 @@
-use std::mem;
-use std::pin::Pin;
+use core::mem;
+use core::pin::Pin;
 
 use pin_project_lite::pin_project;
 
@@ -13,11 +13,11 @@ pin_project! {
     ///
     /// This stream is created by the [`split`] method on types that implement [`BufRead`].
     ///
-    /// This type is an async version of [`std::io::Split`].
+    /// This type is an async version of [`core::io::Split`].
     ///
     /// [`split`]: trait.BufRead.html#method.lines
     /// [`BufRead`]: trait.BufRead.html
-    /// [`std::io::Split`]: https://doc.rust-lang.org/std/io/struct.Split.html
+    /// [`core::io::Split`]: https://doc.rust-lang.org/core/io/struct.Split.html
     #[derive(Debug)]
     pub struct Split<R> {
         #[pin]

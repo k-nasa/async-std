@@ -1,12 +1,12 @@
-use std::borrow::{Borrow, Cow};
-use std::ffi::{OsStr, OsString};
-use std::iter::{self, FromIterator};
-use std::ops::Deref;
+use core::borrow::{Borrow, Cow};
+use core::ffi::{OsStr, OsString};
+use core::iter::{self, FromIterator};
+use core::ops::Deref;
 #[cfg(feature = "unstable")]
-use std::pin::Pin;
-use std::rc::Rc;
-use std::str::FromStr;
-use std::sync::Arc;
+use core::pin::Pin;
+use core::rc::Rc;
+use core::str::FromStr;
+use core::sync::Arc;
 
 use crate::path::Path;
 #[cfg(feature = "unstable")]
@@ -14,12 +14,12 @@ use crate::prelude::*;
 #[cfg(feature = "unstable")]
 use crate::stream::{self, FromStream, IntoStream};
 
-/// This struct is an async version of [`std::path::PathBuf`].
+/// This struct is an async version of [`core::path::PathBuf`].
 ///
-/// [`std::path::Path`]: https://doc.rust-lang.org/std/path/struct.PathBuf.html
+/// [`core::path::Path`]: https://doc.rust-lang.org/core/path/struct.PathBuf.html
 #[derive(Clone, Debug, Default, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct PathBuf {
-    inner: std::path::PathBuf,
+    inner: core::path::PathBuf,
 }
 
 impl PathBuf {
@@ -28,12 +28,12 @@ impl PathBuf {
     /// # Examples
     ///
     /// ```
-    /// use async_std::path::PathBuf;
+    /// use async_core::path::PathBuf;
     ///
     /// let path = PathBuf::new();
     /// ```
     pub fn new() -> PathBuf {
-        std::path::PathBuf::new().into()
+        core::path::PathBuf::new().into()
     }
 
     /// Coerces to a [`Path`] slice.
@@ -43,7 +43,7 @@ impl PathBuf {
     /// # Examples
     ///
     /// ```
-    /// use async_std::path::{Path, PathBuf};
+    /// use async_core::path::{Path, PathBuf};
     ///
     /// let p = PathBuf::from("/test");
     /// assert_eq!(Path::new("/test"), p.as_path());
@@ -67,7 +67,7 @@ impl PathBuf {
     /// Pushing a relative path extends the existing path:
     ///
     /// ```
-    /// use async_std::path::PathBuf;
+    /// use async_core::path::PathBuf;
     ///
     /// let mut path = PathBuf::from("/tmp");
     /// path.push("file.bk");
@@ -77,7 +77,7 @@ impl PathBuf {
     /// Pushing an absolute path replaces the existing path:
     ///
     /// ```
-    /// use async_std::path::PathBuf;
+    /// use async_core::path::PathBuf;
     ///
     /// let mut path = PathBuf::from("/tmp");
     /// path.push("/etc");
@@ -92,13 +92,13 @@ impl PathBuf {
     /// Returns `false` and does nothing if [`self.parent`] is [`None`].
     /// Otherwise, returns `true`.
     ///
-    /// [`None`]: https://doc.rust-lang.org/std/option/enum.Option.html#variant.None
+    /// [`None`]: https://doc.rust-lang.org/core/option/enum.Option.html#variant.None
     /// [`self.parent`]: struct.PathBuf.html#method.parent
     ///
     /// # Examples
     ///
     /// ```
-    /// use async_std::path::{Path, PathBuf};
+    /// use async_core::path::{Path, PathBuf};
     ///
     /// let mut p = PathBuf::from("/test/test.rs");
     ///
@@ -121,13 +121,13 @@ impl PathBuf {
     /// (That is, it will have the same parent.)
     ///
     /// [`self.file_name`]: struct.PathBuf.html#method.file_name
-    /// [`None`]: https://doc.rust-lang.org/std/option/enum.Option.html#variant.None
+    /// [`None`]: https://doc.rust-lang.org/core/option/enum.Option.html#variant.None
     /// [`pop`]: struct.PathBuf.html#method.pop
     ///
     /// # Examples
     ///
     /// ```
-    /// use async_std::path::PathBuf;
+    /// use async_core::path::PathBuf;
     ///
     /// let mut buf = PathBuf::from("/");
     /// assert!(buf.file_name() == None);
@@ -151,12 +151,12 @@ impl PathBuf {
     ///
     /// [`self.file_name`]: struct.PathBuf.html#method.file_name
     /// [`self.extension`]: struct.PathBuf.html#method.extension
-    /// [`None`]: https://doc.rust-lang.org/std/option/enum.Option.html#variant.None
+    /// [`None`]: https://doc.rust-lang.org/core/option/enum.Option.html#variant.None
     ///
     /// # Examples
     ///
     /// ```
-    /// use async_std::path::{Path, PathBuf};
+    /// use async_core::path::{Path, PathBuf};
     ///
     /// let mut p = PathBuf::from("/feel/the");
     ///
@@ -172,12 +172,12 @@ impl PathBuf {
 
     /// Consumes the `PathBuf`, returning its internal [`OsString`] storage.
     ///
-    /// [`OsString`]: https://doc.rust-lang.org/std/ffi/struct.OsString.html
+    /// [`OsString`]: https://doc.rust-lang.org/core/ffi/struct.OsString.html
     ///
     /// # Examples
     ///
     /// ```
-    /// use async_std::path::PathBuf;
+    /// use async_core::path::PathBuf;
     ///
     /// let p = PathBuf::from("/the/head");
     /// let os_str = p.into_os_string();
@@ -188,7 +188,7 @@ impl PathBuf {
 
     /// Converts this `PathBuf` into a [boxed][`Box`] [`Path`].
     ///
-    /// [`Box`]: https://doc.rust-lang.org/std/boxed/struct.Box.html
+    /// [`Box`]: https://doc.rust-lang.org/core/boxed/struct.Box.html
     /// [`Path`]: struct.Path.html
     pub fn into_boxed_path(self) -> Box<Path> {
         let rw = Box::into_raw(self.inner.into_boxed_path()) as *mut Path;
@@ -352,20 +352,20 @@ impl<'b, P: AsRef<Path> + 'b> FromStream<P> for PathBuf {
     }
 }
 
-impl From<std::path::PathBuf> for PathBuf {
-    fn from(path: std::path::PathBuf) -> PathBuf {
+impl From<core::path::PathBuf> for PathBuf {
+    fn from(path: core::path::PathBuf) -> PathBuf {
         PathBuf { inner: path }
     }
 }
 
-impl Into<std::path::PathBuf> for PathBuf {
-    fn into(self) -> std::path::PathBuf {
+impl Into<core::path::PathBuf> for PathBuf {
+    fn into(self) -> core::path::PathBuf {
         self.inner
     }
 }
 
-impl AsRef<std::path::Path> for PathBuf {
-    fn as_ref(&self) -> &std::path::Path {
+impl AsRef<core::path::Path> for PathBuf {
+    fn as_ref(&self) -> &core::path::Path {
         self.inner.as_ref()
     }
 }

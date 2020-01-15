@@ -1,5 +1,5 @@
-use std::future::Future;
-use std::pin::Pin;
+use core::future::Future;
+use core::pin::Pin;
 
 use crate::future::IntoFuture;
 use crate::task::{ready, Context, Poll};

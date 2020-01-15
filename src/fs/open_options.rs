@@ -1,4 +1,4 @@
-use std::future::Future;
+use core::future::Future;
 
 use crate::fs::File;
 use crate::io;
@@ -15,7 +15,7 @@ use crate::task::spawn_blocking;
 /// It is also possible to [`truncate`] the file right after opening, to [`create`] a file if it
 /// doesn't exist yet, or to always create a new file with [`create_new`].
 ///
-/// This type is an async version of [`std::fs::OpenOptions`].
+/// This type is an async version of [`core::fs::OpenOptions`].
 ///
 /// [`read`]: #method.read
 /// [`write`]: #method.write
@@ -23,16 +23,16 @@ use crate::task::spawn_blocking;
 /// [`truncate`]: #method.truncate
 /// [`create`]: #method.create
 /// [`create_new`]: #method.create_new
-/// [`std::fs::OpenOptions`]: https://doc.rust-lang.org/std/fs/struct.OpenOptions.html
+/// [`core::fs::OpenOptions`]: https://doc.rust-lang.org/core/fs/struct.OpenOptions.html
 ///
 /// # Examples
 ///
 /// Open a file for reading:
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::fs::OpenOptions;
+/// use async_core::fs::OpenOptions;
 ///
 /// let file = OpenOptions::new()
 ///     .read(true)
@@ -45,9 +45,9 @@ use crate::task::spawn_blocking;
 /// Open a file for both reading and writing, and create it if it doesn't exist yet:
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::fs::OpenOptions;
+/// use async_core::fs::OpenOptions;
 ///
 /// let file = OpenOptions::new()
 ///     .read(true)
@@ -59,7 +59,7 @@ use crate::task::spawn_blocking;
 /// # Ok(()) }) }
 /// ```
 #[derive(Clone, Debug)]
-pub struct OpenOptions(std::fs::OpenOptions);
+pub struct OpenOptions(core::fs::OpenOptions);
 
 impl OpenOptions {
     /// Creates a blank set of options.
@@ -69,9 +69,9 @@ impl OpenOptions {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::fs::OpenOptions;
+    /// use async_core::fs::OpenOptions;
     ///
     /// let file = OpenOptions::new()
     ///     .read(true)
@@ -81,7 +81,7 @@ impl OpenOptions {
     /// # Ok(()) }) }
     /// ```
     pub fn new() -> OpenOptions {
-        OpenOptions(std::fs::OpenOptions::new())
+        OpenOptions(core::fs::OpenOptions::new())
     }
 
     /// Configures the option for read mode.
@@ -91,9 +91,9 @@ impl OpenOptions {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::fs::OpenOptions;
+    /// use async_core::fs::OpenOptions;
     ///
     /// let file = OpenOptions::new()
     ///     .read(true)
@@ -117,9 +117,9 @@ impl OpenOptions {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::fs::OpenOptions;
+    /// use async_core::fs::OpenOptions;
     ///
     /// let file = OpenOptions::new()
     ///     .write(true)
@@ -141,9 +141,9 @@ impl OpenOptions {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::fs::OpenOptions;
+    /// use async_core::fs::OpenOptions;
     ///
     /// let file = OpenOptions::new()
     ///     .append(true)
@@ -169,9 +169,9 @@ impl OpenOptions {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::fs::OpenOptions;
+    /// use async_core::fs::OpenOptions;
     ///
     /// let file = OpenOptions::new()
     ///     .write(true)
@@ -198,9 +198,9 @@ impl OpenOptions {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::fs::OpenOptions;
+    /// use async_core::fs::OpenOptions;
     ///
     /// let file = OpenOptions::new()
     ///     .write(true)
@@ -228,9 +228,9 @@ impl OpenOptions {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::fs::OpenOptions;
+    /// use async_core::fs::OpenOptions;
     ///
     /// let file = OpenOptions::new()
     ///     .write(true)
@@ -270,9 +270,9 @@ impl OpenOptions {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::fs::OpenOptions;
+    /// use async_core::fs::OpenOptions;
     ///
     /// let file = OpenOptions::new()
     ///     .read(true)

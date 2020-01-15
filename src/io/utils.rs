@@ -1,11 +1,11 @@
 use crate::utils::Context;
 
-use std::{error::Error as StdError, fmt, io};
+use core::{error::Error as StdError, fmt, io};
 
-/// Wrap `std::io::Error` with additional message
+/// Wrap `core::io::Error` with additional message
 ///
 /// Keeps the original error kind and stores the original I/O error as `source`.
-impl<T> Context for Result<T, std::io::Error> {
+impl<T> Context for Result<T, core::io::Error> {
     fn context(self, message: impl Fn() -> String) -> Self {
         self.map_err(|e| VerboseError::wrap(e, message()))
     }

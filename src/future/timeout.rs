@@ -1,8 +1,8 @@
-use std::error::Error;
-use std::fmt;
-use std::pin::Pin;
-use std::time::Duration;
-use std::future::Future;
+use core::error::Error;
+use core::fmt;
+use core::pin::Pin;
+use core::time::Duration;
+use core::future::Future;
 
 use futures_timer::Delay;
 use pin_project_lite::pin_project;
@@ -17,11 +17,11 @@ use crate::task::{Context, Poll};
 /// # Examples
 ///
 /// ```
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use std::time::Duration;
+/// use core::time::Duration;
 ///
-/// use async_std::future;
+/// use async_core::future;
 ///
 /// let never = future::pending::<()>();
 /// let dur = Duration::from_millis(5);

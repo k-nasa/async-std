@@ -7,4 +7,4 @@ mod extend;
 mod from_stream;
 
 #[doc(inline)]
-pub use std::vec::Vec;
+pub use core::vec::Vec;

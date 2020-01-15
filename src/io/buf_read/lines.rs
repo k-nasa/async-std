@@ -1,6 +1,6 @@
-use std::mem;
-use std::pin::Pin;
-use std::str;
+use core::mem;
+use core::pin::Pin;
+use core::str;
 
 use pin_project_lite::pin_project;
 
@@ -14,11 +14,11 @@ pin_project! {
     ///
     /// This stream is created by the [`lines`] method on types that implement [`BufRead`].
     ///
-    /// This type is an async version of [`std::io::Lines`].
+    /// This type is an async version of [`core::io::Lines`].
     ///
     /// [`lines`]: trait.BufRead.html#method.lines
     /// [`BufRead`]: trait.BufRead.html
-    /// [`std::io::Lines`]: https://doc.rust-lang.org/std/io/struct.Lines.html
+    /// [`core::io::Lines`]: https://doc.rust-lang.org/core/io/struct.Lines.html
     #[derive(Debug)]
     pub struct Lines<R> {
         #[pin]

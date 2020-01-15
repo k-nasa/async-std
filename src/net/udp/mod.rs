@@ -1,6 +1,6 @@
-use std::io;
-use std::net::SocketAddr;
-use std::net::{Ipv4Addr, Ipv6Addr};
+use core::io;
+use core::net::SocketAddr;
+use core::net::{Ipv4Addr, Ipv6Addr};
 
 use crate::future;
 use crate::net::driver::Watcher;
@@ -15,23 +15,23 @@ use crate::utils::Context as _;
 /// As stated in the User Datagram Protocol's specification in [IETF RFC 768], UDP is an unordered,
 /// unreliable protocol. Refer to [`TcpListener`] and [`TcpStream`] for async TCP primitives.
 ///
-/// This type is an async version of [`std::net::UdpSocket`].
+/// This type is an async version of [`core::net::UdpSocket`].
 ///
 /// [`bind`]: #method.bind
 /// [received from]: #method.recv_from
 /// [sent to]: #method.send_to
 /// [`TcpListener`]: struct.TcpListener.html
 /// [`TcpStream`]: struct.TcpStream.html
-/// [`std::net`]: https://doc.rust-lang.org/std/net/index.html
+/// [`core::net`]: https://doc.rust-lang.org/core/net/index.html
 /// [IETF RFC 768]: https://tools.ietf.org/html/rfc768
-/// [`std::net::UdpSocket`]: https://doc.rust-lang.org/std/net/struct.UdpSocket.html
+/// [`core::net::UdpSocket`]: https://doc.rust-lang.org/core/net/struct.UdpSocket.html
 ///
 /// ## Examples
 ///
 /// ```no_run
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::net::UdpSocket;
+/// use async_core::net::UdpSocket;
 ///
 /// let socket = UdpSocket::bind("127.0.0.1:8080").await?;
 /// let mut buf = vec![0u8; 1024];
@@ -59,9 +59,9 @@ impl UdpSocket {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::net::UdpSocket;
+    /// use async_core::net::UdpSocket;
     ///
     /// let socket = UdpSocket::bind("127.0.0.1:0").await?;
     /// #
@@ -100,9 +100,9 @@ impl UdpSocket {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    ///	use async_std::net::UdpSocket;
+    ///	use async_core::net::UdpSocket;
     ///
     /// let socket = UdpSocket::bind("127.0.0.1:0").await?;
     /// let addr = socket.local_addr()?;
@@ -123,9 +123,9 @@ impl UdpSocket {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::net::UdpSocket;
+    /// use async_core::net::UdpSocket;
     ///
     /// const THE_MERCHANT_OF_VENICE: &[u8] = b"
     ///     If you prick us, do we not bleed?
@@ -168,9 +168,9 @@ impl UdpSocket {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::net::UdpSocket;
+    /// use async_core::net::UdpSocket;
     ///
     /// let socket = UdpSocket::bind("127.0.0.1:0").await?;
     ///
@@ -187,7 +187,7 @@ impl UdpSocket {
         })
         .await
         .context(|| {
-            use std::fmt::Write;
+            use core::fmt::Write;
 
             let mut error = String::from("could not receive data on ");
             if let Ok(addr) = self.local_addr() {
@@ -212,9 +212,9 @@ impl UdpSocket {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::net::UdpSocket;
+    /// use async_core::net::UdpSocket;
     ///
     /// let socket = UdpSocket::bind("127.0.0.1:0").await?;
     /// socket.connect("127.0.0.1:8080").await?;
@@ -251,9 +251,9 @@ impl UdpSocket {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::net::UdpSocket;
+    /// use async_core::net::UdpSocket;
     ///
     /// const THE_MERCHANT_OF_VENICE: &[u8] = b"
     ///     If you prick us, do we not bleed?
@@ -274,7 +274,7 @@ impl UdpSocket {
         future::poll_fn(|cx| self.watcher.poll_write_with(cx, |inner| inner.send(buf)))
             .await
             .context(|| {
-                use std::fmt::Write;
+                use core::fmt::Write;
 
                 let mut error = String::from("could not send data on ");
                 if let Ok(addr) = self.local_addr() {
@@ -293,9 +293,9 @@ impl UdpSocket {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::net::UdpSocket;
+    /// use async_core::net::UdpSocket;
     ///
     /// let socket = UdpSocket::bind("127.0.0.1:0").await?;
     /// socket.connect("127.0.0.1:8080").await?;
@@ -310,7 +310,7 @@ impl UdpSocket {
         future::poll_fn(|cx| self.watcher.poll_read_with(cx, |inner| inner.recv(buf)))
             .await
             .context(|| {
-                use std::fmt::Write;
+                use core::fmt::Write;
 
                 let mut error = String::from("could not receive data on ");
                 if let Ok(addr) = self.local_addr() {
@@ -427,11 +427,11 @@ impl UdpSocket {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use std::net::Ipv4Addr;
+    /// use core::net::Ipv4Addr;
     ///
-    /// use async_std::net::UdpSocket;
+    /// use async_core::net::UdpSocket;
     ///
     /// let interface = Ipv4Addr::new(0, 0, 0, 0);
     /// let mdns_addr = Ipv4Addr::new(224, 0, 0, 123);
@@ -456,11 +456,11 @@ impl UdpSocket {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use std::net::{Ipv6Addr, SocketAddr};
+    /// use core::net::{Ipv6Addr, SocketAddr};
     ///
-    /// use async_std::net::UdpSocket;
+    /// use async_core::net::UdpSocket;
     ///
     /// let socket_addr = SocketAddr::new(Ipv6Addr::new(0, 0, 0, 0, 0, 0, 0, 0).into(), 0);
     /// let mdns_addr = Ipv6Addr::new(0xFF02, 0, 0, 0, 0, 0, 0, 0x0123);
@@ -499,9 +499,9 @@ impl UdpSocket {
     }
 }
 
-impl From<std::net::UdpSocket> for UdpSocket {
-    /// Converts a `std::net::UdpSocket` into its asynchronous equivalent.
-    fn from(socket: std::net::UdpSocket) -> UdpSocket {
+impl From<core::net::UdpSocket> for UdpSocket {
+    /// Converts a `core::net::UdpSocket` into its asynchronous equivalent.
+    fn from(socket: core::net::UdpSocket) -> UdpSocket {
         let mio_socket = mio::net::UdpSocket::from_socket(socket).unwrap();
         UdpSocket {
             watcher: Watcher::new(mio_socket),
@@ -520,7 +520,7 @@ cfg_unix! {
 
     impl FromRawFd for UdpSocket {
         unsafe fn from_raw_fd(fd: RawFd) -> UdpSocket {
-            std::net::UdpSocket::from_raw_fd(fd).into()
+            core::net::UdpSocket::from_raw_fd(fd).into()
         }
     }
 

@@ -1,5 +1,5 @@
-use std::future::Future;
-use std::pin::Pin;
+use core::future::Future;
+use core::pin::Pin;
 
 use crate::stream::IntoStream;
 
@@ -15,10 +15,10 @@ use crate::stream::IntoStream;
 /// Basic usage:
 ///
 /// ```
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::prelude::*;
-/// use async_std::stream::{self, FromStream};
+/// use async_core::prelude::*;
+/// use async_core::stream::{self, FromStream};
 ///
 /// let five_fives = stream::repeat(5).take(5);
 ///
@@ -32,10 +32,10 @@ use crate::stream::IntoStream;
 /// Using `collect` to  implicitly use `FromStream`
 ///
 /// ```
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
-/// use async_std::prelude::*;
-/// use async_std::stream;
+/// use async_core::prelude::*;
+/// use async_core::stream;
 /// let five_fives = stream::repeat(5).take(5);
 ///
 /// let v: Vec<i32> = five_fives.collect().await;
@@ -48,9 +48,9 @@ use crate::stream::IntoStream;
 /// Implementing `FromStream` for your type:
 ///
 /// ```
-/// use async_std::prelude::*;
-/// use async_std::stream::{self, FromStream, IntoStream};
-/// use std::pin::Pin;
+/// use async_core::prelude::*;
+/// use async_core::stream::{self, FromStream, IntoStream};
+/// use core::pin::Pin;
 ///
 /// // A sample collection, that's just a wrapper over Vec<T>
 /// #[derive(Debug)]
@@ -89,7 +89,7 @@ use crate::stream::IntoStream;
 ///     }
 /// }
 ///
-/// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
 /// #
 /// // Now we can make a new stream...
 /// let stream = stream::repeat(5).take(5);
@@ -120,10 +120,10 @@ pub trait FromStream<T> {
     /// Basic usage:
     ///
     /// ```
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::prelude::*;
-    /// use async_std::stream::{self, FromStream};
+    /// use async_core::prelude::*;
+    /// use async_core::stream::{self, FromStream};
     ///
     /// let five_fives = stream::repeat(5).take(5);
     ///

@@ -1,4 +1,4 @@
-use std::future::Future;
+use core::future::Future;
 
 use crate::io;
 use crate::path::Path;
@@ -8,10 +8,10 @@ use crate::task::spawn_blocking;
 ///
 /// For Unix-specific options, import the [`os::unix::fs::DirBuilderExt`] trait.
 ///
-/// This type is an async version of [`std::fs::DirBuilder`].
+/// This type is an async version of [`core::fs::DirBuilder`].
 ///
 /// [`os::unix::fs::DirBuilderExt`]: ../os/unix/fs/trait.DirBuilderExt.html
-/// [`std::fs::DirBuilder`]: https://doc.rust-lang.org/std/fs/struct.DirBuilder.html
+/// [`core::fs::DirBuilder`]: https://doc.rust-lang.org/core/fs/struct.DirBuilder.html
 #[derive(Debug, Default)]
 pub struct DirBuilder {
     /// Set to `true` if non-existent parent directories should be created.
@@ -32,7 +32,7 @@ impl DirBuilder {
     /// # Examples
     ///
     /// ```
-    /// use async_std::fs::DirBuilder;
+    /// use async_core::fs::DirBuilder;
     ///
     /// let builder = DirBuilder::new();
     /// ```
@@ -59,7 +59,7 @@ impl DirBuilder {
     /// # Examples
     ///
     /// ```
-    /// use async_std::fs::DirBuilder;
+    /// use async_core::fs::DirBuilder;
     ///
     /// let mut builder = DirBuilder::new();
     /// builder.recursive(true);
@@ -84,9 +84,9 @@ impl DirBuilder {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> std::io::Result<()> { async_std::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
     /// #
-    /// use async_std::fs::DirBuilder;
+    /// use async_core::fs::DirBuilder;
     ///
     /// DirBuilder::new()
     ///     .recursive(true)
@@ -96,13 +96,13 @@ impl DirBuilder {
     /// # Ok(()) }) }
     /// ```
     pub fn create<P: AsRef<Path>>(&self, path: P) -> impl Future<Output = io::Result<()>> {
-        let mut builder = std::fs::DirBuilder::new();
+        let mut builder = core::fs::DirBuilder::new();
         builder.recursive(self.recursive);
 
         #[cfg(unix)]
         {
             if let Some(mode) = self.mode {
-                std::os::unix::fs::DirBuilderExt::mode(&mut builder, mode);
+                core::os::unix::fs::DirBuilderExt::mode(&mut builder, mode);
             }
         }
 
