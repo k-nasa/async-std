@@ -40,7 +40,7 @@ static POOL: Lazy<Pool> = Lazy::new(|| {
         };
 
         thread::Builder::new()
-            .name("async-core/executor".to_string())
+            .name("async-std/executor".to_string())
             .spawn(|| {
                 let _ = PROCESSOR.with(|p| p.set(proc));
                 abort_on_panic(main_loop);

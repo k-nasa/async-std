@@ -73,7 +73,7 @@
 //! * `stream_mut()`, which iterates over `&mut T`.
 //! * `into_stream()`, which iterates over `T`.
 //!
-//! Various things in async-core may implement one or more of the
+//! Various things in async-std may implement one or more of the
 //! three, where appropriate.
 //!
 //! # Implementing Stream

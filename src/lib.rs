@@ -1,11 +1,11 @@
 //! # Async version of the Rust standard library
 //!
-//! `async-core` is a foundation of portable Rust software, a set of minimal and battle-tested
+//! `async-std` is a foundation of portable Rust software, a set of minimal and battle-tested
 //! shared abstractions for the [broader Rust ecosystem][crates.io]. It offers core types, like
 //! [`Future`] and [`Stream`], library-defined [operations on language primitives](#primitives),
 //! [standard macros](#macros), [I/O] and [multithreading], among [many other things][other].
 //!
-//! `async-core` is available from [crates.io]. Once included, `async-core` can be accessed
+//! `async-std` is available from [crates.io]. Once included, `async-std` can be accessed
 //! in [`use`] statements through the path `async_core`, as in [`use async_core::future`].
 //!
 //! [I/O]: io/index.html
@@ -31,20 +31,20 @@
 //! * [Cargo.toml feature flags](#features)
 //! * [Examples](#examples)
 //!
-//! If this is your first time, the documentation for `async-core` is
+//! If this is your first time, the documentation for `async-std` is
 //! written to be casually perused. Clicking on interesting things should
 //! generally lead you to interesting places. Still, there are important bits
-//! you don't want to miss, so read on for a tour of the `async-core` and
+//! you don't want to miss, so read on for a tour of the `async-std` and
 //! its documentation!
 //!
-//! Once you are familiar with the contents of `async-core` you may
+//! Once you are familiar with the contents of `async-std` you may
 //! begin to find the verbosity of the prose distracting. At this stage in your
 //! development you may want to press the `[-]` button near the top of the
 //! page to collapse it into a more skimmable view.
 //!
 //! While you are looking at that `[-]` button also notice the `[src]`
 //! button. Rust's API documentation comes with the source code and you are
-//! encouraged to read it. The `async-core` source is generally high
+//! encouraged to read it. The `async-std` source is generally high
 //! quality and a peek behind the curtains is often enlightening.
 //!
 //! Modules in this crate are organized in the same way as in `core`, except blocking
@@ -53,22 +53,22 @@
 //!
 //! You can find more information, reading materials, and other resources here:
 //!
-//! * [The async-core website](https://async.rs/)
-//! * [The async-core book](https://book.async.rs)
-//! * [GitHub repository](https://github.com/async-rs/async-core)
-//! * [List of code examples](https://github.com/async-rs/async-core/tree/master/examples)
+//! * [The async-std website](https://async.rs/)
+//! * [The async-std book](https://book.async.rs)
+//! * [GitHub repository](https://github.com/async-rs/async-std)
+//! * [List of code examples](https://github.com/async-rs/async-std/tree/master/examples)
 //! * [Discord chat](https://discord.gg/JvZeVNe)
 //!
-//! # What is in the `async-core` documentation?
+//! # What is in the `async-std` documentation?
 //!
-//! First, `async-core` is divided into a number of focused
+//! First, `async-std` is divided into a number of focused
 //! modules, [all listed further down this page](#modules). These modules are
 //! the bedrock upon which async Rust is forged, and they have mighty names
 //! like [`async_core::os`] and [`async_core::task`]. Modules' documentation
 //! typically includes an overview of the module along with examples, and are
 //! a smart place to start familiarizing yourself with the library.
 //!
-//! Second, `async-core` defines [The Async Prelude], a small collection
+//! Second, `async-std` defines [The Async Prelude], a small collection
 //! of items - mostly traits - that should be imported into every module of
 //! every async crate. The traits in the prelude are pervasive, making the
 //! prelude documentation a good entry point to learning about the library.
@@ -77,12 +77,12 @@
 //! [`async_core::os`]: os/index.html
 //! [`async_core::task`]: task/index.html
 //!
-//! And finally, `async-core` exports a number of async macros, and
+//! And finally, `async-std` exports a number of async macros, and
 //! [lists them on this page](#macros).
 //!
 //! # Contributing changes to the documentation
 //!
-//! Check out `async-core`'s contribution guidelines [here](https://async.rs/contribute).
+//! Check out `async-std`'s contribution guidelines [here](https://async.rs/contribute).
 //! The source for this documentation can be found on [GitHub](https://github.com/async-rs).
 //! To contribute changes, make sure you read the guidelines first, then submit
 //! pull requests for your suggested changes.
@@ -91,21 +91,21 @@
 //! improved, submit a PR, or chat with us first on
 //! [Discord](https://discord.gg/JvZeVNe).
 //!
-//! # A tour of `async-core`
+//! # A tour of `async-std`
 //!
 //! The rest of this crate documentation is dedicated to pointing out notable
-//! features of `async-core`.
+//! features of `async-std`.
 //!
 //! ## Platform abstractions and I/O
 //!
-//! Besides basic data types, `async-core` is largely concerned with
+//! Besides basic data types, `async-std` is largely concerned with
 //! abstracting over differences in common platforms, most notably Windows and
 //! Unix derivatives.
 //!
 //! Common types of I/O, including [files], [TCP], [UDP], are defined in the
 //! [`io`], [`fs`], and [`net`] modules.
 //!
-//! The [`task`] module contains `async-core`'s task abstractions. [`sync`]
+//! The [`task`] module contains `async-std`'s task abstractions. [`sync`]
 //! contains further primitive shared memory types, including [`channel`],
 //! which contains the channel types for message passing.
 //!
@@ -118,7 +118,7 @@
 //!
 //! ## Timeouts, intervals, and delays
 //!
-//! `async-core` provides several methods to manipulate time:
+//! `async-std` provides several methods to manipulate time:
 //!
 //! * [`task::sleep`] to wait for a duration to pass without blocking.
 //! * [`stream::interval`] for emitting an event at a set interval.
@@ -193,7 +193,7 @@
 //! are available only when the `unstable` Cargo feature is enabled:
 //!
 //! ```toml
-//! [dependencies.async-core]
+//! [dependencies.async-std]
 //! version = "1.0.0"
 //! features = ["unstable"]
 //! ```
@@ -206,7 +206,7 @@
 //! are available only when the `attributes` Cargo feature is enabled:
 //!
 //! ```toml
-//! [dependencies.async-core]
+//! [dependencies.async-std]
 //! version = "1.0.0"
 //! features = ["attributes"]
 //! ```
@@ -215,7 +215,7 @@
 //! only enabling the `core` Cargo feature:
 //!
 //! ```toml
-//! [dependencies.async-core]
+//! [dependencies.async-std]
 //! version = "1.0.0"
 //! default-features = false
 //! features = ["core"]

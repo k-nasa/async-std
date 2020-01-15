@@ -71,7 +71,7 @@ fn start_thread() {
     let timeout = Duration::from_secs(1);
 
     thread::Builder::new()
-        .name("async-core/blocking".to_string())
+        .name("async-std/blocking".to_string())
         .spawn(move || {
             loop {
                 let mut task = match POOL.receiver.recv_timeout(timeout) {

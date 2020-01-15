@@ -6,7 +6,7 @@
 //!
 //! ## The need for synchronization
 //!
-//! async-core's sync primitives are scheduler-aware, making it possible to
+//! async-std's sync primitives are scheduler-aware, making it possible to
 //! `.await` their operations - for example the locking of a [`Mutex`].
 //!
 //! Conceptually, a Rust program is a series of operations which will
@@ -109,11 +109,11 @@
 //! ## Higher-level synchronization objects
 //!
 //! Most of the low-level synchronization primitives are quite error-prone and
-//! inconvenient to use, which is why async-core also exposes some
+//! inconvenient to use, which is why async-std also exposes some
 //! higher-level synchronization objects.
 //!
 //! These abstractions can be built out of lower-level primitives.
-//! For efficiency, the sync objects in async-core are usually
+//! For efficiency, the sync objects in async-std are usually
 //! implemented with help from the scheduler, which is
 //! able to reschedule the tasks while they are blocked on acquiring
 //! a lock.
