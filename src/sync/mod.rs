@@ -153,10 +153,10 @@
 //! Spawn a task that updates an integer protected by a mutex:
 //!
 //! ```
-//! # async_core::task::block_on(async {
+//! # async_std::task::block_on(async {
 //! #
-//! use async_core::sync::{Arc, Mutex};
-//! use async_core::task;
+//! use async_std::sync::{Arc, Mutex};
+//! use async_std::task;
 //!
 //! let m1 = Arc::new(Mutex::new(0));
 //! let m2 = m1.clone();

@@ -24,10 +24,10 @@ use crate::task::{spawn_blocking, Context, Poll};
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 /// #
-/// use async_core::os::unix::net::UnixStream;
-/// use async_core::prelude::*;
+/// use async_std::os::unix::net::UnixStream;
+/// use async_std::prelude::*;
 ///
 /// let mut stream = UnixStream::connect("/tmp/socket").await?;
 /// stream.write_all(b"hello world").await?;
@@ -47,9 +47,9 @@ impl UnixStream {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::os::unix::net::UnixStream;
+    /// use async_std::os::unix::net::UnixStream;
     ///
     /// let stream = UnixStream::connect("/tmp/socket").await?;
     /// #
@@ -75,9 +75,9 @@ impl UnixStream {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::os::unix::net::UnixStream;
+    /// use async_std::os::unix::net::UnixStream;
     ///
     /// let stream = UnixStream::pair()?;
     /// #
@@ -99,9 +99,9 @@ impl UnixStream {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::os::unix::net::UnixStream;
+    /// use async_std::os::unix::net::UnixStream;
     ///
     /// let stream = UnixStream::connect("/tmp/socket").await?;
     /// let addr = stream.local_addr()?;
@@ -117,9 +117,9 @@ impl UnixStream {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::os::unix::net::UnixStream;
+    /// use async_std::os::unix::net::UnixStream;
     ///
     /// let stream = UnixStream::connect("/tmp/socket").await?;
     /// let peer = stream.peer_addr()?;
@@ -138,9 +138,9 @@ impl UnixStream {
     /// [`Shutdown`]: https://doc.rust-lang.org/core/net/enum.Shutdown.html
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::os::unix::net::UnixStream;
+    /// use async_std::os::unix::net::UnixStream;
     /// use core::net::Shutdown;
     ///
     /// let stream = UnixStream::connect("/tmp/socket").await?;

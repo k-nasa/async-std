@@ -15,9 +15,9 @@ use crate::task::spawn_blocking;
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 /// #
-/// use async_core::os::windows::fs::symlink_dir;
+/// use async_std::os::windows::fs::symlink_dir;
 ///
 /// symlink_dir("a", "b").await?;
 /// #
@@ -40,9 +40,9 @@ pub async fn symlink_dir<P: AsRef<Path>, Q: AsRef<Path>>(src: P, dst: Q) -> io::
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 /// #
-/// use async_core::os::windows::fs::symlink_file;
+/// use async_std::os::windows::fs::symlink_file;
 ///
 /// symlink_file("a.txt", "b.txt").await?;
 /// #

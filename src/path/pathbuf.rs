@@ -28,7 +28,7 @@ impl PathBuf {
     /// # Examples
     ///
     /// ```
-    /// use async_core::path::PathBuf;
+    /// use async_std::path::PathBuf;
     ///
     /// let path = PathBuf::new();
     /// ```
@@ -43,7 +43,7 @@ impl PathBuf {
     /// # Examples
     ///
     /// ```
-    /// use async_core::path::{Path, PathBuf};
+    /// use async_std::path::{Path, PathBuf};
     ///
     /// let p = PathBuf::from("/test");
     /// assert_eq!(Path::new("/test"), p.as_path());
@@ -67,7 +67,7 @@ impl PathBuf {
     /// Pushing a relative path extends the existing path:
     ///
     /// ```
-    /// use async_core::path::PathBuf;
+    /// use async_std::path::PathBuf;
     ///
     /// let mut path = PathBuf::from("/tmp");
     /// path.push("file.bk");
@@ -77,7 +77,7 @@ impl PathBuf {
     /// Pushing an absolute path replaces the existing path:
     ///
     /// ```
-    /// use async_core::path::PathBuf;
+    /// use async_std::path::PathBuf;
     ///
     /// let mut path = PathBuf::from("/tmp");
     /// path.push("/etc");
@@ -98,7 +98,7 @@ impl PathBuf {
     /// # Examples
     ///
     /// ```
-    /// use async_core::path::{Path, PathBuf};
+    /// use async_std::path::{Path, PathBuf};
     ///
     /// let mut p = PathBuf::from("/test/test.rs");
     ///
@@ -127,7 +127,7 @@ impl PathBuf {
     /// # Examples
     ///
     /// ```
-    /// use async_core::path::PathBuf;
+    /// use async_std::path::PathBuf;
     ///
     /// let mut buf = PathBuf::from("/");
     /// assert!(buf.file_name() == None);
@@ -156,7 +156,7 @@ impl PathBuf {
     /// # Examples
     ///
     /// ```
-    /// use async_core::path::{Path, PathBuf};
+    /// use async_std::path::{Path, PathBuf};
     ///
     /// let mut p = PathBuf::from("/feel/the");
     ///
@@ -177,7 +177,7 @@ impl PathBuf {
     /// # Examples
     ///
     /// ```
-    /// use async_core::path::PathBuf;
+    /// use async_std::path::PathBuf;
     ///
     /// let p = PathBuf::from("/the/head");
     /// let os_str = p.into_os_string();

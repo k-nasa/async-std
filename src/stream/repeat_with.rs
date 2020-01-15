@@ -23,10 +23,10 @@ impl<F> Unpin for RepeatWith<F> {}
 /// Basic usage:
 ///
 /// ```
-/// # async_core::task::block_on(async {
+/// # async_std::task::block_on(async {
 /// #
-/// use async_core::prelude::*;
-/// use async_core::stream;
+/// use async_std::prelude::*;
+/// use async_std::stream;
 ///
 /// let s = stream::repeat_with(|| 1);
 ///
@@ -42,10 +42,10 @@ impl<F> Unpin for RepeatWith<F> {}
 /// Going finite:
 ///
 /// ```
-/// # async_core::task::block_on(async {
+/// # async_std::task::block_on(async {
 /// #
-/// use async_core::prelude::*;
-/// use async_core::stream;
+/// use async_std::prelude::*;
+/// use async_std::stream;
 ///
 /// let mut n = 1;
 /// let s = stream::repeat_with(|| {

@@ -28,11 +28,11 @@ use crate::prelude::*;
 /// Basic example:
 ///
 /// ```no_run
-/// use async_core::prelude::*;
-/// use async_core::stream;
+/// use async_std::prelude::*;
+/// use async_std::stream;
 /// use core::time::Duration;
 ///
-/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 /// #
 /// let mut interval = stream::interval(Duration::from_secs(4));
 /// while let Some(_) = interval.next().await {

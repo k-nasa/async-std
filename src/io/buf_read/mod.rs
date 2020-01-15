@@ -29,7 +29,7 @@ extension_trait! {
 
         ```
         # #[allow(unused_imports)]
-        use async_core::prelude::*;
+        use async_std::prelude::*;
         ```
 
         [`core::io::BufRead`]: https://doc.rust-lang.org/core/io/trait.BufRead.html
@@ -82,11 +82,11 @@ extension_trait! {
             # Examples
 
             ```no_run
-            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
             #
-            use async_core::fs::File;
-            use async_core::io::BufReader;
-            use async_core::prelude::*;
+            use async_std::fs::File;
+            use async_std::io::BufReader;
+            use async_std::prelude::*;
 
             let mut file = BufReader::new(File::open("a.txt").await?);
 
@@ -99,10 +99,10 @@ extension_trait! {
             Multiple successful calls to `read_until` append all bytes up to and including to
             `buf`:
             ```
-            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
             #
-            use async_core::io::BufReader;
-            use async_core::prelude::*;
+            use async_std::io::BufReader;
+            use async_std::prelude::*;
 
             let from: &[u8] = b"append\nexample\n";
             let mut reader = BufReader::new(from);
@@ -160,11 +160,11 @@ extension_trait! {
             # Examples
 
             ```no_run
-            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
             #
-            use async_core::fs::File;
-            use async_core::io::BufReader;
-            use async_core::prelude::*;
+            use async_std::fs::File;
+            use async_std::io::BufReader;
+            use async_std::prelude::*;
 
             let mut file = BufReader::new(File::open("a.txt").await?);
 
@@ -202,11 +202,11 @@ extension_trait! {
             # Examples
 
             ```no_run
-            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
             #
-            use async_core::fs::File;
-            use async_core::io::BufReader;
-            use async_core::prelude::*;
+            use async_std::fs::File;
+            use async_std::io::BufReader;
+            use async_std::prelude::*;
 
             let file = File::open("a.txt").await?;
             let mut lines = BufReader::new(file).lines();
@@ -255,10 +255,10 @@ extension_trait! {
             [`Cursor`]: struct.Cursor.html
 
             ```
-            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
             #
-            use async_core::prelude::*;
-            use async_core::io;
+            use async_std::prelude::*;
+            use async_std::io;
 
             let cursor = io::Cursor::new(b"lorem-ipsum-dolor");
 

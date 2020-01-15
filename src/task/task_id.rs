@@ -6,7 +6,7 @@ use core::sync::atomic::{AtomicU64, Ordering};
 /// # Examples
 ///
 /// ```
-/// use async_core::task;
+/// use async_std::task;
 ///
 /// task::block_on(async {
 ///     println!("id = {:?}", task::current().id());

@@ -19,9 +19,9 @@ cfg_docs! {
         /// # Examples
         ///
         /// ```no_run
-        /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+        /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
         /// #
-        /// use async_core::fs;
+        /// use async_std::fs;
         ///
         /// let perm = fs::metadata("a.txt").await?.permissions();
         /// println!("{:?}", perm.readonly());
@@ -39,9 +39,9 @@ cfg_docs! {
         /// # Examples
         ///
         /// ```no_run
-        /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+        /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
         /// #
-        /// use async_core::fs;
+        /// use async_std::fs;
         ///
         /// let mut perm = fs::metadata("a.txt").await?.permissions();
         /// perm.set_readonly(true);

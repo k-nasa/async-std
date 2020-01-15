@@ -34,10 +34,10 @@ use crate::task::{spawn_blocking, Context, Poll};
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 /// #
-/// use async_core::os::unix::net::UnixListener;
-/// use async_core::prelude::*;
+/// use async_std::os::unix::net::UnixListener;
+/// use async_std::prelude::*;
 ///
 /// let listener = UnixListener::bind("/tmp/socket").await?;
 /// let mut incoming = listener.incoming();
@@ -59,9 +59,9 @@ impl UnixListener {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::os::unix::net::UnixListener;
+    /// use async_std::os::unix::net::UnixListener;
     ///
     /// let listener = UnixListener::bind("/tmp/socket").await?;
     /// #
@@ -83,9 +83,9 @@ impl UnixListener {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::os::unix::net::UnixListener;
+    /// use async_std::os::unix::net::UnixListener;
     ///
     /// let listener = UnixListener::bind("/tmp/socket").await?;
     /// let (socket, addr) = listener.accept().await?;
@@ -129,10 +129,10 @@ impl UnixListener {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::os::unix::net::UnixListener;
-    /// use async_core::prelude::*;
+    /// use async_std::os::unix::net::UnixListener;
+    /// use async_std::prelude::*;
     ///
     /// let listener = UnixListener::bind("/tmp/socket").await?;
     /// let mut incoming = listener.incoming();
@@ -153,9 +153,9 @@ impl UnixListener {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::os::unix::net::UnixListener;
+    /// use async_std::os::unix::net::UnixListener;
     ///
     /// let listener = UnixListener::bind("/tmp/socket").await?;
     /// let addr = listener.local_addr()?;

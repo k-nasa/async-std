@@ -39,7 +39,7 @@ extension_trait! {
 
         ```
         # #[allow(unused_imports)]
-        use async_core::prelude::*;
+        use async_std::prelude::*;
         ```
 
         [`core::io::Read`]: https://doc.rust-lang.org/core/io/trait.Read.html
@@ -96,10 +96,10 @@ extension_trait! {
             # Examples
 
             ```no_run
-            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
             #
-            use async_core::fs::File;
-            use async_core::prelude::*;
+            use async_std::fs::File;
+            use async_std::prelude::*;
 
             let mut file = File::open("a.txt").await?;
 
@@ -155,10 +155,10 @@ extension_trait! {
             # Examples
 
             ```no_run
-            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
             #
-            use async_core::fs::File;
-            use async_core::prelude::*;
+            use async_std::fs::File;
+            use async_std::prelude::*;
 
             let mut file = File::open("a.txt").await?;
 
@@ -194,10 +194,10 @@ extension_trait! {
             # Examples
 
             ```no_run
-            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
             #
-            use async_core::fs::File;
-            use async_core::prelude::*;
+            use async_std::fs::File;
+            use async_std::prelude::*;
 
             let mut file = File::open("a.txt").await?;
 
@@ -249,10 +249,10 @@ extension_trait! {
             # Examples
 
             ```no_run
-            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
             #
-            use async_core::fs::File;
-            use async_core::prelude::*;
+            use async_std::fs::File;
+            use async_std::prelude::*;
 
             let mut file = File::open("a.txt").await?;
 
@@ -289,10 +289,10 @@ extension_trait! {
             [`read`]: tymethod.read
 
             ```no_run
-            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
             #
-            use async_core::io::prelude::*;
-            use async_core::fs::File;
+            use async_std::io::prelude::*;
+            use async_std::fs::File;
 
             let f = File::open("foo.txt").await?;
             let mut buffer = [0; 5];
@@ -325,10 +325,10 @@ extension_trait! {
             [file]: ../fs/struct.File.html
 
             ```no_run
-            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
             #
-            use async_core::prelude::*;
-            use async_core::fs::File;
+            use async_std::prelude::*;
+            use async_std::fs::File;
 
             let mut f = File::open("foo.txt").await?;
             let mut buffer = Vec::new();
@@ -366,10 +366,10 @@ extension_trait! {
             [file]: ../fs/struct.File.html
 
             ```no_run
-            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
             #
-            use async_core::prelude::*;
-            use async_core::fs::File;
+            use async_std::prelude::*;
+            use async_std::fs::File;
 
             let f = File::open("foo.txt").await?;
             let mut s = f.bytes();
@@ -399,10 +399,10 @@ extension_trait! {
             [file]: ../fs/struct.File.html
 
             ```no_run
-            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
             #
-            use async_core::prelude::*;
-            use async_core::fs::File;
+            use async_std::prelude::*;
+            use async_std::fs::File;
 
             let f1 = File::open("foo.txt").await?;
             let f2 = File::open("bar.txt").await?;

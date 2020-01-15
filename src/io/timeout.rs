@@ -16,11 +16,11 @@ use crate::io;
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 /// #
 /// use core::time::Duration;
 ///
-/// use async_core::io;
+/// use async_std::io;
 ///
 /// io::timeout(Duration::from_secs(5), async {
 ///     let corein = io::corein();

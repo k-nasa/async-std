@@ -9,12 +9,12 @@ use crate::task::{Context, Poll};
 /// # Examples
 ///
 /// ```
-/// # async_core::task::block_on(async {
+/// # async_std::task::block_on(async {
 /// #
 /// use core::time::Duration;
 ///
-/// use async_core::future;
-/// use async_core::io;
+/// use async_std::future;
+/// use async_std::io;
 ///
 /// let dur = Duration::from_secs(1);
 /// let fut = future::pending();

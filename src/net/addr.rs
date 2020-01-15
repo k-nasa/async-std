@@ -33,9 +33,9 @@ cfg_docs! {
 /// # Examples
 ///
 /// ```
-/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 /// #
-/// use async_core::net::ToSocketAddrs;
+/// use async_std::net::ToSocketAddrs;
 ///
 /// let addr = "localhost:8080".to_socket_addrs().await?.next().unwrap();
 /// println!("resolved: {:?}", addr);

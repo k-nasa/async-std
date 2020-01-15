@@ -31,12 +31,12 @@ use crate::sync::WakerSet;
 /// # Examples
 ///
 /// ```
-/// # async_core::task::block_on(async {
+/// # async_std::task::block_on(async {
 /// #
 /// use core::time::Duration;
 ///
-/// use async_core::sync::channel;
-/// use async_core::task;
+/// use async_std::sync::channel;
+/// use async_std::task;
 ///
 /// let (s, r) = channel(1);
 ///
@@ -79,10 +79,10 @@ pub fn channel<T>(cap: usize) -> (Sender<T>, Receiver<T>) {
 /// # Examples
 ///
 /// ```
-/// # async_core::task::block_on(async {
+/// # async_std::task::block_on(async {
 /// #
-/// use async_core::sync::channel;
-/// use async_core::task;
+/// use async_std::sync::channel;
+/// use async_std::task;
 ///
 /// let (s1, r) = channel(100);
 /// let s2 = s1.clone();
@@ -112,10 +112,10 @@ impl<T> Sender<T> {
     /// # Examples
     ///
     /// ```
-    /// # async_core::task::block_on(async {
+    /// # async_std::task::block_on(async {
     /// #
-    /// use async_core::sync::channel;
-    /// use async_core::task;
+    /// use async_std::sync::channel;
+    /// use async_std::task;
     ///
     /// let (s, r) = channel(1);
     ///
@@ -197,7 +197,7 @@ impl<T> Sender<T> {
     /// # Examples
     ///
     /// ```
-    /// use async_core::sync::channel;
+    /// use async_std::sync::channel;
     ///
     /// let (s, _) = channel::<i32>(5);
     /// assert_eq!(s.capacity(), 5);
@@ -211,9 +211,9 @@ impl<T> Sender<T> {
     /// # Examples
     ///
     /// ```
-    /// # async_core::task::block_on(async {
+    /// # async_std::task::block_on(async {
     /// #
-    /// use async_core::sync::channel;
+    /// use async_std::sync::channel;
     ///
     /// let (s, r) = channel(1);
     ///
@@ -232,9 +232,9 @@ impl<T> Sender<T> {
     /// # Examples
     ///
     /// ```
-    /// # async_core::task::block_on(async {
+    /// # async_std::task::block_on(async {
     /// #
-    /// use async_core::sync::channel;
+    /// use async_std::sync::channel;
     ///
     /// let (s, r) = channel(1);
     ///
@@ -253,9 +253,9 @@ impl<T> Sender<T> {
     /// # Examples
     ///
     /// ```
-    /// # async_core::task::block_on(async {
+    /// # async_std::task::block_on(async {
     /// #
-    /// use async_core::sync::channel;
+    /// use async_std::sync::channel;
     ///
     /// let (s, r) = channel(2);
     /// assert_eq!(s.len(), 0);
@@ -313,12 +313,12 @@ impl<T> fmt::Debug for Sender<T> {
 /// # Examples
 ///
 /// ```
-/// # async_core::task::block_on(async {
+/// # async_std::task::block_on(async {
 /// #
 /// use core::time::Duration;
 ///
-/// use async_core::sync::channel;
-/// use async_core::task;
+/// use async_std::sync::channel;
+/// use async_std::task;
 ///
 /// let (s, r) = channel(100);
 ///
@@ -352,10 +352,10 @@ impl<T> Receiver<T> {
     /// # Examples
     ///
     /// ```
-    /// # async_core::task::block_on(async {
+    /// # async_std::task::block_on(async {
     /// #
-    /// use async_core::sync::channel;
-    /// use async_core::task;
+    /// use async_std::sync::channel;
+    /// use async_std::task;
     ///
     /// let (s, r) = channel(1);
     ///
@@ -410,7 +410,7 @@ impl<T> Receiver<T> {
     /// # Examples
     ///
     /// ```
-    /// use async_core::sync::channel;
+    /// use async_std::sync::channel;
     ///
     /// let (_, r) = channel::<i32>(5);
     /// assert_eq!(r.capacity(), 5);
@@ -424,9 +424,9 @@ impl<T> Receiver<T> {
     /// # Examples
     ///
     /// ```
-    /// # async_core::task::block_on(async {
+    /// # async_std::task::block_on(async {
     /// #
-    /// use async_core::sync::channel;
+    /// use async_std::sync::channel;
     ///
     /// let (s, r) = channel(1);
     ///
@@ -445,9 +445,9 @@ impl<T> Receiver<T> {
     /// # Examples
     ///
     /// ```
-    /// # async_core::task::block_on(async {
+    /// # async_std::task::block_on(async {
     /// #
-    /// use async_core::sync::channel;
+    /// use async_std::sync::channel;
     ///
     /// let (s, r) = channel(1);
     ///
@@ -466,9 +466,9 @@ impl<T> Receiver<T> {
     /// # Examples
     ///
     /// ```
-    /// # async_core::task::block_on(async {
+    /// # async_std::task::block_on(async {
     /// #
-    /// use async_core::sync::channel;
+    /// use async_std::sync::channel;
     ///
     /// let (s, r) = channel(2);
     /// assert_eq!(r.len(), 0);

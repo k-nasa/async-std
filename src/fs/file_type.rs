@@ -30,9 +30,9 @@ cfg_docs! {
         /// # Examples
         ///
         /// ```no_run
-        /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+        /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
         /// #
-        /// use async_core::fs;
+        /// use async_std::fs;
         ///
         /// let file_type = fs::metadata(".").await?.file_type();
         /// println!("{:?}", file_type.is_dir());
@@ -50,9 +50,9 @@ cfg_docs! {
         /// # Examples
         ///
         /// ```no_run
-        /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+        /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
         /// #
-        /// use async_core::fs;
+        /// use async_std::fs;
         ///
         /// let file_type = fs::metadata("a.txt").await?.file_type();
         /// println!("{:?}", file_type.is_file());
@@ -68,9 +68,9 @@ cfg_docs! {
         /// # Examples
         ///
         /// ```no_run
-        /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+        /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
         /// #
-        /// use async_core::fs;
+        /// use async_std::fs;
         ///
         /// let file_type = fs::metadata("a.txt").await?.file_type();
         /// println!("{:?}", file_type.is_symlink());

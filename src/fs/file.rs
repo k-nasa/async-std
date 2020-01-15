@@ -33,10 +33,10 @@ use crate::utils::Context as _;
 /// Create a new file and write some bytes to it:
 ///
 /// ```no_run
-/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 /// #
-/// use async_core::fs::File;
-/// use async_core::prelude::*;
+/// use async_std::fs::File;
+/// use async_std::prelude::*;
 ///
 /// let mut file = File::create("a.txt").await?;
 /// file.write_all(b"Hello, world!").await?;
@@ -47,10 +47,10 @@ use crate::utils::Context as _;
 /// Read the contents of a file into a vector of bytes:
 ///
 /// ```no_run
-/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 /// #
-/// use async_core::fs::File;
-/// use async_core::prelude::*;
+/// use async_std::fs::File;
+/// use async_std::prelude::*;
 ///
 /// let mut file = File::open("a.txt").await?;
 /// let mut contents = Vec::new();
@@ -103,9 +103,9 @@ impl File {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::fs::File;
+    /// use async_std::fs::File;
     ///
     /// let file = File::open("a.txt").await?;
     /// #
@@ -141,9 +141,9 @@ impl File {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::fs::File;
+    /// use async_std::fs::File;
     ///
     /// let file = File::create("a.txt").await?;
     /// #
@@ -169,10 +169,10 @@ impl File {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::fs::File;
-    /// use async_core::prelude::*;
+    /// use async_std::fs::File;
+    /// use async_std::prelude::*;
     ///
     /// let mut file = File::create("a.txt").await?;
     /// file.write_all(b"Hello, world!").await?;
@@ -205,10 +205,10 @@ impl File {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::fs::File;
-    /// use async_core::prelude::*;
+    /// use async_std::fs::File;
+    /// use async_std::prelude::*;
     ///
     /// let mut file = File::create("a.txt").await?;
     /// file.write_all(b"Hello, world!").await?;
@@ -239,9 +239,9 @@ impl File {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::fs::File;
+    /// use async_std::fs::File;
     ///
     /// let file = File::create("a.txt").await?;
     /// file.set_len(10).await?;
@@ -265,9 +265,9 @@ impl File {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::fs::File;
+    /// use async_std::fs::File;
     ///
     /// let file = File::open("a.txt").await?;
     /// let metadata = file.metadata().await?;
@@ -291,9 +291,9 @@ impl File {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::fs::File;
+    /// use async_std::fs::File;
     ///
     /// let file = File::create("a.txt").await?;
     ///

@@ -25,9 +25,9 @@ use crate::utils::abort_on_panic;
 ///
 /// ```
 /// # #[cfg(feature = "unstable")]
-/// # async_core::task::block_on(async {
+/// # async_std::task::block_on(async {
 /// #
-/// use async_core::task;
+/// use async_std::task;
 ///
 /// task::spawn_blocking(|| {
 ///     println!("long-running task here");

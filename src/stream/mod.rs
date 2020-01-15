@@ -34,7 +34,7 @@
 //! [`Stream`] looks like this:
 //!
 //! ```
-//! # use async_core::task::{Context, Poll};
+//! # use async_std::task::{Context, Poll};
 //! # use core::pin::Pin;
 //! trait Stream {
 //!     type Item;
@@ -86,8 +86,8 @@
 //! Let's make a stream named `Counter` which counts from `1` to `5`:
 //!
 //! ```
-//! # use async_core::prelude::*;
-//! # use async_core::task::{Context, Poll};
+//! # use async_std::prelude::*;
+//! # use async_std::task::{Context, Poll};
 //! # use core::pin::Pin;
 //! // First, the struct:
 //!
@@ -126,7 +126,7 @@
 //! }
 //!
 //! // And now we can use it!
-//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 //! #
 //! let mut counter = Counter::new();
 //!
@@ -160,10 +160,10 @@
 //! example of `while let`:
 //!
 //! ```
-//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 //! #
-//! # use async_core::prelude::*;
-//! # use async_core::stream;
+//! # use async_std::prelude::*;
+//! # use async_std::stream;
 //! let mut values = stream::repeat(1u8).take(5);
 //!
 //! while let Some(x) = values.next().await {
@@ -211,10 +211,10 @@
 //!
 //! ```
 //! # #![allow(unused_must_use)]
-//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 //! #
-//! # use async_core::prelude::*;
-//! # use async_core::stream;
+//! # use async_std::prelude::*;
+//! # use async_std::stream;
 //! let v = stream::repeat(1u8).take(5);
 //! v.map(|x| println!("{}", x));
 //! #
@@ -233,10 +233,10 @@
 //! `while let` loop instead:
 //!
 //! ```
-//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 //! #
-//! # use async_core::prelude::*;
-//! # use async_core::stream;
+//! # use async_std::prelude::*;
+//! # use async_std::stream;
 //! let mut v = stream::repeat(1u8).take(5);
 //!
 //! while let Some(x) = &v.next().await {
@@ -259,7 +259,7 @@
 //! an infinite stream:
 //!
 //! ```
-//! # use async_core::stream;
+//! # use async_std::stream;
 //! let numbers = stream::repeat(1u8);
 //! ```
 //!
@@ -267,10 +267,10 @@
 //! stream into a finite one:
 //!
 //! ```
-//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 //! #
-//! # use async_core::prelude::*;
-//! # use async_core::stream;
+//! # use async_std::prelude::*;
+//! # use async_std::stream;
 //! let numbers = stream::repeat(1u8);
 //! let mut five_numbers = numbers.take(5);
 //!
@@ -290,7 +290,7 @@
 //! successfully for any infinite streams.
 //!
 //! ```ignore
-//! let ones = async_core::stream::repeat(1);
+//! let ones = async_std::stream::repeat(1);
 //! let least = ones.min().await.unwrap(); // Oh no! An infinite loop!
 //! // `ones.min()` causes an infinite loop, so we won't reach this point!
 //! println!("The smallest number one is {}.", least);

@@ -26,7 +26,7 @@ use crate::task::{Context, Poll, Task, Waker};
 /// # Examples
 ///
 /// ```no_run
-/// use async_core::task;
+/// use async_std::task;
 ///
 /// fn main() {
 ///     task::block_on(async {

@@ -15,9 +15,9 @@ use crate::task::spawn_blocking;
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 /// #
-/// use async_core::os::unix::fs::symlink;
+/// use async_std::os::unix::fs::symlink;
 ///
 /// symlink("a.txt", "b.txt").await?;
 /// #

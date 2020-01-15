@@ -1,6 +1,6 @@
 //! Traits, helpers, and type definitions for core I/O functionality.
 //!
-//! The `async_core::io` module contains a number of common things you'll need
+//! The `async_std::io` module contains a number of common things you'll need
 //! when doing input and output. The most core part of this module is
 //! the [`Read`] and [`Write`] traits, which provide the
 //! most general interface for reading and writing input and output.
@@ -19,10 +19,10 @@
 //! [`File`]s:
 //!
 //! ```no_run
-//! use async_core::fs::File;
-//! use async_core::prelude::*;
+//! use async_std::fs::File;
+//! use async_std::prelude::*;
 //!
-//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 //! #
 //! let mut f = File::open("foo.txt").await?;
 //! let mut buffer = [0; 10];
@@ -47,11 +47,11 @@
 //! coming from:
 //!
 //! ```no_run
-//! use async_core::fs::File;
-//! use async_core::io::SeekFrom;
-//! use async_core::prelude::*;
+//! use async_std::fs::File;
+//! use async_std::io::SeekFrom;
+//! use async_std::prelude::*;
 //!
-//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 //! #
 //! let mut f = File::open("foo.txt").await?;
 //! let mut buffer = [0; 10];
@@ -82,11 +82,11 @@
 //! methods to any reader:
 //!
 //! ```no_run
-//! use async_core::fs::File;
-//! use async_core::io::BufReader;
-//! use async_core::prelude::*;
+//! use async_std::fs::File;
+//! use async_std::io::BufReader;
+//! use async_std::prelude::*;
 //!
-//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 //! #
 //! let f = File::open("foo.txt").await?;
 //! let mut reader = BufReader::new(f);
@@ -104,11 +104,11 @@
 //! to [`write`][`Write::write`]:
 //!
 //! ```no_run
-//! use async_core::fs::File;
-//! use async_core::io::prelude::*;
-//! use async_core::io::BufWriter;
+//! use async_std::fs::File;
+//! use async_std::io::prelude::*;
+//! use async_std::io::BufWriter;
 //!
-//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 //! #
 //! let f = File::create("foo.txt").await?;
 //! {
@@ -127,9 +127,9 @@
 //! A very common source of input is standard input:
 //!
 //! ```no_run
-//! use async_core::io;
+//! use async_std::io;
 //!
-//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 //! #
 //! let mut input = String::new();
 //!
@@ -145,9 +145,9 @@
 //! or `match` on the return value to catch any possible errors:
 //!
 //! ```no_run
-//! use async_core::io;
+//! use async_std::io;
 //!
-//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 //! #
 //! let mut input = String::new();
 //!
@@ -159,10 +159,10 @@
 //! And a very common source of output is standard output:
 //!
 //! ```no_run
-//! use async_core::io;
-//! use async_core::io::prelude::*;
+//! use async_std::io;
+//! use async_std::io::prelude::*;
 //!
-//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 //! #
 //! io::coreout().write(&[42]).await?;
 //! #
@@ -179,11 +179,11 @@
 //! lines:
 //!
 //! ```no_run
-//! use async_core::fs::File;
-//! use async_core::io::BufReader;
-//! use async_core::prelude::*;
+//! use async_std::fs::File;
+//! use async_std::io::BufReader;
+//! use async_std::prelude::*;
 //!
-//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 //! #
 //! let f = File::open("foo.txt").await?;
 //! let reader = BufReader::new(f);
@@ -203,9 +203,9 @@
 //! from standard input to standard output:
 //!
 //! ```no_run
-//! use async_core::io;
+//! use async_std::io;
 //!
-//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 //! #
 //! io::copy(&mut io::corein(), &mut io::coreout()).await?;
 //! #
@@ -223,7 +223,7 @@
 //!
 //! ```
 //! #![allow(dead_code)]
-//! use async_core::io;
+//! use async_std::io;
 //!
 //! async fn read_input() -> io::Result<()> {
 //!     let mut input = String::new();

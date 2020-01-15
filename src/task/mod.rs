@@ -26,7 +26,7 @@
 //! A new task can be spawned using the [`task::spawn`][`spawn`] function:
 //!
 //! ```no_run
-//! use async_core::task;
+//! use async_std::task;
 //!
 //! task::spawn(async {
 //!     // some work here
@@ -40,9 +40,9 @@
 //! [`JoinHandle`], which implements `Future` and can be `await`ed:
 //!
 //! ```
-//! use async_core::task;
+//! use async_std::task;
 //!
-//! # async_core::task::block_on(async {
+//! # async_std::task::block_on(async {
 //! #
 //! let child = task::spawn(async {
 //!     // some work here
@@ -62,9 +62,9 @@
 //!
 //! ```
 //! # #![allow(unused_must_use)]
-//! use async_core::task;
+//! use async_std::task;
 //!
-//! # async_core::task::block_on(async {
+//! # async_std::task::block_on(async {
 //! #
 //! task::Builder::new().name("child1".to_string()).spawn(async {
 //!     println!("Hello, world!");

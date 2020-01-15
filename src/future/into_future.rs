@@ -5,9 +5,9 @@ use core::future::Future;
 /// # Examples
 ///
 /// ```
-/// use async_core::future::{Future, IntoFuture};
-/// use async_core::io;
-/// use async_core::pin::Pin;
+/// use async_std::future::{Future, IntoFuture};
+/// use async_std::io;
+/// use async_std::pin::Pin;
 ///
 /// struct Client;
 ///

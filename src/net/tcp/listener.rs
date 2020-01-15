@@ -29,11 +29,11 @@ use crate::task::{Context, Poll};
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 /// #
-/// use async_core::io;
-/// use async_core::net::TcpListener;
-/// use async_core::prelude::*;
+/// use async_std::io;
+/// use async_std::net::TcpListener;
+/// use async_std::prelude::*;
 ///
 /// let listener = TcpListener::bind("127.0.0.1:8080").await?;
 /// let mut incoming = listener.incoming();
@@ -63,9 +63,9 @@ impl TcpListener {
     /// Create a TCP listener bound to 127.0.0.1:0:
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::net::TcpListener;
+    /// use async_std::net::TcpListener;
     ///
     /// let listener = TcpListener::bind("127.0.0.1:0").await?;
     /// #
@@ -105,9 +105,9 @@ impl TcpListener {
     /// ## Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::net::TcpListener;
+    /// use async_std::net::TcpListener;
     ///
     /// let listener = TcpListener::bind("127.0.0.1:0").await?;
     /// let (stream, addr) = listener.accept().await?;
@@ -137,10 +137,10 @@ impl TcpListener {
     /// ## Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::net::TcpListener;
-    /// use async_core::prelude::*;
+    /// use async_std::net::TcpListener;
+    /// use async_std::prelude::*;
     ///
     /// let listener = TcpListener::bind("127.0.0.1:0").await?;
     /// let mut incoming = listener.incoming();
@@ -164,9 +164,9 @@ impl TcpListener {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::net::TcpListener;
+    /// use async_std::net::TcpListener;
     ///
     /// let listener = TcpListener::bind("127.0.0.1:8080").await?;
     /// let addr = listener.local_addr()?;

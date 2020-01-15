@@ -37,13 +37,13 @@ pub trait DoubleEndedStream: Stream {
         # Examples
 
         ```
-        # fn main() { async_core::task::block_on(async {
+        # fn main() { async_std::task::block_on(async {
         #
         use core::pin::Pin;
 
-        use async_core::prelude::*;
-        use async_core::stream;
-        use async_core::task::{Context, Poll};
+        use async_std::prelude::*;
+        use async_std::stream;
+        use async_std::task::{Context, Poll};
 
         fn increment(
             s: impl DoubleEndedStream<Item = i32> + Unpin,
@@ -103,10 +103,10 @@ pub trait DoubleEndedStream: Stream {
             # Examples
 
             ```
-            # fn main() { async_core::task::block_on(async {
+            # fn main() { async_std::task::block_on(async {
             #
-            use async_core::prelude::*;
-            use async_core::stream;
+            use async_std::prelude::*;
+            use async_std::stream;
 
             let mut s = stream::from_iter(vec![7u8]);
 
@@ -131,10 +131,10 @@ pub trait DoubleEndedStream: Stream {
             Basic usage:
 
             ```
-            # fn main() { async_core::task::block_on(async {
+            # fn main() { async_std::task::block_on(async {
             #
-            use async_core::prelude::*;
-            use async_core::stream;
+            use async_std::prelude::*;
+            use async_std::stream;
 
             let mut s = stream::from_iter(vec![1u8, 2, 3, 4, 5]);
 
@@ -159,10 +159,10 @@ pub trait DoubleEndedStream: Stream {
             Basic usage:
 
             ```
-            # fn main() { async_core::task::block_on(async {
+            # fn main() { async_std::task::block_on(async {
             #
-            use async_core::prelude::*;
-            use async_core::stream;
+            use async_std::prelude::*;
+            use async_std::stream;
 
             let mut s = stream::from_iter(vec![1u8, 2, 3, 4, 5]);
 
@@ -186,10 +186,10 @@ pub trait DoubleEndedStream: Stream {
             Basic usage:
 
             ```
-            # fn main() { async_core::task::block_on(async {
+            # fn main() { async_std::task::block_on(async {
             #
-            use async_core::prelude::*;
-            use async_core::stream;
+            use async_std::prelude::*;
+            use async_std::stream;
 
             let s = stream::from_iter(vec![1u8, 2, 3, 4, 5]);
 
@@ -217,10 +217,10 @@ pub trait DoubleEndedStream: Stream {
             Basic usage:
 
             ```
-            # fn main() { async_core::task::block_on(async {
+            # fn main() { async_std::task::block_on(async {
             #
-            use async_core::prelude::*;
-            use async_core::stream;
+            use async_std::prelude::*;
+            use async_std::stream;
 
             let s = stream::from_iter(vec![1u8, 2, 3, 4, 5]);
             let sum = s.try_rfold(0, |acc, v| {

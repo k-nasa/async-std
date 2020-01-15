@@ -25,10 +25,10 @@ cfg_unstable! {
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 /// #
-/// use async_core::io;
-/// use async_core::prelude::*;
+/// use async_std::io;
+/// use async_std::prelude::*;
 ///
 /// let mut coreerr = io::coreerr();
 /// coreerr.write_all(b"Hello, world!").await?;
@@ -116,10 +116,10 @@ impl Stderr {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::io;
-    /// use async_core::prelude::*;
+    /// use async_std::io;
+    /// use async_std::prelude::*;
     ///
     /// let coreerr = io::coreerr();
     /// let mut handle = coreerr.lock().await;

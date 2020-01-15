@@ -14,10 +14,10 @@ where
     /// # Examples
     ///
     /// ```
-    /// # fn main() { async_core::task::block_on(async {
+    /// # fn main() { async_std::task::block_on(async {
     /// #
-    /// use async_core::prelude::*;
-    /// use async_core::stream;
+    /// use async_std::prelude::*;
+    /// use async_std::stream;
     ///
     /// let v = stream::from_iter(vec![1, 2]);
     /// let res: Result<Vec<u32>, &'static str> = v.map(|x: u32|

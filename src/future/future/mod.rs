@@ -38,7 +38,7 @@ extension_trait! {
 
         ```
         # #[allow(unused_imports)]
-        use async_core::prelude::*;
+        use async_std::prelude::*;
         ```
 
         # The `poll` method
@@ -142,9 +142,9 @@ extension_trait! {
         /// # Examples
         ///
         /// ```
-        /// # async_core::task::block_on(async {
-        /// use async_core::prelude::*;
-        /// use async_core::future;
+        /// # async_std::task::block_on(async {
+        /// use async_std::prelude::*;
+        /// use async_std::future;
         /// use core::time::Duration;
         ///
         /// let a = future::ready(1).delay(Duration::from_millis(2000));
@@ -166,8 +166,8 @@ extension_trait! {
         /// # Examples
         ///
         /// ```
-        /// # async_core::task::block_on(async {
-        /// use async_core::prelude::*;
+        /// # async_std::task::block_on(async {
+        /// use async_std::prelude::*;
         ///
         /// let nested_future = async { async { 1 } };
         /// let future = nested_future.flatten();
@@ -203,9 +203,9 @@ extension_trait! {
             # Examples
 
             ```
-            # async_core::task::block_on(async {
-            use async_core::prelude::*;
-            use async_core::future;
+            # async_std::task::block_on(async {
+            use async_std::prelude::*;
+            use async_std::future;
 
             let a = future::pending();
             let b = future::ready(1u8);
@@ -246,10 +246,10 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
             #
-            use async_core::prelude::*;
-            use async_core::future;
+            use async_std::prelude::*;
+            use async_std::future;
             use core::io::{Error, ErrorKind};
 
             let a = future::pending::<Result<_, Error>>();
@@ -287,9 +287,9 @@ extension_trait! {
             # Examples
 
             ```
-            # async_core::task::block_on(async {
-            use async_core::prelude::*;
-            use async_core::future;
+            # async_std::task::block_on(async {
+            use async_std::prelude::*;
+            use async_std::future;
 
             let a = future::ready(1u8);
             let b = future::ready(2u16);
@@ -326,10 +326,10 @@ extension_trait! {
             # Examples
 
             ```
-            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
             #
-            use async_core::prelude::*;
-            use async_core::future;
+            use async_std::prelude::*;
+            use async_std::future;
 
             let a = future::ready(Err::<u8, &str>("Error"));
             let b = future::ready(Ok(1u8));
@@ -365,12 +365,12 @@ extension_trait! {
 
             # Example
             ```
-            # async_core::task::block_on(async {
+            # async_std::task::block_on(async {
             #
             use core::time::Duration;
 
-            use async_core::prelude::*;
-            use async_core::future;
+            use async_std::prelude::*;
+            use async_std::future;
 
             let fut = future::ready(0);
             let dur = Duration::from_millis(100);

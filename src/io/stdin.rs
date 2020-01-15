@@ -27,9 +27,9 @@ cfg_unstable! {
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 /// #
-/// use async_core::io;
+/// use async_std::io;
 ///
 /// let corein = io::corein();
 /// let mut line = String::new();
@@ -119,9 +119,9 @@ impl Stdin {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::io;
+    /// use async_std::io;
     ///
     /// let corein = io::corein();
     /// let mut line = String::new();
@@ -173,10 +173,10 @@ impl Stdin {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::io;
-    /// use async_core::prelude::*;
+    /// use async_std::io;
+    /// use async_std::prelude::*;
     ///
     /// let mut buffer = String::new();
     ///

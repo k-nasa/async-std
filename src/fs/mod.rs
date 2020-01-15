@@ -16,10 +16,10 @@
 //! Create a new file and write some bytes to it:
 //!
 //! ```no_run
-//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 //! #
-//! use async_core::fs::File;
-//! use async_core::prelude::*;
+//! use async_std::fs::File;
+//! use async_std::prelude::*;
 //!
 //! let mut file = File::create("a.txt").await?;
 //! file.write_all(b"Hello, world!").await?;

@@ -11,7 +11,7 @@ use crate::path::{Component, Path};
 /// # Examples
 ///
 /// ```
-/// use async_core::path::Path;
+/// use async_std::path::Path;
 ///
 /// let path = Path::new("/tmp/foo/bar.txt");
 ///
@@ -34,7 +34,7 @@ impl<'a> Components<'a> {
     /// # Examples
     ///
     /// ```
-    /// use async_core::path::Path;
+    /// use async_std::path::Path;
     ///
     /// let mut components = Path::new("/tmp/foo/bar.txt").components();
     /// components.next();

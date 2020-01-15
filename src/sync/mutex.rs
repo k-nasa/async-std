@@ -17,10 +17,10 @@ use crate::task::{Context, Poll};
 /// # Examples
 ///
 /// ```
-/// # async_core::task::block_on(async {
+/// # async_std::task::block_on(async {
 /// #
-/// use async_core::sync::{Arc, Mutex};
-/// use async_core::task;
+/// use async_std::sync::{Arc, Mutex};
+/// use async_std::task;
 ///
 /// let m = Arc::new(Mutex::new(0));
 /// let mut tasks = vec![];
@@ -54,7 +54,7 @@ impl<T> Mutex<T> {
     /// # Examples
     ///
     /// ```
-    /// use async_core::sync::Mutex;
+    /// use async_std::sync::Mutex;
     ///
     /// let mutex = Mutex::new(0);
     /// ```
@@ -75,10 +75,10 @@ impl<T: ?Sized> Mutex<T> {
     /// # Examples
     ///
     /// ```
-    /// # async_core::task::block_on(async {
+    /// # async_std::task::block_on(async {
     /// #
-    /// use async_core::sync::{Arc, Mutex};
-    /// use async_core::task;
+    /// use async_std::sync::{Arc, Mutex};
+    /// use async_std::task;
     ///
     /// let m1 = Arc::new(Mutex::new(10));
     /// let m2 = m1.clone();
@@ -151,10 +151,10 @@ impl<T: ?Sized> Mutex<T> {
     /// # Examples
     ///
     /// ```
-    /// # async_core::task::block_on(async {
+    /// # async_std::task::block_on(async {
     /// #
-    /// use async_core::sync::{Arc, Mutex};
-    /// use async_core::task;
+    /// use async_std::sync::{Arc, Mutex};
+    /// use async_std::task;
     ///
     /// let m1 = Arc::new(Mutex::new(10));
     /// let m2 = m1.clone();
@@ -186,7 +186,7 @@ impl<T: ?Sized> Mutex<T> {
     /// # Examples
     ///
     /// ```
-    /// use async_core::sync::Mutex;
+    /// use async_std::sync::Mutex;
     ///
     /// let mutex = Mutex::new(10);
     /// assert_eq!(mutex.into_inner(), 10);
@@ -203,9 +203,9 @@ impl<T: ?Sized> Mutex<T> {
     /// # Examples
     ///
     /// ```
-    /// # async_core::task::block_on(async {
+    /// # async_std::task::block_on(async {
     /// #
-    /// use async_core::sync::Mutex;
+    /// use async_std::sync::Mutex;
     ///
     /// let mut mutex = Mutex::new(0);
     /// *mutex.get_mut() = 10;

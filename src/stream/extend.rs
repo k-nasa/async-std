@@ -14,10 +14,10 @@ use crate::stream::IntoStream;
 /// ## Examples
 ///
 /// ```
-/// # async_core::task::block_on(async {
+/// # async_std::task::block_on(async {
 /// #
-/// use async_core::prelude::*;
-/// use async_core::stream;
+/// use async_std::prelude::*;
+/// use async_std::stream;
 ///
 /// let mut v: Vec<usize> = vec![1, 2];
 /// let s = stream::repeat(3usize).take(3);
@@ -50,10 +50,10 @@ pub trait Extend<A> {
 /// ## Examples
 ///
 /// ```
-/// # async_core::task::block_on(async {
+/// # async_std::task::block_on(async {
 /// #
-/// use async_core::prelude::*;
-/// use async_core::stream;
+/// use async_std::prelude::*;
+/// use async_std::stream;
 ///
 /// let mut v: Vec<usize> = vec![1, 2];
 /// let s = stream::repeat(3usize).take(3);

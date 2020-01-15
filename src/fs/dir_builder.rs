@@ -32,7 +32,7 @@ impl DirBuilder {
     /// # Examples
     ///
     /// ```
-    /// use async_core::fs::DirBuilder;
+    /// use async_std::fs::DirBuilder;
     ///
     /// let builder = DirBuilder::new();
     /// ```
@@ -59,7 +59,7 @@ impl DirBuilder {
     /// # Examples
     ///
     /// ```
-    /// use async_core::fs::DirBuilder;
+    /// use async_std::fs::DirBuilder;
     ///
     /// let mut builder = DirBuilder::new();
     /// builder.recursive(true);
@@ -84,9 +84,9 @@ impl DirBuilder {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::fs::DirBuilder;
+    /// use async_std::fs::DirBuilder;
     ///
     /// DirBuilder::new()
     ///     .recursive(true)

@@ -31,9 +31,9 @@
 //! # Platform-specific extensions
 //!
 //! APIs such as Unix domain sockets are available on certain platforms only. You can find
-//! platform-specific extensions in the [`async_core::os`] module.
+//! platform-specific extensions in the [`async_std::os`] module.
 //!
-//! [`async_core::os`]: ../os/index.html
+//! [`async_std::os`]: ../os/index.html
 //! [`core::net`]: https://doc.rust-lang.org/core/net/index.html
 //!
 //! # Examples
@@ -41,9 +41,9 @@
 //! A simple UDP echo server:
 //!
 //! ```no_run
-//! # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+//! # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 //! #
-//! use async_core::net::UdpSocket;
+//! use async_std::net::UdpSocket;
 //!
 //! let socket = UdpSocket::bind("127.0.0.1:8080").await?;
 //! let mut buf = vec![0u8; 1024];

@@ -8,10 +8,10 @@ use crate::sync::Mutex;
 /// # Examples
 ///
 /// ```
-/// # async_core::task::block_on(async {
+/// # async_std::task::block_on(async {
 /// #
-/// use async_core::sync::{Arc, Barrier};
-/// use async_core::task;
+/// use async_std::sync::{Arc, Barrier};
+/// use async_std::task;
 ///
 /// let mut handles = Vec::with_capacity(10);
 /// let barrier = Arc::new(Barrier::new(10));
@@ -56,7 +56,7 @@ struct BarrierState {
 /// # Examples
 ///
 /// ```
-/// use async_core::sync::Barrier;
+/// use async_std::sync::Barrier;
 ///
 /// let barrier = Barrier::new(1);
 /// let barrier_wait_result = barrier.wait();
@@ -119,10 +119,10 @@ impl Barrier {
     /// # Examples
     ///
     /// ```
-    /// # async_core::task::block_on(async {
+    /// # async_std::task::block_on(async {
     /// #
-    /// use async_core::sync::{Arc, Barrier};
-    /// use async_core::task;
+    /// use async_std::sync::{Arc, Barrier};
+    /// use async_std::task;
     ///
     /// let mut handles = Vec::with_capacity(10);
     /// let barrier = Arc::new(Barrier::new(10));
@@ -188,9 +188,9 @@ impl BarrierWaitResult {
     /// # Examples
     ///
     /// ```
-    /// # async_core::task::block_on(async {
+    /// # async_std::task::block_on(async {
     /// #
-    /// use async_core::sync::Barrier;
+    /// use async_std::sync::Barrier;
     ///
     /// let barrier = Barrier::new(1);
     /// let barrier_wait_result = barrier.wait().await;

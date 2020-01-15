@@ -24,7 +24,7 @@ impl<'a> Iter<'a> {
     /// # Examples
     ///
     /// ```
-    /// use async_core::path::Path;
+    /// use async_std::path::Path;
     ///
     /// let mut iter = Path::new("/tmp/foo/bar.txt").iter();
     /// iter.next();

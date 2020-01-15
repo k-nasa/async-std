@@ -18,11 +18,11 @@ use crate::io;
 /// # Examples
 ///
 /// ```
-/// # async_core::task::block_on(async {
+/// # async_std::task::block_on(async {
 /// #
 /// use core::time::Duration;
 ///
-/// use async_core::task;
+/// use async_std::task;
 ///
 /// task::sleep(Duration::from_secs(1)).await;
 /// #

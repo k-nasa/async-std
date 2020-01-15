@@ -32,10 +32,10 @@ use crate::utils::Context as _;
 /// ## Examples
 ///
 /// ```no_run
-/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 /// #
-/// use async_core::net::TcpStream;
-/// use async_core::prelude::*;
+/// use async_std::net::TcpStream;
+/// use async_std::prelude::*;
 ///
 /// let mut stream = TcpStream::connect("127.0.0.1:8080").await?;
 /// stream.write_all(b"hello world").await?;
@@ -62,9 +62,9 @@ impl TcpStream {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::net::TcpStream;
+    /// use async_std::net::TcpStream;
     ///
     /// let stream = TcpStream::connect("127.0.0.1:0").await?;
     /// #
@@ -107,9 +107,9 @@ impl TcpStream {
     /// ## Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::net::TcpStream;
+    /// use async_std::net::TcpStream;
     ///
     /// let stream = TcpStream::connect("127.0.0.1:8080").await?;
     /// let addr = stream.local_addr()?;
@@ -125,9 +125,9 @@ impl TcpStream {
     /// ## Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::net::TcpStream;
+    /// use async_std::net::TcpStream;
     ///
     /// let stream = TcpStream::connect("127.0.0.1:8080").await?;
     /// let peer = stream.peer_addr()?;
@@ -147,9 +147,9 @@ impl TcpStream {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::net::TcpStream;
+    /// use async_std::net::TcpStream;
     ///
     /// let stream = TcpStream::connect("127.0.0.1:8080").await?;
     ///
@@ -170,9 +170,9 @@ impl TcpStream {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::net::TcpStream;
+    /// use async_std::net::TcpStream;
     ///
     /// let stream = TcpStream::connect("127.0.0.1:8080").await?;
     ///
@@ -196,9 +196,9 @@ impl TcpStream {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::net::TcpStream;
+    /// use async_std::net::TcpStream;
     ///
     /// let stream = TcpStream::connect("127.0.0.1:8000").await?;
     ///
@@ -220,9 +220,9 @@ impl TcpStream {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::net::TcpStream;
+    /// use async_std::net::TcpStream;
     ///
     /// let stream = TcpStream::connect("127.0.0.1:8080").await?;
     ///
@@ -246,9 +246,9 @@ impl TcpStream {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::net::TcpStream;
+    /// use async_std::net::TcpStream;
     ///
     /// let stream = TcpStream::connect("127.0.0.1:8080").await?;
     ///
@@ -271,11 +271,11 @@ impl TcpStream {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
     /// use core::net::Shutdown;
     ///
-    /// use async_core::net::TcpStream;
+    /// use async_std::net::TcpStream;
     ///
     /// let stream = TcpStream::connect("127.0.0.1:8080").await?;
     /// stream.shutdown(Shutdown::Both)?;

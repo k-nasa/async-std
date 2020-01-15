@@ -30,11 +30,11 @@ pin_project! {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::fs::File;
-    /// use async_core::io::BufReader;
-    /// use async_core::prelude::*;
+    /// use async_std::fs::File;
+    /// use async_std::io::BufReader;
+    /// use async_std::prelude::*;
     ///
     /// let mut file = BufReader::new(File::open("a.txt").await?);
     ///
@@ -60,10 +60,10 @@ impl<R: io::Read> BufReader<R> {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::fs::File;
-    /// use async_core::io::BufReader;
+    /// use async_std::fs::File;
+    /// use async_std::io::BufReader;
     ///
     /// let f = BufReader::new(File::open("a.txt").await?);
     /// #
@@ -78,10 +78,10 @@ impl<R: io::Read> BufReader<R> {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::fs::File;
-    /// use async_core::io::BufReader;
+    /// use async_std::fs::File;
+    /// use async_std::io::BufReader;
     ///
     /// let f = BufReader::with_capacity(1024, File::open("a.txt").await?);
     /// #
@@ -105,10 +105,10 @@ impl<R> BufReader<R> {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::fs::File;
-    /// use async_core::io::BufReader;
+    /// use async_std::fs::File;
+    /// use async_std::io::BufReader;
     ///
     /// let f = BufReader::new(File::open("a.txt").await?);
     /// let inner = f.get_ref();
@@ -126,10 +126,10 @@ impl<R> BufReader<R> {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::fs::File;
-    /// use async_core::io::BufReader;
+    /// use async_std::fs::File;
+    /// use async_std::io::BufReader;
     ///
     /// let mut file = BufReader::new(File::open("a.txt").await?);
     /// let inner = file.get_mut();
@@ -154,10 +154,10 @@ impl<R> BufReader<R> {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::fs::File;
-    /// use async_core::io::BufReader;
+    /// use async_std::fs::File;
+    /// use async_std::io::BufReader;
     ///
     /// let f = BufReader::new(File::open("a.txt").await?);
     /// let buffer = f.buffer();
@@ -175,10 +175,10 @@ impl<R> BufReader<R> {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::fs::File;
-    /// use async_core::io::BufReader;
+    /// use async_std::fs::File;
+    /// use async_std::io::BufReader;
     ///
     /// let f = BufReader::new(File::open("a.txt").await?);
     /// let inner = f.into_inner();

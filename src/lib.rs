@@ -6,13 +6,13 @@
 //! [standard macros](#macros), [I/O] and [multithreading], among [many other things][other].
 //!
 //! `async-std` is available from [crates.io]. Once included, `async-std` can be accessed
-//! in [`use`] statements through the path `async_core`, as in [`use async_core::future`].
+//! in [`use`] statements through the path `async_std`, as in [`use async_std::future`].
 //!
 //! [I/O]: io/index.html
 //! [multithreading]: task/index.html
 //! [other]: #what-is-in-the-standard-library-documentation
 //! [`use`]: https://doc.rust-lang.org/book/ch07-02-defining-modules-to-control-scope-and-privacy.html
-//! [`use async_core::future`]: future/index.html
+//! [`use async_std::future`]: future/index.html
 //! [crates.io]: https://crates.io
 //! [`Future`]: future/trait.Future.html
 //! [`Stream`]: stream/trait.Stream.html
@@ -25,7 +25,7 @@
 //!
 //! Otherwise, you may want to jump to one of these useful sections:
 //!
-//! * [`async_core::*` modules](#modules)
+//! * [`async_std::*` modules](#modules)
 //! * [Async macros](#macros)
 //! * [The Async Prelude](prelude/index.html)
 //! * [Cargo.toml feature flags](#features)
@@ -64,7 +64,7 @@
 //! First, `async-std` is divided into a number of focused
 //! modules, [all listed further down this page](#modules). These modules are
 //! the bedrock upon which async Rust is forged, and they have mighty names
-//! like [`async_core::os`] and [`async_core::task`]. Modules' documentation
+//! like [`async_std::os`] and [`async_std::task`]. Modules' documentation
 //! typically includes an overview of the module along with examples, and are
 //! a smart place to start familiarizing yourself with the library.
 //!
@@ -74,8 +74,8 @@
 //! prelude documentation a good entry point to learning about the library.
 //!
 //! [The Async Prelude]: prelude/index.html
-//! [`async_core::os`]: os/index.html
-//! [`async_core::task`]: task/index.html
+//! [`async_std::os`]: os/index.html
+//! [`async_std::task`]: task/index.html
 //!
 //! And finally, `async-std` exports a number of async macros, and
 //! [lists them on this page](#macros).
@@ -143,7 +143,7 @@
 //!     println!("Hello, world!");
 //! }
 //!
-//! #[async_core::main]
+//! #[async_std::main]
 //! async fn main() {
 //!     say_hello().await;
 //! }
@@ -152,9 +152,9 @@
 //! Await two futures concurrently, and return a tuple of their output:
 //!
 //! ```
-//! use async_core::prelude::*;
+//! use async_std::prelude::*;
 //!
-//! #[async_core::main]
+//! #[async_std::main]
 //! async fn main() {
 //!     let a = async { 1u8 };
 //!     let b = async { 2u8 };
@@ -165,9 +165,9 @@
 //! Create a UDP server that echoes back each received message to the sender:
 //!
 //! ```no_run
-//! use async_core::net::UdpSocket;
+//! use async_std::net::UdpSocket;
 //!
-//! #[async_core::main]
+//! #[async_std::main]
 //! async fn main() -> core::io::Result<()> {
 //!     let socket = UdpSocket::bind("127.0.0.1:8080").await?;
 //!     println!("Listening on {}", socket.local_addr()?);

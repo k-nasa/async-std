@@ -21,11 +21,11 @@
 /// # Examples
 ///
 /// ```
-/// # async_core::task::block_on(async {
+/// # async_std::task::block_on(async {
 /// #
-/// use async_core::io;
-/// use async_core::prelude::*;
-/// use async_core::print;
+/// use async_std::io;
+/// use async_std::prelude::*;
+/// use async_std::print;
 ///
 /// print!("this ").await;
 /// print!("will ").await;
@@ -71,9 +71,9 @@ macro_rules! print {
 /// # Examples
 ///
 /// ```
-/// # async_core::task::block_on(async {
+/// # async_std::task::block_on(async {
 /// #
-/// use async_core::println;
+/// use async_std::println;
 ///
 /// println!().await; // prints just a newline
 /// println!("hello there!").await;
@@ -111,9 +111,9 @@ macro_rules! println {
 /// # Examples
 ///
 /// ```
-/// # async_core::task::block_on(async {
+/// # async_std::task::block_on(async {
 /// #
-/// use async_core::eprint;
+/// use async_std::eprint;
 ///
 /// eprint!("Error: Could not complete task").await;
 /// #
@@ -145,9 +145,9 @@ macro_rules! eprint {
 /// # Examples
 ///
 /// ```
-/// # async_core::task::block_on(async {
+/// # async_std::task::block_on(async {
 /// #
-/// use async_core::eprintln;
+/// use async_std::eprintln;
 ///
 /// eprintln!("Error: Could not complete task").await;
 /// #
@@ -181,8 +181,8 @@ macro_rules! eprintln {
 /// #
 /// use core::cell::Cell;
 ///
-/// use async_core::prelude::*;
-/// use async_core::task;
+/// use async_std::prelude::*;
+/// use async_std::task;
 ///
 /// task_local! {
 ///     static VAL: Cell<u32> = Cell::new(5);

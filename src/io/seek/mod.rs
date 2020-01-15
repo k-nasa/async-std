@@ -22,7 +22,7 @@ extension_trait! {
 
         ```
         # #[allow(unused_imports)]
-        use async_core::prelude::*;
+        use async_std::prelude::*;
         ```
 
         [`core::io::Seek`]: https://doc.rust-lang.org/core/io/trait.Seek.html
@@ -60,11 +60,11 @@ extension_trait! {
             # Examples
 
             ```no_run
-            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
             #
-            use async_core::fs::File;
-            use async_core::io::SeekFrom;
-            use async_core::prelude::*;
+            use async_std::fs::File;
+            use async_std::io::SeekFrom;
+            use async_std::prelude::*;
 
             let mut file = File::open("a.txt").await?;
 

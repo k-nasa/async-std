@@ -29,9 +29,9 @@ use crate::utils::Context as _;
 /// ## Examples
 ///
 /// ```no_run
-/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 /// #
-/// use async_core::net::UdpSocket;
+/// use async_std::net::UdpSocket;
 ///
 /// let socket = UdpSocket::bind("127.0.0.1:8080").await?;
 /// let mut buf = vec![0u8; 1024];
@@ -59,9 +59,9 @@ impl UdpSocket {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::net::UdpSocket;
+    /// use async_std::net::UdpSocket;
     ///
     /// let socket = UdpSocket::bind("127.0.0.1:0").await?;
     /// #
@@ -100,9 +100,9 @@ impl UdpSocket {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    ///	use async_core::net::UdpSocket;
+    ///	use async_std::net::UdpSocket;
     ///
     /// let socket = UdpSocket::bind("127.0.0.1:0").await?;
     /// let addr = socket.local_addr()?;
@@ -123,9 +123,9 @@ impl UdpSocket {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::net::UdpSocket;
+    /// use async_std::net::UdpSocket;
     ///
     /// const THE_MERCHANT_OF_VENICE: &[u8] = b"
     ///     If you prick us, do we not bleed?
@@ -168,9 +168,9 @@ impl UdpSocket {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::net::UdpSocket;
+    /// use async_std::net::UdpSocket;
     ///
     /// let socket = UdpSocket::bind("127.0.0.1:0").await?;
     ///
@@ -212,9 +212,9 @@ impl UdpSocket {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::net::UdpSocket;
+    /// use async_std::net::UdpSocket;
     ///
     /// let socket = UdpSocket::bind("127.0.0.1:0").await?;
     /// socket.connect("127.0.0.1:8080").await?;
@@ -251,9 +251,9 @@ impl UdpSocket {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::net::UdpSocket;
+    /// use async_std::net::UdpSocket;
     ///
     /// const THE_MERCHANT_OF_VENICE: &[u8] = b"
     ///     If you prick us, do we not bleed?
@@ -293,9 +293,9 @@ impl UdpSocket {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::net::UdpSocket;
+    /// use async_std::net::UdpSocket;
     ///
     /// let socket = UdpSocket::bind("127.0.0.1:0").await?;
     /// socket.connect("127.0.0.1:8080").await?;
@@ -427,11 +427,11 @@ impl UdpSocket {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
     /// use core::net::Ipv4Addr;
     ///
-    /// use async_core::net::UdpSocket;
+    /// use async_std::net::UdpSocket;
     ///
     /// let interface = Ipv4Addr::new(0, 0, 0, 0);
     /// let mdns_addr = Ipv4Addr::new(224, 0, 0, 123);
@@ -456,11 +456,11 @@ impl UdpSocket {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
     /// use core::net::{Ipv6Addr, SocketAddr};
     ///
-    /// use async_core::net::UdpSocket;
+    /// use async_std::net::UdpSocket;
     ///
     /// let socket_addr = SocketAddr::new(Ipv6Addr::new(0, 0, 0, 0, 0, 0, 0, 0).into(), 0);
     /// let mdns_addr = Ipv6Addr::new(0xFF02, 0, 0, 0, 0, 0, 0, 0x0123);

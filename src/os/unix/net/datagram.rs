@@ -29,9 +29,9 @@ use crate::task::spawn_blocking;
 /// ## Examples
 ///
 /// ```no_run
-/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 /// #
-/// use async_core::os::unix::net::UnixDatagram;
+/// use async_std::os::unix::net::UnixDatagram;
 ///
 /// let socket = UnixDatagram::bind("/tmp/socket1").await?;
 /// socket.send_to(b"hello world", "/tmp/socket2").await?;
@@ -57,9 +57,9 @@ impl UnixDatagram {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::os::unix::net::UnixDatagram;
+    /// use async_std::os::unix::net::UnixDatagram;
     ///
     /// let socket = UnixDatagram::bind("/tmp/socket").await?;
     /// #
@@ -76,9 +76,9 @@ impl UnixDatagram {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::os::unix::net::UnixDatagram;
+    /// use async_std::os::unix::net::UnixDatagram;
     ///
     /// let socket = UnixDatagram::unbound()?;
     /// #
@@ -96,9 +96,9 @@ impl UnixDatagram {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::os::unix::net::UnixDatagram;
+    /// use async_std::os::unix::net::UnixDatagram;
     ///
     /// let (socket1, socket2) = UnixDatagram::pair()?;
     /// #
@@ -123,9 +123,9 @@ impl UnixDatagram {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::os::unix::net::UnixDatagram;
+    /// use async_std::os::unix::net::UnixDatagram;
     ///
     /// let socket = UnixDatagram::unbound()?;
     /// socket.connect("/tmp/socket").await?;
@@ -143,9 +143,9 @@ impl UnixDatagram {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::os::unix::net::UnixDatagram;
+    /// use async_std::os::unix::net::UnixDatagram;
     ///
     /// let socket = UnixDatagram::bind("/tmp/socket").await?;
     /// let addr = socket.local_addr()?;
@@ -165,9 +165,9 @@ impl UnixDatagram {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::os::unix::net::UnixDatagram;
+    /// use async_std::os::unix::net::UnixDatagram;
     ///
     /// let socket = UnixDatagram::unbound()?;
     /// socket.connect("/tmp/socket").await?;
@@ -186,9 +186,9 @@ impl UnixDatagram {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::os::unix::net::UnixDatagram;
+    /// use async_std::os::unix::net::UnixDatagram;
     ///
     /// let socket = UnixDatagram::unbound()?;
     /// let mut buf = vec![0; 1024];
@@ -211,9 +211,9 @@ impl UnixDatagram {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::os::unix::net::UnixDatagram;
+    /// use async_std::os::unix::net::UnixDatagram;
     ///
     /// let socket = UnixDatagram::bind("/tmp/socket").await?;
     /// let mut buf = vec![0; 1024];
@@ -232,9 +232,9 @@ impl UnixDatagram {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::os::unix::net::UnixDatagram;
+    /// use async_std::os::unix::net::UnixDatagram;
     ///
     /// let socket = UnixDatagram::unbound()?;
     /// socket.send_to(b"hello world", "/tmp/socket").await?;
@@ -256,9 +256,9 @@ impl UnixDatagram {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::os::unix::net::UnixDatagram;
+    /// use async_std::os::unix::net::UnixDatagram;
     ///
     /// let socket = UnixDatagram::unbound()?;
     /// socket.connect("/tmp/socket").await?;
@@ -280,9 +280,9 @@ impl UnixDatagram {
     /// ## Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::os::unix::net::UnixDatagram;
+    /// use async_std::os::unix::net::UnixDatagram;
     /// use core::net::Shutdown;
     ///
     /// let socket = UnixDatagram::unbound()?;

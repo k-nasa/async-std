@@ -10,7 +10,7 @@ use crate::path::Path;
 /// # Examples
 ///
 /// ```
-/// use async_core::path::Path;
+/// use async_std::path::Path;
 ///
 /// let path = Path::new("/foo/bar");
 ///

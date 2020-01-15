@@ -33,9 +33,9 @@ use crate::utils::Context as _;
 /// # Examples
 ///
 /// ```
-/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 /// #
-/// use async_core::io;
+/// use async_std::io;
 ///
 /// let mut reader: &[u8] = b"hello";
 /// let mut writer = io::coreout();
@@ -120,9 +120,9 @@ where
 /// # Examples
 ///
 /// ```
-/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 /// #
-/// use async_core::io;
+/// use async_std::io;
 ///
 /// let mut reader: &[u8] = b"hello";
 /// let mut writer = io::coreout();

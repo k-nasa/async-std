@@ -8,7 +8,7 @@
 //!
 //! ```
 //! # #[allow(unused_imports)]
-//! use async_core::prelude::*;
+//! use async_std::prelude::*;
 //! ```
 
 cfg_core! {

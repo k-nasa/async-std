@@ -36,7 +36,7 @@ impl<T> Cursor<T> {
     /// # Examples
     ///
     /// ```
-    /// use async_core::io::Cursor;
+    /// use async_std::io::Cursor;
     ///
     /// let buff = Cursor::new(Vec::new());
     /// # fn force_inference(_: &Cursor<Vec<u8>>) {}
@@ -53,7 +53,7 @@ impl<T> Cursor<T> {
     /// # Examples
     ///
     /// ```
-    /// use async_core::io::Cursor;
+    /// use async_std::io::Cursor;
     ///
     /// let buff = Cursor::new(Vec::new());
     /// # fn force_inference(_: &Cursor<Vec<u8>>) {}
@@ -70,7 +70,7 @@ impl<T> Cursor<T> {
     /// # Examples
     ///
     /// ```
-    /// use async_core::io::Cursor;
+    /// use async_std::io::Cursor;
     ///
     /// let buff = Cursor::new(Vec::new());
     /// # fn force_inference(_: &Cursor<Vec<u8>>) {}
@@ -90,7 +90,7 @@ impl<T> Cursor<T> {
     /// # Examples
     ///
     /// ```
-    /// use async_core::io::Cursor;
+    /// use async_std::io::Cursor;
     ///
     /// let mut buff = Cursor::new(Vec::new());
     /// # fn force_inference(_: &Cursor<Vec<u8>>) {}
@@ -107,11 +107,11 @@ impl<T> Cursor<T> {
     /// # Examples
     ///
     /// ```
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::io::Cursor;
-    /// use async_core::io::prelude::*;
-    /// use async_core::io::SeekFrom;
+    /// use async_std::io::Cursor;
+    /// use async_std::io::prelude::*;
+    /// use async_std::io::SeekFrom;
     ///
     /// let mut buff = Cursor::new(vec![1, 2, 3, 4, 5]);
     ///
@@ -134,7 +134,7 @@ impl<T> Cursor<T> {
     /// # Examples
     ///
     /// ```
-    /// use async_core::io::Cursor;
+    /// use async_std::io::Cursor;
     ///
     /// let mut buff = Cursor::new(vec![1, 2, 3, 4, 5]);
     ///

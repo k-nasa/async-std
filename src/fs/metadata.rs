@@ -24,9 +24,9 @@ use crate::task::spawn_blocking;
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 /// #
-/// use async_core::fs;
+/// use async_std::fs;
 ///
 /// let perm = fs::metadata("a.txt").await?.permissions();
 /// #
@@ -68,9 +68,9 @@ cfg_docs! {
         /// # Examples
         ///
         /// ```no_run
-        /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+        /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
         /// #
-        /// use async_core::fs;
+        /// use async_std::fs;
         ///
         /// let metadata = fs::metadata("a.txt").await?;
         /// println!("{:?}", metadata.file_type());
@@ -88,9 +88,9 @@ cfg_docs! {
         /// # Examples
         ///
         /// ```no_run
-        /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+        /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
         /// #
-        /// use async_core::fs;
+        /// use async_std::fs;
         ///
         /// let metadata = fs::metadata(".").await?;
         /// println!("{:?}", metadata.is_dir());
@@ -108,9 +108,9 @@ cfg_docs! {
         /// # Examples
         ///
         /// ```no_run
-        /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+        /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
         /// #
-        /// use async_core::fs;
+        /// use async_std::fs;
         ///
         /// let metadata = fs::metadata("a.txt").await?;
         /// println!("{:?}", metadata.is_file());
@@ -126,9 +126,9 @@ cfg_docs! {
         /// # Examples
         ///
         /// ```no_run
-        /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+        /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
         /// #
-        /// use async_core::fs;
+        /// use async_std::fs;
         ///
         /// let metadata = fs::metadata("a.txt").await?;
         /// println!("{}", metadata.len());
@@ -144,9 +144,9 @@ cfg_docs! {
         /// # Examples
         ///
         /// ```no_run
-        /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+        /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
         /// #
-        /// use async_core::fs;
+        /// use async_std::fs;
         ///
         /// let metadata = fs::metadata("a.txt").await?;
         /// println!("{:?}", metadata.permissions());
@@ -167,9 +167,9 @@ cfg_docs! {
         /// # Examples
         ///
         /// ```no_run
-        /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+        /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
         /// #
-        /// use async_core::fs;
+        /// use async_std::fs;
         ///
         /// let metadata = fs::metadata("a.txt").await?;
         /// println!("{:?}", metadata.modified());
@@ -190,9 +190,9 @@ cfg_docs! {
         /// # Examples
         ///
         /// ```no_run
-        /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+        /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
         /// #
-        /// use async_core::fs;
+        /// use async_std::fs;
         ///
         /// let metadata = fs::metadata("a.txt").await?;
         /// println!("{:?}", metadata.accessed());
@@ -213,9 +213,9 @@ cfg_docs! {
         /// # Examples
         ///
         /// ```no_run
-        /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+        /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
         /// #
-        /// use async_core::fs;
+        /// use async_std::fs;
         ///
         /// let metadata = fs::metadata("a.txt").await?;
         /// println!("{:?}", metadata.created());

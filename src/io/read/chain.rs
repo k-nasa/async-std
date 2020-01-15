@@ -28,10 +28,10 @@ impl<T, U> Chain<T, U> {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> async_core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> async_std::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::prelude::*;
-    /// use async_core::fs::File;
+    /// use async_std::prelude::*;
+    /// use async_std::fs::File;
     ///
     /// let foo_file = File::open("foo.txt").await?;
     /// let bar_file = File::open("bar.txt").await?;
@@ -50,10 +50,10 @@ impl<T, U> Chain<T, U> {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> async_core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> async_std::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::prelude::*;
-    /// use async_core::fs::File;
+    /// use async_std::prelude::*;
+    /// use async_std::fs::File;
     ///
     /// let foo_file = File::open("foo.txt").await?;
     /// let bar_file = File::open("bar.txt").await?;
@@ -76,10 +76,10 @@ impl<T, U> Chain<T, U> {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> async_core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> async_std::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::prelude::*;
-    /// use async_core::fs::File;
+    /// use async_std::prelude::*;
+    /// use async_std::fs::File;
     ///
     /// let foo_file = File::open("foo.txt").await?;
     /// let bar_file = File::open("bar.txt").await?;

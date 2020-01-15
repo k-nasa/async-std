@@ -39,7 +39,7 @@ pub use crate::stream::Stream;
 /// ```
 /// # use core::task::{Context, Poll};
 /// # use core::pin::Pin;
-/// # use async_core::prelude::*;
+/// # use async_std::prelude::*;
 /// # struct Counter {
 /// #     count: usize,
 /// # }
@@ -59,7 +59,7 @@ pub use crate::stream::Stream;
 /// #         }
 /// #     }
 /// # }
-/// # async_core::task::block_on(async {
+/// # async_std::task::block_on(async {
 /// #
 /// impl ExactSizeStream for Counter {
 ///     // We can easily calculate the remaining number of iterations.

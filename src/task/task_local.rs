@@ -40,8 +40,8 @@ impl<T: Send + 'static> LocalKey<T> {
     /// #
     /// use core::cell::Cell;
     ///
-    /// use async_core::task;
-    /// use async_core::prelude::*;
+    /// use async_std::task;
+    /// use async_std::prelude::*;
     ///
     /// task_local! {
     ///     static NUMBER: Cell<u32> = Cell::new(5);
@@ -79,8 +79,8 @@ impl<T: Send + 'static> LocalKey<T> {
     /// #
     /// use core::cell::Cell;
     ///
-    /// use async_core::task;
-    /// use async_core::prelude::*;
+    /// use async_std::task;
+    /// use async_std::prelude::*;
     ///
     /// task_local! {
     ///     static VAL: Cell<u32> = Cell::new(5);

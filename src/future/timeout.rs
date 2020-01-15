@@ -17,11 +17,11 @@ use crate::task::{Context, Poll};
 /// # Examples
 ///
 /// ```
-/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 /// #
 /// use core::time::Duration;
 ///
-/// use async_core::future;
+/// use async_std::future;
 ///
 /// let never = future::pending::<()>();
 /// let dur = Duration::from_millis(5);

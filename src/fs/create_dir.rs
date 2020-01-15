@@ -25,9 +25,9 @@ use crate::utils::Context as _;
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 /// #
-/// use async_core::fs;
+/// use async_std::fs;
 ///
 /// fs::create_dir("./some/directory").await?;
 /// #

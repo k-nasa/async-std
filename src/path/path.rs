@@ -58,7 +58,7 @@ impl Path {
     /// # Examples
     ///
     /// ```
-    /// use async_core::path::Path;
+    /// use async_std::path::Path;
     ///
     /// Path::new("foo.txt");
     /// ```
@@ -66,7 +66,7 @@ impl Path {
     /// You can create `Path`s from `String`s, or even other `Path`s:
     ///
     /// ```
-    /// use async_core::path::Path;
+    /// use async_std::path::Path;
     ///
     /// let string = String::from("foo.txt");
     /// let from_string = Path::new(&string);
@@ -86,7 +86,7 @@ impl Path {
     /// ```
     /// use core::ffi::OsStr;
     ///
-    /// use async_core::path::Path;
+    /// use async_std::path::Path;
     ///
     /// let os_str = Path::new("foo.txt").as_os_str();
     /// assert_eq!(os_str, OsStr::new("foo.txt"));
@@ -106,7 +106,7 @@ impl Path {
     /// # Examples
     ///
     /// ```
-    /// use async_core::path::Path;
+    /// use async_std::path::Path;
     ///
     /// let path = Path::new("foo.txt");
     /// assert_eq!(path.to_str(), Some("foo.txt"));
@@ -128,7 +128,7 @@ impl Path {
     /// Calling `to_string_lossy` on a `Path` with valid unicode:
     ///
     /// ```
-    /// use async_core::path::Path;
+    /// use async_std::path::Path;
     ///
     /// let path = Path::new("foo.txt");
     /// assert_eq!(path.to_string_lossy(), "foo.txt");
@@ -147,7 +147,7 @@ impl Path {
     /// # Examples
     ///
     /// ```
-    /// use async_core::path::{Path, PathBuf};
+    /// use async_std::path::{Path, PathBuf};
     ///
     /// let path_buf = Path::new("foo.txt").to_path_buf();
     /// assert_eq!(path_buf, PathBuf::from("foo.txt"));
@@ -170,7 +170,7 @@ impl Path {
     /// # Examples
     ///
     /// ```
-    /// use async_core::path::Path;
+    /// use async_std::path::Path;
     ///
     /// assert!(!Path::new("foo.txt").is_absolute());
     /// ```
@@ -187,7 +187,7 @@ impl Path {
     /// # Examples
     ///
     /// ```
-    /// use async_core::path::Path;
+    /// use async_std::path::Path;
     ///
     /// assert!(Path::new("foo.txt").is_relative());
     /// ```
@@ -207,7 +207,7 @@ impl Path {
     /// # Examples
     ///
     /// ```
-    /// use async_core::path::Path;
+    /// use async_std::path::Path;
     ///
     /// assert!(Path::new("/etc/passwd").has_root());
     /// ```
@@ -224,7 +224,7 @@ impl Path {
     /// # Examples
     ///
     /// ```
-    /// use async_core::path::Path;
+    /// use async_std::path::Path;
     ///
     /// let path = Path::new("/foo/bar");
     /// let parent = path.parent().unwrap();
@@ -252,7 +252,7 @@ impl Path {
     /// # Examples
     ///
     /// ```
-    /// use async_core::path::Path;
+    /// use async_std::path::Path;
     ///
     /// let mut ancestors = Path::new("/foo/bar").ancestors();
     /// assert_eq!(ancestors.next(), Some(Path::new("/foo/bar").into()));
@@ -278,7 +278,7 @@ impl Path {
     /// ```
     /// use core::ffi::OsStr;
     ///
-    /// use async_core::path::Path;
+    /// use async_std::path::Path;
     ///
     /// assert_eq!(Some(OsStr::new("bin")), Path::new("/usr/bin/").file_name());
     /// assert_eq!(Some(OsStr::new("foo.txt")), Path::new("tmp/foo.txt").file_name());
@@ -304,7 +304,7 @@ impl Path {
     /// # Examples
     ///
     /// ```
-    /// use async_core::path::{Path, PathBuf};
+    /// use async_std::path::{Path, PathBuf};
     ///
     /// let path = Path::new("/test/haha/foo.txt");
     ///
@@ -333,7 +333,7 @@ impl Path {
     /// # Examples
     ///
     /// ```
-    /// use async_core::path::Path;
+    /// use async_std::path::Path;
     ///
     /// let path = Path::new("/etc/passwd");
     ///
@@ -355,7 +355,7 @@ impl Path {
     /// # Examples
     ///
     /// ```
-    /// use async_core::path::Path;
+    /// use async_std::path::Path;
     ///
     /// let path = Path::new("/etc/passwd");
     ///
@@ -381,7 +381,7 @@ impl Path {
     /// # Examples
     ///
     /// ```
-    /// use async_core::path::Path;
+    /// use async_std::path::Path;
     ///
     /// let path = Path::new("foo.rs");
     ///
@@ -406,7 +406,7 @@ impl Path {
     /// # Examples
     ///
     /// ```
-    /// use async_core::path::Path;
+    /// use async_std::path::Path;
     ///
     /// let path = Path::new("foo.rs");
     ///
@@ -426,7 +426,7 @@ impl Path {
     /// # Examples
     ///
     /// ```
-    /// use async_core::path::{Path, PathBuf};
+    /// use async_std::path::{Path, PathBuf};
     ///
     /// assert_eq!(Path::new("/etc").join("passwd"), PathBuf::from("/etc/passwd"));
     /// ```
@@ -444,7 +444,7 @@ impl Path {
     /// # Examples
     ///
     /// ```
-    /// use async_core::path::{Path, PathBuf};
+    /// use async_std::path::{Path, PathBuf};
     ///
     /// let path = Path::new("/tmp/foo.txt");
     /// assert_eq!(path.with_file_name("bar.txt"), PathBuf::from("/tmp/bar.txt"));
@@ -466,7 +466,7 @@ impl Path {
     /// # Examples
     ///
     /// ```
-    /// use async_core::path::{Path, PathBuf};
+    /// use async_std::path::{Path, PathBuf};
     ///
     /// let path = Path::new("foo.rs");
     /// assert_eq!(path.with_extension("txt"), PathBuf::from("foo.txt"));
@@ -501,7 +501,7 @@ impl Path {
     /// ```
     /// use core::ffi::OsStr;
     ///
-    /// use async_core::path::{Path, Component};
+    /// use async_std::path::{Path, Component};
     ///
     /// let mut components = Path::new("/tmp/foo.txt").components();
     ///
@@ -530,7 +530,7 @@ impl Path {
     /// ```
     /// use core::ffi::OsStr;
     ///
-    /// use async_core::path::{self, Path};
+    /// use async_std::path::{self, Path};
     ///
     /// let mut it = Path::new("/tmp/foo.txt").iter();
     /// assert_eq!(it.next(), Some(OsStr::new(&path::MAIN_SEPARATOR.to_string())));
@@ -552,7 +552,7 @@ impl Path {
     /// # Examples
     ///
     /// ```
-    /// use async_core::path::Path;
+    /// use async_std::path::Path;
     ///
     /// let path = Path::new("/tmp/foo.rs");
     ///
@@ -574,9 +574,9 @@ impl Path {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::path::Path;
+    /// use async_std::path::Path;
     ///
     /// let path = Path::new("/Minas/tirith");
     /// let metadata = path.metadata().await?;
@@ -597,9 +597,9 @@ impl Path {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::path::Path;
+    /// use async_std::path::Path;
     ///
     /// let path = Path::new("/Minas/tirith");
     /// let metadata = path.symlink_metadata().await?;
@@ -623,9 +623,9 @@ impl Path {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::path::{Path, PathBuf};
+    /// use async_std::path::{Path, PathBuf};
     ///
     /// let path = Path::new("/foo/test/../test/bar.rs");
     /// assert_eq!(path.canonicalize().await?, PathBuf::from("/foo/test/bar.rs"));
@@ -645,9 +645,9 @@ impl Path {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::path::Path;
+    /// use async_std::path::Path;
     ///
     /// let path = Path::new("/laputa/sky_castle.rs");
     /// let path_link = path.read_link().await?;
@@ -672,11 +672,11 @@ impl Path {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::fs;
-    /// use async_core::path::Path;
-    /// use async_core::prelude::*;
+    /// use async_std::fs;
+    /// use async_std::path::Path;
+    /// use async_std::prelude::*;
     ///
     /// let path = Path::new("/laputa");
     /// let mut dir = fs::read_dir(&path).await?;
@@ -703,9 +703,9 @@ impl Path {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::path::Path;
+    /// use async_std::path::Path;
     /// assert_eq!(Path::new("does_not_exist.txt").exists().await, false);
     /// #
     /// # Ok(()) }) }
@@ -732,9 +732,9 @@ impl Path {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::path::Path;
+    /// use async_std::path::Path;
     /// assert_eq!(Path::new("./is_a_directory/").is_file().await, false);
     /// assert_eq!(Path::new("a_file.txt").is_file().await, true);
     /// #
@@ -767,9 +767,9 @@ impl Path {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::path::Path;
+    /// use async_std::path::Path;
     ///
     /// assert_eq!(Path::new("./is_a_directory/").is_dir().await, true);
     /// assert_eq!(Path::new("a_file.txt").is_dir().await, false);
@@ -801,7 +801,7 @@ impl Path {
     /// # Examples
     ///
     /// ```
-    /// use async_core::path::Path;
+    /// use async_std::path::Path;
     ///
     /// let path: Box<Path> = Path::new("foo.txt").into();
     /// let path_buf = path.into_path_buf();

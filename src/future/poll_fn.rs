@@ -10,10 +10,10 @@ use crate::task::{Context, Poll};
 /// # Examples
 ///
 /// ```
-/// # async_core::task::block_on(async {
+/// # async_std::task::block_on(async {
 /// #
-/// use async_core::future;
-/// use async_core::task::{Context, Poll};
+/// use async_std::future;
+/// use async_std::task::{Context, Poll};
 ///
 /// fn poll_greeting(_: &mut Context<'_>) -> Poll<String> {
 ///     Poll::Ready("hello world".to_string())

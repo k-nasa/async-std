@@ -7,9 +7,9 @@
 /// # Examples
 ///
 /// ```
-/// # async_core::task::block_on(async {
+/// # async_std::task::block_on(async {
 /// #
-/// use async_core::future;
+/// use async_std::future;
 ///
 /// assert_eq!(future::ready(10).await, 10);
 /// #

@@ -30,7 +30,7 @@ extension_trait! {
 
         ```
         # #[allow(unused_imports)]
-        use async_core::prelude::*;
+        use async_std::prelude::*;
         ```
 
         [`core::io::Write`]: https://doc.rust-lang.org/core/io/trait.Write.html
@@ -95,10 +95,10 @@ extension_trait! {
             # Examples
 
             ```no_run
-            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
             #
-            use async_core::fs::File;
-            use async_core::prelude::*;
+            use async_std::fs::File;
+            use async_std::prelude::*;
 
             let mut file = File::create("a.txt").await?;
 
@@ -123,10 +123,10 @@ extension_trait! {
             # Examples
 
             ```no_run
-            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
             #
-            use async_core::fs::File;
-            use async_core::prelude::*;
+            use async_std::fs::File;
+            use async_std::prelude::*;
 
             let mut file = File::create("a.txt").await?;
 
@@ -177,10 +177,10 @@ extension_trait! {
             # Examples
 
             ```no_run
-            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
             #
-            use async_core::fs::File;
-            use async_core::prelude::*;
+            use async_std::fs::File;
+            use async_std::prelude::*;
 
             let mut file = File::create("a.txt").await?;
 
@@ -213,10 +213,10 @@ extension_trait! {
             # Examples
 
             ```no_run
-            # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+            # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
             #
-            use async_core::io::prelude::*;
-            use async_core::fs::File;
+            use async_std::io::prelude::*;
+            use async_std::fs::File;
 
             let mut buffer = File::create("foo.txt").await?;
 

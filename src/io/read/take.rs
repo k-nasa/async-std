@@ -35,10 +35,10 @@ impl<T> Take<T> {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> async_core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> async_std::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::prelude::*;
-    /// use async_core::fs::File;
+    /// use async_std::prelude::*;
+    /// use async_std::fs::File;
     ///
     /// let f = File::open("foo.txt").await?;
     ///
@@ -61,10 +61,10 @@ impl<T> Take<T> {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> async_core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> async_std::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::prelude::*;
-    /// use async_core::fs::File;
+    /// use async_std::prelude::*;
+    /// use async_std::fs::File;
     ///
     /// let f = File::open("foo.txt").await?;
     ///
@@ -85,10 +85,10 @@ impl<T> Take<T> {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> async_core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> async_std::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::prelude::*;
-    /// use async_core::fs::File;
+    /// use async_std::prelude::*;
+    /// use async_std::fs::File;
     ///
     /// let file = File::open("foo.txt").await?;
     ///
@@ -109,10 +109,10 @@ impl<T> Take<T> {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> async_core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> async_std::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::prelude::*;
-    /// use async_core::fs::File;
+    /// use async_std::prelude::*;
+    /// use async_std::fs::File;
     ///
     /// let file = File::open("foo.txt").await?;
     ///
@@ -137,10 +137,10 @@ impl<T> Take<T> {
     /// # Examples
     ///
     /// ```no_run
-    /// # fn main() -> async_core::io::Result<()> { async_core::task::block_on(async {
+    /// # fn main() -> async_std::io::Result<()> { async_std::task::block_on(async {
     /// #
-    /// use async_core::prelude::*;
-    /// use async_core::fs::File;
+    /// use async_std::prelude::*;
+    /// use async_std::fs::File;
     ///
     /// let file = File::open("foo.txt").await?;
     ///

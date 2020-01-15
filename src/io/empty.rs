@@ -9,10 +9,10 @@ use crate::task::{Context, Poll};
 /// # Examples
 ///
 /// ```rust
-/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 /// #
-/// use async_core::io;
-/// use async_core::prelude::*;
+/// use async_std::io;
+/// use async_std::prelude::*;
 ///
 /// let mut buf = Vec::new();
 /// let mut reader = io::empty();

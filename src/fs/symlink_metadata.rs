@@ -24,9 +24,9 @@ use crate::task::spawn_blocking;
 /// # Examples
 ///
 /// ```no_run
-/// # fn main() -> core::io::Result<()> { async_core::task::block_on(async {
+/// # fn main() -> core::io::Result<()> { async_std::task::block_on(async {
 /// #
-/// use async_core::fs;
+/// use async_std::fs;
 ///
 /// let perm = fs::symlink_metadata("a.txt").await?.permissions();
 /// #

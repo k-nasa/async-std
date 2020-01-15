@@ -25,7 +25,7 @@
 //! slice and start asking questions:
 //!
 //! ```
-//! use async_core::path::Path;
+//! use async_std::path::Path;
 //! use core::ffi::OsStr;
 //!
 //! let path = Path::new("/tmp/foo/bar.txt");
@@ -43,7 +43,7 @@
 //! To build or modify paths, use [`PathBuf`]:
 //!
 //! ```
-//! use async_core::path::PathBuf;
+//! use async_std::path::PathBuf;
 //!
 //! // This way works...
 //! let mut path = PathBuf::from("c:\\");
