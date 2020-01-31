@@ -54,11 +54,6 @@ jobs:
         command:  check
         args: --no-default-features --features std
 
-    - name: check no_std
-      uses: actions-rs/cargo@v1
-      with:
-        command:  check
-        args: --no-default-features --features alloc
 
     - name: check attributes
       uses: actions-rs/cargo@v1
@@ -77,6 +72,27 @@ jobs:
       with:
         command: test
         args: --doc --features "unstable attributes"
+
+  build_and_test_when_no_std:
+    name: Build and test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+        rust: [nightly, beta, stable]
+
+    steps:
+    - uses: actions/checkout@master
+
+    - name: setup
+      run: |
+        rustup target add thumbv7m-none-eabi
+
+    - name: check no_std
+      uses: actions-rs/cargo@v1
+      with:
+        command:  check
+        args: --no-default-features --features alloc --target thumbv7m-none-eabi
 
   check_fmt_and_docs:
     name: Checking fmt and docs
